@@ -1,7 +1,8 @@
 # Boss Master
 An Android/IOs app designed to aid and assist scoring in Archery
 
-https://archerygb.org/news/archery-apps
+## Useful Links
+* [Tech Stack](./docs/tech-stack)
 
 ## Features (*P* - Premium)
 * Enter session scores
@@ -31,6 +32,9 @@ Join a club. A club allows sharing of results between one another. When you comp
 
 ## Market Research
 MyTargets Archery appears to be the biggest one out there. It offers the ability to tap a target when entering scores which was something I was keen on doing. The user interface looks somewhat old. It was last updated 24 Jan 2024, though I can’t see the scale of the update. There are 100k+ downloads.
+
+
+https://archerygb.org/news/archery-apps
 
 ## Feature Behavior
 ### Sessions
