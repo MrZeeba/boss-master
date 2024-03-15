@@ -30,3 +30,10 @@ Offers the following:
 #### Resources
 React Native Tutorial for Beginners - Build a React Native App
 What is Firebase?
+
+## Testing Framework
+It's important to start with a test driven development approach to ensure my code has good coverage. I need to investigate mocking frameworks for React Native. 
+
+https://reactnative.dev/docs/testing-overview
+
+Mocking is the process of providing a pre-canned result from a method. I will do this through the use of a mocking framework. In the document linked above, React Native specifically mentions that [Jest](https://jestjs.io/docs/mock-functions#mocking-modules) has mocking built in.
