@@ -80,7 +80,7 @@ I want to utilise combined storage where some data is stored in the cloud and so
 * *P* Cloud Backed up score data
 
 ### Local
-Your scores and history
+Your scores and history (optionally backed up). Through the use of repository pattern all data could be backed up using a `IRepository` with multiple implementations to store online vs offline data.
 
 ### AI Image Recognition
 Amazon Rekognition: https://aws.amazon.com/rekognition/pricing/
