@@ -3,6 +3,7 @@ An Android/IOs app designed to aid and assist scoring in Archery
 
 ## Useful Links
 * [Tech Stack](./docs/tech-stack)
+* [Architectural Decision Records](./docs/adr/README.md)
 
 ## Features (*P* - Premium)
 * Enter session scores
