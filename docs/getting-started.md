@@ -29,7 +29,8 @@ There are two ways to connect to the app. Either via an emulated device or my ac
 Android Studio offers emulation functionality.
 1. Open Android Studio
 2. More Actions > Virtual Device Manager
-2. Select a phone and click the play/run icon
+3. Select a phone and click the play/run icon
+4. When the expo server is started press "A" to run in the emulated device
 
 #### Phone Handset
 You can either hit the URL in a web browser to get a browser version. Or use the Expo play store app.
