@@ -11,6 +11,18 @@ OR
 
 You can now access the exposed URL on a mobile device to hit the web version, or on the PC to hit a browser version.
 
+### Line Debugging
+On the emulated device open the developer panel and 
+1. Select Debug Remote JS. 
+2. This will open a Chrome browser which our remote debugging will use. 
+3. Open developer tools `F12`
+4. Go to the Sources tab 
+5. Tick "Pause on caught exceptions"
+
+> TIP Breakpoints can be added here
+
+Enable remote debugging 
+
 ### iOS
 You cannot install app's on a simulated Apple device. For this reason the source code must be available on the Macbook to be able to debug and connect to the application. You'll need to pull the source code.
 
@@ -41,5 +53,3 @@ Just open a browser and hit the IP
 #### via the App
 1. Open the Expo App
 2. Scan the QR code provided
-
-### iOS
