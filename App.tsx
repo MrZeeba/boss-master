@@ -3,8 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
   console.log("I am a line of logging!!");
-  let foo;
-  foo.toString();
+
   return (
     <View style={styles.container}>
       <Text>This text has been updated!</Text>
