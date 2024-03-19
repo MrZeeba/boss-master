@@ -17,11 +17,10 @@ On the emulated device open the developer panel and
 2. This will open a Chrome browser which our remote debugging will use. 
 3. Open developer tools `F12`
 4. Go to the Sources tab 
-5. Tick "Pause on caught exceptions"
+5. Tick "Pause on caught exceptions" this can be found in the Sources tab on the top right.
+6. Reload
 
 > TIP Breakpoints can be added here
-
-Enable remote debugging 
 
 ### iOS
 You cannot install app's on a simulated Apple device. For this reason the source code must be available on the Macbook to be able to debug and connect to the application. You'll need to pull the source code.
@@ -43,6 +42,8 @@ Android Studio offers emulation functionality.
 2. More Actions > Virtual Device Manager
 3. Select a phone and click the play/run icon
 4. When the expo server is started press "A" to run in the emulated device
+
+The developer menu can be brought up by pressing `CTRL + M`. However, this didn't work for me. You can use tools in the terminal by expo i.e. `M` will open developer tools. `J` will enable remote debugging and so on.
 
 #### Phone Handset
 You can either hit the URL in a web browser to get a browser version. Or use the Expo play store app.
