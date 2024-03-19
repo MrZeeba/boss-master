@@ -1,6 +1,9 @@
 # Getting Started
 
-## Start Debugging
+- [Debugging](#debugging)
+- [Package Scripts](#package-scripts)
+
+## Debugging
 To start the metro server you can run. Metro bundles all of our files into a single `.js` executable.
 
 `npm start`
@@ -54,3 +57,10 @@ Just open a browser and hit the IP
 #### via the App
 1. Open the Expo App
 2. Scan the QR code provided
+
+## Package Scripts
+There are various scripts within the `package.json` that can be ran such as a Type Script Compiler check. These can be run with a command like
+
+`npm run <scriptname>`
+
+Example `npm run ts:check`
