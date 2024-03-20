@@ -6,7 +6,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text>This text has been updated!</Text>
+      <Text>This text has been updated!!</Text>
       <StatusBar style="auto" />
     </View>
   );
