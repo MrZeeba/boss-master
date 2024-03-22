@@ -4,7 +4,6 @@ import EditShootSession from '../pages/EditShootSession';
 import History from '../pages/History';
 import Profile from '../pages/Profile';
 import Settings from '../pages/Settings';
-Feather;
 
 const Tab = createBottomTabNavigator();
 
