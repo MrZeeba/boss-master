@@ -4,18 +4,27 @@ import EditShootSession from '../pages/EditShootSession';
 import History from '../pages/History';
 import Profile from '../pages/Profile';
 import Settings from '../pages/Settings';
+import { styles } from '../styles';
 
 const Tab = createBottomTabNavigator();
+const iconSize: number = 32;
 
 export default function NavigationBar() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={{
+        tabBarShowLabel: false,
+        tabBarActiveTintColor: styles.primaryColour.backgroundColor,
+        tabBarLabelStyle: {
+          fontSize: 16,
+        },
+      }}>
       <Tab.Screen
         name="Shoot"
         component={EditShootSession}
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <Feather name="target" size={size} color={color} />
+          tabBarIcon: ({ color }) => (
+            <Feather name="target" size={iconSize} color={color} />
           ),
         }}
       />
@@ -23,10 +32,10 @@ export default function NavigationBar() {
         name="History"
         component={History}
         options={{
-          tabBarIcon: ({ color, size }) => (
+          tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="notebook-outline"
-              size={size}
+              size={iconSize}
               color={color}
             />
           ),
@@ -36,8 +45,12 @@ export default function NavigationBar() {
         name="Profile"
         component={Profile}
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="account" size={size} color={color} />
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="account"
+              size={iconSize}
+              color={color}
+            />
           ),
         }}
       />
@@ -45,8 +58,8 @@ export default function NavigationBar() {
         name="Settings"
         component={Settings}
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <Feather name="settings" size={size} color={color} />
+          tabBarIcon: ({ color }) => (
+            <Feather name="settings" size={iconSize} color={color} />
           ),
         }}
       />
