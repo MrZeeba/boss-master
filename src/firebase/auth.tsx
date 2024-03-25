@@ -1,34 +1,19 @@
+import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
 import { Alert } from 'react-native';
 
-export async function registration(email, password, lastName, firstName) {
-  try {
-    const auth = firebase.getAuth(firebase);
-    await firebase.auth().createUserWithEmailAndPassword(email, password);
-    const currentUser = firebase.auth().currentUser;
-
-    const db = firebase.firestore();
-    db.collection('users').doc(currentUser.uid).set({
-      email: currentUser.email,
-      lastName,
-      firstName,
+export async function register(email, password) {
+  const auth = getAuth();
+  createUserWithEmailAndPassword(auth, email, password)
+    .then(userCredential => {
+      // Signed up
+      const user = userCredential.user;
+      Alert.alert(
+        `Successfully signed user up with display name: ${user.displayName}`,
+      );
+    })
+    .catch(error => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      Alert.alert('Failed to sign up user', errorMessage);
     });
-  } catch (err) {
-    Alert.alert('There is something wrong!!!!', err.message);
-  }
-}
-
-export async function signIn(email, password) {
-  try {
-    await firebase.auth().signInWithEmailAndPassword(email, password);
-  } catch (err) {
-    Alert.alert('There is something wrong!', err.message);
-  }
-}
-
-export async function loggingOut() {
-  try {
-    await firebase.auth().signOut();
-  } catch (err) {
-    Alert.alert('There is something wrong!', err.message);
-  }
 }
