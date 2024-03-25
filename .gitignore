@@ -3,6 +3,9 @@
 # dependencies
 node_modules/
 
+# Private
+keys.*
+
 # Expo
 .expo/
 dist/
