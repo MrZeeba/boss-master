@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Run npm test before allowing a commit
+echo "Running npm test..."
+npm test
+
+# Check the exit status of the npm test command
+if [ $? -ne 0 ]; then
+    echo "npm test failed. Aborting commit."
+    exit 1
+fi
+
+# If npm test passed, allow the commit
+exit 0
