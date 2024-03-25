@@ -1,8 +1,8 @@
 import { Alert } from 'react-native';
-import firebase from './firebase';
 
 export async function registration(email, password, lastName, firstName) {
   try {
+    const auth = firebase.getAuth(firebase);
     await firebase.auth().createUserWithEmailAndPassword(email, password);
     const currentUser = firebase.auth().currentUser;
 
