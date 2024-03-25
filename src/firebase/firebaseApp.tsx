@@ -7,5 +7,5 @@ import apiKeys from '../../apiKeys';
 export const app = firebase.initializeApp(apiKeys.firebase);
 
 //Instantiate various firebase services for use elsewhere constructed using the app
-getAuth(app);
-getFirestore(app);
+export const auth = getAuth(app);
+export const db = getFirestore(app);
