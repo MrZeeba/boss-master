@@ -1,27 +1,20 @@
-import { addDoc, collection } from 'firebase/firestore';
 import { Controller, useForm } from 'react-hook-form';
 import { Button, Text, TextInput, View } from 'react-native';
-import { db } from '../firebase/firebaseApp';
-
-type ShootSessionData = {
-  type: string;
-  note: string;
-  bow: string;
-  date: string;
-};
+import { AddSession } from '../firebase/database';
+import { ShootSessionData } from '../models/ShootSession';
 
 export default function EditShootSession() {
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<ShootSessionData>();
 
-  const onSubmit = data => {
+  const onSubmit = async data => {
     const date = new Date();
     data.date = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
     console.log('Submitted Data', data);
-    //await AddSession(data);
+    await AddSession(data);
   };
 
   return (
@@ -39,26 +32,11 @@ export default function EditShootSession() {
             value={value}
           />
         )}
-        name="Foo"
+        name="type"
       />
       {errors.type && <Text>This is required.</Text>}
 
       <Button title="Submit" onPress={handleSubmit(onSubmit)} />
     </View>
   );
-}
-
-async function AddSession(sessionData: ShootSessionData) {
-  try {
-    const docRef = await addDoc(collection(db, 'shooting_sessions'), {
-      type: sessionData.type,
-      bow: sessionData.bow,
-      date: sessionData.date,
-      note: sessionData.note,
-    });
-
-    console.log('Document written with ID: ', docRef.id);
-  } catch (e) {
-    console.error('Error adding document: ', e);
-  }
 }
