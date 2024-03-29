@@ -17,7 +17,8 @@ describe('Connect to local database', () => {
   });
 
   it('get an existing connection', () => {
-    expect(SQLite.openDatabase).toHaveBeenCalledTimes(0);
-    expect(localDB).not.toBeNull();
+    localDB();
+    localDB();
+    expect(SQLite.openDatabase).toHaveBeenCalledTimes(1);
   });
 });

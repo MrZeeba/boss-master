@@ -2,6 +2,7 @@
   "name": "boss-master",
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
+  "author": "Matthew Coffey",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -10,24 +11,6 @@
     "ts:check": "tsc",
     "lint": "echo Running eslint check && eslint .",
     "test": "jest"
-  },
-  "jest": {
-    "preset": "jest-expo",
-    "transformIgnorePatterns": [
-      "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg)"
-    ],
-    "collectCoverage": false,
-    "coverageDirectory": "./test-coverage-report",
-    "collectCoverageFrom": [
-      "**/*.{tsx,js,jsx}",
-      "!**/.expo/**",
-      "!**/__tests__/**",
-      "!**/test-coverage-report/**",
-      "!**/node_modules/**",
-      "!**/babel.config.js",
-      "!**/jest.setup.js",
-      "!**/.prettierrc.js"
-    ]
   },
   "dependencies": {
     "@expo/metro-runtime": "~3.1.3",
