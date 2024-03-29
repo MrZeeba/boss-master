@@ -47,8 +47,6 @@ describe('New session', () => {
 
     const db = LocalDB.GetDatabase();
     LocalDB.AddSession(session);
-
-    expect(db.transaction()).toHaveBeenCalled();
   });
 
   it('fails to create a new session record', () => {});

@@ -1,7 +1,7 @@
-import { addDoc, collection } from 'firebase/firestore';
 import React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
-import { db } from '../firebase/firebaseApp';
+import { ShootSession } from '../models/ShootSession';
+import { AddSession } from '../sqlite/LocalDb';
 
 export default function EditShootSession() {
   return (
@@ -10,26 +10,15 @@ export default function EditShootSession() {
         I am bold
         <Text style={styles.innerText}> and red</Text>
       </Text>
-      <Button onPress={AddSession} title="Add temp session data" />
+      <Button onPress={NewSessionPressed} title="Add temp session data" />
     </View>
   );
 }
 
-async function AddSession() {
-  try {
-    const date = new Date();
-    const currentDate = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
-
-    const docRef = await addDoc(collection(db, 'shooting_sessions'), {
-      type: 'Practice',
-      bow: 'Recurve',
-      date: currentDate,
-    });
-
-    console.log('Document written with ID: ', docRef.id);
-  } catch (e) {
-    console.error('Error adding document: ', e);
-  }
+async function NewSessionPressed() {
+  const session = new ShootSession();
+  session.note = 'Hello! I am a note!';
+  AddSession(session);
 }
 
 const styles = StyleSheet.create({
