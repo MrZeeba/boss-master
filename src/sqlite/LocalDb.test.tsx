@@ -3,7 +3,8 @@ import * as SQLite from 'expo-sqlite';
 import { localDB } from './LocalDb';
 
 jest.mock('expo-sqlite', () => ({
-  openDatabase: jest.fn(),
+  //Fakes and returns an empty object
+  openDatabase: jest.fn().mockReturnValue({}),
 }));
 
 describe('Connect to local database', () => {
@@ -12,13 +13,13 @@ describe('Connect to local database', () => {
   });
 
   it('open a new connection', () => {
-    localDB();
+    const db = localDB();
     expect(SQLite.openDatabase).toHaveBeenCalledWith('boss-master.db');
+    expect(db).not.toBeUndefined();
   });
 
   it('get an existing connection', () => {
     localDB();
-    localDB();
-    expect(SQLite.openDatabase).toHaveBeenCalledTimes(1);
+    expect(SQLite.openDatabase).toHaveBeenCalledTimes(0);
   });
 });

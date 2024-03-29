@@ -1,6 +1,6 @@
 import * as SQLite from 'expo-sqlite';
 
-let _localDB: SQLite.SQLiteDatabase;
+let _localDB;
 
 //Return an open connection
 export const localDB = function () {
