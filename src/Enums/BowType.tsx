@@ -1,4 +1,4 @@
-enum BowType {
+export enum BowType {
   Longbow,
   Flatbow,
   Recurve,
