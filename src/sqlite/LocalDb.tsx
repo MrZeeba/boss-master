@@ -31,14 +31,36 @@ export function AddSession(session: ShootSession) {
 
   db.transaction(tx => {
     tx.executeSql(
-      `INSERT INTO ${tableName} (note) VALUES(?)`,
-      [session.note],
+      `INSERT INTO ${tableName} (bow, note) VALUES(?)`,
+      [session.bow.type, session.note],
       (txObj, resultSet) => {
         console.log(resultSet);
         return resultSet;
       },
       (txObj, error) => {
         console.log(error);
+        return false;
+      },
+    );
+  });
+}
+
+export function DropTable(
+  tableName: string,
+  callback: (success: boolean) => void,
+) {
+  const db = GetDatabase();
+
+  db.transaction(tx => {
+    tx.executeSql(
+      `DROP TABLE IF EXISTS ${tableName}`,
+      [],
+      () => {
+        callback(true);
+      },
+      (_, error: SQLite.SQLError) => {
+        console.error(`Error dropping table ${tableName}: ${error.message}`);
+        callback(false);
         return false;
       },
     );
