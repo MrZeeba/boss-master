@@ -46,7 +46,10 @@ describe('New session', () => {
     session.bow.type = BowType.Flatbow;
 
     const db = LocalDB.GetDatabase();
-    LocalDB.AddSession(session);
+    LocalDB.AddSession(session, id => {
+      expect(id).toBeDefined();
+      expect(id).toBeGreaterThan(0);
+    });
   });
 
   it('fails to create a new session record', () => {});

@@ -19,7 +19,10 @@ export function GetDatabase() {
   return _localDB;
 }
 
-export function AddSession(session: ShootSession) {
+export function AddSession(
+  session: ShootSession,
+  callback: (id: number | undefined) => void,
+) {
   const db = GetDatabase();
   const tableName = 'shootsessions';
 
@@ -31,14 +34,15 @@ export function AddSession(session: ShootSession) {
 
   db.transaction(tx => {
     tx.executeSql(
-      `INSERT INTO ${tableName} (bow, note) VALUES(?)`,
+      `INSERT INTO ${tableName} (bow, note) VALUES(?, ?)`,
       [session.bow.type, session.note],
-      (txObj, resultSet) => {
+      (_, resultSet) => {
         console.log(resultSet);
-        return resultSet;
+        callback(resultSet.insertId);
       },
-      (txObj, error) => {
-        console.log(error);
+      (_, error) => {
+        console.warn(error);
+        callback(undefined);
         return false;
       },
     );

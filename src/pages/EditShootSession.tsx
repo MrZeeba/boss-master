@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
+import { BowType } from '../Enums/BowType';
+import { Bow } from '../models/Bow';
 import { ShootSession } from '../models/ShootSession';
 import { AddSession, DropTable } from '../sqlite/LocalDb';
 
@@ -21,7 +23,17 @@ export default function EditShootSession() {
   async function NewSessionPressed() {
     const session = new ShootSession();
     session.note = 'Hello! I am a note!';
-    AddSession(session);
+
+    const bow = new Bow();
+    bow.type = BowType.Recurve;
+
+    session.bow = bow;
+
+    AddSession(session, id => {
+      const resultString = `Session was inserted with id: ${id}`;
+      console.log(resultString);
+      setSQLResultText(resultString);
+    });
   }
 
   async function ClearSessionsPressed() {
