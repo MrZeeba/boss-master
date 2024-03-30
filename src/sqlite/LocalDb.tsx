@@ -4,7 +4,9 @@ import { ShootSession } from '../models/ShootSession';
 
 let _localDB: SQLite.Database;
 
-//Return an open connection
+/*
+Return an open connection
+*/
 export function GetDatabase() {
   if (Platform.OS === 'web') {
     console.error(
@@ -19,6 +21,34 @@ export function GetDatabase() {
   return _localDB;
 }
 
+/*
+Deletes an entire table including the structure of it
+*/
+export function DropTable(
+  tableName: string,
+  callback: (success: boolean) => void,
+) {
+  const db = GetDatabase();
+
+  db.transaction(tx => {
+    tx.executeSql(
+      `DROP TABLE IF EXISTS ${tableName}`,
+      [],
+      () => {
+        callback(true);
+      },
+      (_, error: SQLite.SQLError) => {
+        console.error(`Error dropping table ${tableName}: ${error.message}`);
+        callback(false);
+        return false;
+      },
+    );
+  });
+}
+
+/*
+Add a session to the database
+*/
 export function AddSession(
   session: ShootSession,
   callback: (id: number | undefined) => void,
@@ -43,28 +73,6 @@ export function AddSession(
       (_, error) => {
         console.warn(error);
         callback(undefined);
-        return false;
-      },
-    );
-  });
-}
-
-export function DropTable(
-  tableName: string,
-  callback: (success: boolean) => void,
-) {
-  const db = GetDatabase();
-
-  db.transaction(tx => {
-    tx.executeSql(
-      `DROP TABLE IF EXISTS ${tableName}`,
-      [],
-      () => {
-        callback(true);
-      },
-      (_, error: SQLite.SQLError) => {
-        console.error(`Error dropping table ${tableName}: ${error.message}`);
-        callback(false);
         return false;
       },
     );
