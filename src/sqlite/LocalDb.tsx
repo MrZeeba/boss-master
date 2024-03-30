@@ -25,16 +25,18 @@ export function AddSession(session: ShootSession) {
 
   db.transaction(tx => {
     tx.executeSql(
-      `CREATE TABLE IF NOT EXISTS ? (id INTEGER PRIMARY KEY AUTOINCREMENT, note TEXT`,
-      [tableName],
+      `CREATE TABLE IF NOT EXISTS ${tableName} (id INTEGER PRIMARY KEY AUTOINCREMENT, bow TEXT, note TEXT)`,
     );
   });
 
   db.transaction(tx => {
     tx.executeSql(
-      `SELECT * FROM ?`,
-      [tableName],
-      (txObj, resultSet) => console.log(resultSet),
+      `INSERT INTO ${tableName} (note) VALUES(?)`,
+      [session.note],
+      (txObj, resultSet) => {
+        console.log(resultSet);
+        return resultSet;
+      },
       (txObj, error) => {
         console.log(error);
         return false;
