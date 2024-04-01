@@ -1,8 +1,9 @@
 import { NavigationContainer } from '@react-navigation/native';
 import NavigationBar from './src/navigation/NavigationBar';
+import { ValidateDb } from './src/sqlite/ValidateDb';
 
 export default function App() {
-  console.log('I am a line of logging!!');
+  ValidateDb();
 
   return (
     <NavigationContainer>

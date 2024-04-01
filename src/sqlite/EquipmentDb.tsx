@@ -12,7 +12,7 @@ export function Create(
 
   db.transaction(tx => {
     tx.executeSql(
-      `CREATE TABLE IF NOT EXISTS ${tableName} 
+      `CREATE TABLE IF NOT EXISTS ${equipmentTableName} 
         (id INTEGER PRIMARY KEY AUTOINCREMENT, 
          name TEXT,
          type TEXT

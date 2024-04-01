@@ -37,6 +37,10 @@ export default function EquipmentPage() {
         onPress={DeleteTablePressed}
         title="Delete ALL session data & schema"
       />
+      <Button
+        onPress={TruncateTablePressed}
+        title="Truncate ALL session data"
+      />
       {equipmentList.map(equipment => {
         return (
           <View key={equipment.id}>

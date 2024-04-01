@@ -1,8 +1,6 @@
 import { ShootSession } from '../models/ShootSession';
 import { GetDatabase } from './LocalDb';
 
-const tableName = 'shootsessions';
-
 /*
 Add a session to the database
 */
@@ -15,7 +13,7 @@ export function Create(
 
   db.transaction(tx => {
     tx.executeSql(
-      `CREATE TABLE IF NOT EXISTS ${tableName} 
+      `CREATE TABLE IF NOT EXISTS ${shootSessionsTableName} 
         (id INTEGER PRIMARY KEY AUTOINCREMENT, 
          note TEXT,
          dateShot TEXT,
