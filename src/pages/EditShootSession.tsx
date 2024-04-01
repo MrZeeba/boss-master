@@ -26,8 +26,10 @@ export default function EditShootSession() {
 
     const bow = new Bow();
     bow.type = BowType.Recurve;
-
     session.bow = bow;
+
+    const date = new Date().toISOString();
+    session.date = date;
 
     AddSession(session, id => {
       const resultString = `Session was inserted with id: ${id}`;

@@ -54,6 +54,7 @@ export function AddSession(
   session: ShootSession,
   callback: (id: number | undefined) => void,
 ) {
+  console.log('Attempting to insert shooting session', { session });
   const db = GetDatabase();
 
   db.transaction(tx => {
