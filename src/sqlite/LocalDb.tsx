@@ -90,6 +90,7 @@ export function GetSessions(callback: (session: ShootSession[]) => void) {
       `SELECT * FROM ${shootSessionTableName}`,
       [],
       (_, resultSet) => {
+        console.log(`Returning resultset ${resultSet.rows._array}`);
         callback(resultSet.rows._array);
       },
       (_, error) => {
