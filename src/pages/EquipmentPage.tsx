@@ -1,17 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback, useState } from 'react';
 import { Button, Text, View } from 'react-native';
 import { Equipment } from '../models/Equipment';
-import { Create } from '../sqlite/EquipmentDB';
-import { GetAll } from '../sqlite/LocalDb';
+import { Create } from '../sqlite/EquipmentDb';
+import { DropTable, GetAll } from '../sqlite/LocalDb';
 
 export default function EquipmentPage() {
   const [equipmentList, setEquipmentList] = useState<Equipment[]>([]);
 
-  useEffect(() => {
-    GetAll<Equipment>('equipment', results => setEquipmentList(results));
-  }, []); //DOES NOT REFRESH
+  useFocusEffect(
+    useCallback(() => {
+      GetAll<Equipment>('equipment', results => setEquipmentList(results));
+    }, []),
+  );
 
-  async function NewItem() {
+  async function NewItemPressed() {
     const equipment = new Equipment();
     equipment.name = 'I am equipment!';
 
@@ -20,10 +23,20 @@ export default function EquipmentPage() {
     });
   }
 
+  async function DeleteTablePressed() {
+    DropTable(`equipment`, sqlResults => {
+      console.log(sqlResults);
+    });
+  }
+
   return (
     <View>
       <Text>equipment!</Text>
-      <Button onPress={NewItem} title="Add temp equipment data" />
+      <Button onPress={NewItemPressed} title="Add temp equipment data" />
+      <Button
+        onPress={DeleteTablePressed}
+        title="Delete ALL session data & schema"
+      />
       {equipmentList.map(equipment => {
         return (
           <View key={equipment.id}>

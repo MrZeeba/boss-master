@@ -15,13 +15,16 @@ export default function EditShootSession() {
         I am bold
         <Text style={styles.innerText}> and red</Text>
       </Text>
-      <Button onPress={NewSessionPressed} title="Add temp session data" />
-      <Button onPress={ClearSessionsPressed} title="Delete ALL session data" />
+      <Button onPress={NewItemPressed} title="Add temp session data" />
+      <Button
+        onPress={DeleteTablePressed}
+        title="Delete ALL session data & schema"
+      />
       <Text>{sqlResultText}</Text>
     </View>
   );
 
-  async function NewSessionPressed() {
+  async function NewItemPressed() {
     const session = new ShootSession();
     session.note = 'Hello! I am a note!';
 
@@ -39,7 +42,7 @@ export default function EditShootSession() {
     });
   }
 
-  async function ClearSessionsPressed() {
+  async function DeleteTablePressed() {
     DropTable(`shootsessions`, result => setSQLResultText(result.toString()));
   }
 }
