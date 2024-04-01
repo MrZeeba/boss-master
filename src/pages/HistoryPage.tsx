@@ -2,9 +2,9 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useCallback, useState } from 'react';
 import { Text, View } from 'react-native';
 import { ShootSession } from '../models/ShootSession';
-import { GetSessions } from '../sqlite/LocalDb';
+import { GetAll } from '../sqlite/LocalDb';
 
-export default function History() {
+export default function HistoryPage() {
   const [shootSessions, setShootSessions] = useState<ShootSession[]>([]);
 
   /*
@@ -13,15 +13,17 @@ export default function History() {
   */
   useFocusEffect(
     useCallback(() => {
-      GetSessions(results => setShootSessions(results));
+      GetAll<ShootSession>('shootsessions', results =>
+        setShootSessions(results),
+      );
     }, []),
   );
 
   return shootSessions.map((shootSession: ShootSession, index) => {
+    console.log('Loaded session', shootSession);
     return (
       <View key={index}>
-        <Text>{`bow - ${shootSession.bow.type}`}</Text>
-        <Text>{`date - ${shootSession.date}`}</Text>
+        <Text>{`date - ${shootSession.dateShot}`}</Text>
         <Text>{`note - ${shootSession.note}`}</Text>
       </View>
     );

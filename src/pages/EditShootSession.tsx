@@ -3,7 +3,8 @@ import { Button, StyleSheet, Text, View } from 'react-native';
 import { BowType } from '../Enums/BowType';
 import { Bow } from '../models/Bow';
 import { ShootSession } from '../models/ShootSession';
-import { AddSession, DropTable } from '../sqlite/LocalDb';
+import { DropTable } from '../sqlite/LocalDb';
+import { Create } from '../sqlite/ShootSessionsDb';
 
 export default function EditShootSession() {
   const [sqlResultText, setSQLResultText] = useState('...');
@@ -29,9 +30,9 @@ export default function EditShootSession() {
     session.bow = bow;
 
     const date = new Date().toISOString();
-    session.date = date;
+    session.dateShot = date;
 
-    AddSession(session, id => {
+    Create(session, id => {
       const resultString = `Session was inserted with id: ${id}`;
       console.log(resultString);
       setSQLResultText(resultString);

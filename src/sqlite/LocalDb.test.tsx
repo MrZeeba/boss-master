@@ -4,6 +4,7 @@ import { BowType } from '../Enums/BowType';
 import { Bow } from '../models/Bow';
 import { ShootSession } from '../models/ShootSession';
 import * as LocalDB from './LocalDb';
+import { Create } from './ShootSessionsDb';
 
 jest.mock('expo-sqlite', () => ({
   //Fakes and returns an empty object
@@ -41,12 +42,12 @@ describe('New session', () => {
 
     const session = new ShootSession();
     session.note = 'I am a note for this session';
-    session.date = currentDate;
+    session.dateShot = currentDate;
     session.bow = new Bow();
     session.bow.type = BowType.Flatbow;
 
     const db = LocalDB.GetDatabase();
-    LocalDB.AddSession(session, id => {
+    Create(session, id => {
       expect(id).toBeDefined();
       expect(id).toBeGreaterThan(0);
     });
