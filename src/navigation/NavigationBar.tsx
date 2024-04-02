@@ -52,9 +52,7 @@ export default function NavigationBar() {
               size={iconSize}
               color={color}
               options={{
-                headerRight: () => {
-                  <Feather name="plus" size={32} color="black" />;
-                },
+                headerRight: () => {},
               }}
             />
           ),
