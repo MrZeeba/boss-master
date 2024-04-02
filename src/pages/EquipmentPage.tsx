@@ -1,11 +1,15 @@
+import { Feather } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Button, Text, View } from 'react-native';
 import { Equipment } from '../models/Equipment';
 import { Create, tableName as equipmentTableName } from '../sqlite/EquipmentDb';
-import { DropTable, GetAll, TruncateTable } from '../sqlite/LocalDb';
+import { GetAll, TruncateTable } from '../sqlite/LocalDb';
 
-export default function EquipmentPage() {
+/*
+Equipment is currently just a bow but may be expanded in the future
+*/
+export default function EquipmentPage({ navigation }) {
   const [equipmentList, setEquipmentList] = useState<Equipment[]>([]);
 
   useFocusEffect(
@@ -14,18 +18,28 @@ export default function EquipmentPage() {
     }, []),
   );
 
+  //Hook into the header add item icon
+  useEffect(() => {
+    // Use `setOptions` to update the button that we previously specified
+    // Now the button includes an `onPress` handler to update the count
+    navigation.setOptions({
+      headerRight: () => (
+        <Feather
+          name="plus"
+          size={32}
+          color="black"
+          onPress={() => NewItemPressed()}
+        />
+      ),
+    });
+  }, [navigation]);
+
   async function NewItemPressed() {
     const equipment = new Equipment();
     equipment.name = 'I am equipment!';
 
     Create(equipment, id => {
       console.log(`New equipment created with id ${id}`);
-    });
-  }
-
-  async function DeleteTablePressed() {
-    DropTable(equipmentTableName, sqlResults => {
-      console.log(sqlResults);
     });
   }
 
@@ -37,9 +51,6 @@ export default function EquipmentPage() {
 
   return (
     <View>
-      <Text>equipment!</Text>
-      <Button onPress={NewItemPressed} title="Add temp equipment data" />
-      <Button onPress={DeleteTablePressed} title="Delete ALL data & schema" />
       <Button onPress={TruncateTablePressed} title="Truncate ALL data" />
       {equipmentList.map(equipment => {
         return (

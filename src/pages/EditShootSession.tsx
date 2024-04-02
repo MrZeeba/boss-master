@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Button, Text, View } from 'react-native';
-import { BowType } from '../enums/BowType';
+import { BowType } from '../Enums/BowType';
 import { Bow } from '../models/Bow';
 import { ShootSession } from '../models/ShootSession';
-import { DropTable, TruncateTable } from '../sqlite/LocalDb';
+import { TruncateTable } from '../sqlite/LocalDb';
 import {
   Create,
   tableName as shootSessionsTableName,
@@ -15,7 +15,6 @@ export default function EditShootSession() {
   return (
     <View>
       <Button onPress={NewItemPressed} title="Add temp session data" />
-      <Button onPress={DeleteTablePressed} title="Delete ALL data & schema" />
       <Button onPress={TruncateTablePressed} title="Truncate ALL data" />
       <Text>{sqlResultText}</Text>
     </View>
@@ -37,12 +36,6 @@ export default function EditShootSession() {
       console.log(resultString);
       setSQLResultText(resultString);
     });
-  }
-
-  async function DeleteTablePressed() {
-    DropTable(shootSessionsTableName, result =>
-      setSQLResultText(result.toString()),
-    );
   }
 
   async function TruncateTablePressed() {
