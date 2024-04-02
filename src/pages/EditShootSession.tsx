@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
-import { BowType } from '../Enums/BowType';
+import { BowType } from '../enums/BowType';
 import { Bow } from '../models/Bow';
 import { ShootSession } from '../models/ShootSession';
 import { DropTable } from '../sqlite/LocalDb';

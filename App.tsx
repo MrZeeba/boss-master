@@ -1,9 +1,11 @@
 import { NavigationContainer } from '@react-navigation/native';
 import NavigationBar from './src/navigation/NavigationBar';
-import { ValidateDb } from './src/sqlite/ValidateDb';
+import { Validate as ValidateEquipment } from './src/sqlite/EquipmentDb';
+import { Validate as ValidateShootSessions } from './src/sqlite/ShootSessionsDb';
 
 export default function App() {
-  ValidateDb();
+  ValidateEquipment();
+  ValidateShootSessions();
 
   return (
     <NavigationContainer>

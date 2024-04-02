@@ -1,6 +1,32 @@
 import { ShootSession } from '../models/ShootSession';
 import { GetDatabase } from './LocalDb';
 
+const tableName = 'shootsessions';
+
+/*
+Validates the schema for this table
+*/
+export function Validate() {
+  const db = GetDatabase();
+
+  db.transaction(tx => {
+    tx.executeSql(
+      `CREATE TABLE IF NOT EXISTS ${tableName} 
+        (id INTEGER PRIMARY KEY AUTOINCREMENT, 
+         note TEXT,
+         dateShot TEXT,
+         bow_id INTEGER NOT NULL,
+         FOREIGN KEY (bow_id)
+          REFERENCES equipment(id)
+         )`,
+      undefined,
+      (_, result) => {
+        console.log(`Validation of ${tableName} complete`, result);
+      },
+    );
+  });
+}
+
 /*
 Add a session to the database
 */
@@ -10,19 +36,6 @@ export function Create(
 ) {
   console.log('Attempting to insert shooting session', { session });
   const db = GetDatabase();
-
-  db.transaction(tx => {
-    tx.executeSql(
-      `CREATE TABLE IF NOT EXISTS ${shootSessionsTableName} 
-        (id INTEGER PRIMARY KEY AUTOINCREMENT, 
-         note TEXT,
-         dateShot TEXT,
-         bow_id INTEGER NOT NULL,
-         FOREIGN KEY (bow_id)
-          REFERENCES equipment(id)
-         )`,
-    );
-  });
 
   db.transaction(tx => {
     tx.executeSql(

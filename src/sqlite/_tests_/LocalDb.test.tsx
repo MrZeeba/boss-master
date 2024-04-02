@@ -1,10 +1,10 @@
 //Mock the database
 import * as SQLite from 'expo-sqlite';
-import { BowType } from '../Enums/BowType';
-import { Bow } from '../models/Bow';
-import { ShootSession } from '../models/ShootSession';
-import * as LocalDB from './LocalDb';
-import { Create } from './ShootSessionsDb';
+import { BowType } from '../../enums/BowType';
+import { Bow } from '../../models/Bow';
+import { ShootSession } from '../../models/ShootSession';
+import * as LocalDB from '../LocalDb';
+import { Create } from '../ShootSessionsDb';
 
 jest.mock('expo-sqlite', () => ({
   //Fakes and returns an empty object
