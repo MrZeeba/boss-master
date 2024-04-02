@@ -2,8 +2,8 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useCallback, useState } from 'react';
 import { Button, Text, View } from 'react-native';
 import { Equipment } from '../models/Equipment';
-import { Create } from '../sqlite/EquipmentDb';
-import { DropTable, GetAll } from '../sqlite/LocalDb';
+import { Create, tableName as equipmentTableName } from '../sqlite/EquipmentDb';
+import { DropTable, GetAll, TruncateTable } from '../sqlite/LocalDb';
 
 export default function EquipmentPage() {
   const [equipmentList, setEquipmentList] = useState<Equipment[]>([]);
@@ -24,7 +24,13 @@ export default function EquipmentPage() {
   }
 
   async function DeleteTablePressed() {
-    DropTable(`equipment`, sqlResults => {
+    DropTable(equipmentTableName, sqlResults => {
+      console.log(sqlResults);
+    });
+  }
+
+  async function TruncateTablePressed() {
+    TruncateTable(equipmentTableName, sqlResults => {
       console.log(sqlResults);
     });
   }
@@ -33,14 +39,8 @@ export default function EquipmentPage() {
     <View>
       <Text>equipment!</Text>
       <Button onPress={NewItemPressed} title="Add temp equipment data" />
-      <Button
-        onPress={DeleteTablePressed}
-        title="Delete ALL session data & schema"
-      />
-      <Button
-        onPress={TruncateTablePressed}
-        title="Truncate ALL session data"
-      />
+      <Button onPress={DeleteTablePressed} title="Delete ALL data & schema" />
+      <Button onPress={TruncateTablePressed} title="Truncate ALL data" />
       {equipmentList.map(equipment => {
         return (
           <View key={equipment.id}>

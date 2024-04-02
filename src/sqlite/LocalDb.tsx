@@ -46,6 +46,37 @@ export function DropTable(
 }
 
 /*
+Removes the data from a table but retains the structure
+*/
+export function TruncateTable(
+  tableName: string,
+  callback: (rowsDeleted: number) => void,
+) {
+  const db = GetDatabase();
+  console.log(`Truncating table ${tableName}...`);
+
+  db.transaction(tx => {
+    tx.executeSql(
+      `DELETE FROM ${tableName}`,
+      [],
+      (_, result) => {
+        console.log('Truncate result', result);
+        callback(result.rowsAffected);
+
+        //Resequence table
+        tx.executeSql(`UPDATE SQLITE_SEQUENCE SET SEQ = 0 WHERE NAME = ?`, [
+          tableName,
+        ]);
+      },
+      (_, error: SQLite.SQLError) => {
+        console.error(`Error truncating table ${tableName}: ${error.message}`);
+        return false;
+      },
+    );
+  });
+}
+
+/*
 Return all of a type
 */
 export function GetAll<Type>(

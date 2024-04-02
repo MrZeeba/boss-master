@@ -1,7 +1,7 @@
 import { ShootSession } from '../models/ShootSession';
 import { GetDatabase } from './LocalDb';
 
-const tableName = 'shootsessions';
+export const tableName = 'shootsessions';
 
 /*
 Validates the schema for this table
@@ -21,7 +21,7 @@ export function Validate() {
          )`,
       undefined,
       (_, result) => {
-        console.log(`Validation of ${tableName} complete`, result);
+        console.log(`Validate ${tableName}: SUCCESS`, result);
       },
     );
   });

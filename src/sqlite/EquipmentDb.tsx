@@ -1,7 +1,7 @@
 import { Equipment } from '../models/Equipment';
 import { GetDatabase } from './LocalDb';
 
-const tableName = 'equipment';
+export const tableName = 'equipment';
 
 export function Validate() {
   console.log('Validating equipment schema');
@@ -16,7 +16,7 @@ export function Validate() {
              )`,
       undefined,
       (_, result) => {
-        console.log(`Validation of ${tableName} comlete`, result);
+        console.log(`Validate ${tableName}: SUCCESS`, result);
       },
     );
   });
