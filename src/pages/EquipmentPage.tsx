@@ -31,7 +31,7 @@ export default function EquipmentPage() {
 
   async function TruncateTablePressed() {
     TruncateTable(equipmentTableName, sqlResults => {
-      console.log(sqlResults);
+      console.log(`${sqlResults} rows deleted`);
     });
   }
 

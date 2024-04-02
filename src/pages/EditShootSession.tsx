@@ -47,7 +47,7 @@ export default function EditShootSession() {
 
   async function TruncateTablePressed() {
     TruncateTable(shootSessionsTableName, sqlResults => {
-      console.log(sqlResults);
+      setSQLResultText(`${sqlResults} rows deleted`);
     });
   }
 }
