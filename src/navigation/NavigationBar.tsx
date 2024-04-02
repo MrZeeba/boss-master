@@ -45,18 +45,15 @@ export default function NavigationBar() {
       <Tab.Screen
         name="Equipment"
         component={EquipmentPage}
-        options={({ navigation }) => ({
+        options={{
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="bow-arrow"
               size={iconSize}
               color={color}
-              options={{
-                headerRight: () => {},
-              }}
             />
           ),
-        })}
+        }}
       />
       <Tab.Screen
         name="Profile"
