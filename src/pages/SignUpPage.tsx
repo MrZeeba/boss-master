@@ -1,6 +1,6 @@
 import { Button } from 'react-native';
 
-export default function SignUp() {
+export default function SignUpPage() {
   return (
     <Button
       onPress={() => console.log('I was pressed')}

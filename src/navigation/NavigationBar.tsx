@@ -1,9 +1,10 @@
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import EditShootSession from '../pages/EditShootSession';
-import History from '../pages/History';
-import Profile from '../pages/Profile';
-import Settings from '../pages/Settings';
+import EquipmentPage from '../pages/EquipmentPage';
+import HistoryPage from '../pages/HistoryPage';
+import ProfilePage from '../pages/ProfilePage';
+import SettingsPage from '../pages/SettingsPage';
 import { styles } from '../styles';
 
 const Tab = createBottomTabNavigator();
@@ -30,7 +31,7 @@ export default function NavigationBar() {
       />
       <Tab.Screen
         name="History"
-        component={History}
+        component={HistoryPage}
         options={{
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
@@ -42,8 +43,21 @@ export default function NavigationBar() {
         }}
       />
       <Tab.Screen
+        name="Equipment"
+        component={EquipmentPage}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="bow-arrow"
+              size={iconSize}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
         name="Profile"
-        component={Profile}
+        component={ProfilePage}
         options={{
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
@@ -56,7 +70,7 @@ export default function NavigationBar() {
       />
       <Tab.Screen
         name="Settings"
-        component={Settings}
+        component={SettingsPage}
         options={{
           tabBarIcon: ({ color }) => (
             <Feather name="settings" size={iconSize} color={color} />
