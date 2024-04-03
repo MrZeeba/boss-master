@@ -20,8 +20,8 @@ export function Validate() {
           REFERENCES equipment(id)
          )`,
       undefined,
-      (_, result) => {
-        console.log(`Validate ${tableName}: SUCCESS`, result);
+      () => {
+        console.log(`Validate ${tableName}: SUCCESS`);
       },
     );
   });

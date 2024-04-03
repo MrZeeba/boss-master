@@ -16,7 +16,7 @@ export function Validate() {
              )`,
       undefined,
       (_, result) => {
-        console.log(`Validate ${tableName}: SUCCESS`, result);
+        console.log(`Validate ${tableName}: SUCCESS`);
       },
     );
   });
