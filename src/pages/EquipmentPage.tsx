@@ -56,8 +56,8 @@ export default function EquipmentPage({ navigation }) {
   return (
     <EquipmentStack.Navigator>
       <EquipmentStack.Screen
-        name="Home"
-        component={Equipment}
+        name="Equipment"
+        component={EquipmentView}
         options={{ headerShown: false }}
       />
       <EquipmentStack.Group screenOptions={{ presentation: 'modal' }}>
@@ -69,7 +69,7 @@ export default function EquipmentPage({ navigation }) {
     </EquipmentStack.Navigator>
   );
 
-  function Equipment() {
+  function EquipmentView() {
     return (
       <View>
         <Button onPress={TruncateTablePressed} title="Truncate ALL data" />

@@ -1,5 +1,5 @@
 import { NavigationContainer } from '@react-navigation/native';
-import NavigationBar from './src/navigation/NavigationBar';
+import TabNavigation from './src/navigation/TabNavigation';
 import { Validate as ValidateEquipment } from './src/sqlite/EquipmentDb';
 import { Validate as ValidateShootSessions } from './src/sqlite/ShootSessionsDb';
 
@@ -9,7 +9,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <NavigationBar />
+      <TabNavigation />
     </NavigationContainer>
   );
 }

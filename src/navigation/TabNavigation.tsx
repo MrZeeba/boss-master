@@ -10,7 +10,7 @@ import { styles } from '../styles';
 const Tab = createBottomTabNavigator();
 const iconSize: number = 32;
 
-export default function NavigationBar() {
+export default function TabNavigation() {
   return (
     <Tab.Navigator
       screenOptions={{
