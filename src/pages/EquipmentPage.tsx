@@ -1,10 +1,12 @@
 import { Feather } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import { useCallback, useEffect, useState } from 'react';
 import { Button, Text, View } from 'react-native';
 import { Equipment } from '../models/Equipment';
 import { Create, tableName as equipmentTableName } from '../sqlite/EquipmentDb';
 import { GetAll, TruncateTable } from '../sqlite/LocalDb';
+import { EditEquipmentModal } from './EditEquipmentModal';
 
 /*
 Equipment is currently just a bow but may be expanded in the future
@@ -28,7 +30,7 @@ export default function EquipmentPage({ navigation }) {
           name="plus"
           size={32}
           color="black"
-          onPress={() => NewItemPressed()}
+          onPress={() => navigation.navigate('EditEquipmentModal')}
         />
       ),
     });
@@ -49,16 +51,36 @@ export default function EquipmentPage({ navigation }) {
     });
   }
 
+  const EquipmentStack = createStackNavigator();
+
   return (
-    <View>
-      <Button onPress={TruncateTablePressed} title="Truncate ALL data" />
-      {equipmentList.map(equipment => {
-        return (
-          <View key={equipment.id}>
-            <Text>{equipment.name}</Text>
-          </View>
-        );
-      })}
-    </View>
+    <EquipmentStack.Navigator>
+      <EquipmentStack.Screen
+        name="Home"
+        component={Equipment}
+        options={{ headerShown: false }}
+      />
+      <EquipmentStack.Group screenOptions={{ presentation: 'modal' }}>
+        <EquipmentStack.Screen
+          name="EditEquipmentModal"
+          component={EditEquipmentModal}
+        />
+      </EquipmentStack.Group>
+    </EquipmentStack.Navigator>
   );
+
+  function Equipment() {
+    return (
+      <View>
+        <Button onPress={TruncateTablePressed} title="Truncate ALL data" />
+        {equipmentList.map(equipment => {
+          return (
+            <View key={equipment.id}>
+              <Text>{equipment.name}</Text>
+            </View>
+          );
+        })}
+      </View>
+    );
+  }
 }
