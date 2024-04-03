@@ -1,6 +1,6 @@
 import { Button, Text, View } from 'react-native';
 
-export function EditEquipmentModal({ navigation }) {
+export function EditEquipmentPage({ navigation }) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>This is a modal!</Text>

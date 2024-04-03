@@ -6,35 +6,20 @@ import { Button, Text, View } from 'react-native';
 import { Equipment } from '../models/Equipment';
 import { Create, tableName as equipmentTableName } from '../sqlite/EquipmentDb';
 import { GetAll, TruncateTable } from '../sqlite/LocalDb';
-import { EditEquipmentModal } from './EditEquipmentModal';
+import { EditEquipmentPage } from './EditEquipmentPage';
 
 /*
 Equipment is currently just a bow but may be expanded in the future
 */
-export default function EquipmentPage({ navigation }) {
+export default function EquipmentPage() {
   const [equipmentList, setEquipmentList] = useState<Equipment[]>([]);
+  const EquipmentStack = createStackNavigator();
 
   useFocusEffect(
     useCallback(() => {
       GetAll<Equipment>('equipment', results => setEquipmentList(results));
     }, []),
   );
-
-  //Hook into the header add item icon
-  useEffect(() => {
-    // Use `setOptions` to update the button that we previously specified
-    // Now the button includes an `onPress` handler to update the count
-    navigation.setOptions({
-      headerRight: () => (
-        <Feather
-          name="plus"
-          size={32}
-          color="black"
-          onPress={() => navigation.navigate('EditEquipmentModal')}
-        />
-      ),
-    });
-  }, [navigation]);
 
   async function NewItemPressed() {
     const equipment = new Equipment();
@@ -51,31 +36,44 @@ export default function EquipmentPage({ navigation }) {
     });
   }
 
-  const EquipmentStack = createStackNavigator();
-
   return (
     <EquipmentStack.Navigator>
       <EquipmentStack.Screen
-        name="Equipment"
+        name="EquipmentStack"
         component={EquipmentView}
-        options={{ headerShown: false }}
+        options={{ title: 'Equipment' }}
       />
-      <EquipmentStack.Group screenOptions={{ presentation: 'modal' }}>
-        <EquipmentStack.Screen
-          name="EditEquipmentModal"
-          component={EditEquipmentModal}
-        />
-      </EquipmentStack.Group>
+      <EquipmentStack.Screen
+        name="EditEquipmentPage"
+        component={EditEquipmentPage}
+      />
     </EquipmentStack.Navigator>
   );
 
-  function EquipmentView() {
+  function EquipmentView({ navigation }) {
+    //Hook into the header add item icon
+    useEffect(() => {
+      // Use `setOptions` to update the button that we previously specified
+      // Now the button includes an `onPress` handler to update the count
+      navigation.setOptions({
+        headerRight: () => (
+          <Feather
+            name="plus"
+            size={32}
+            color="black"
+            onPress={() => navigation.navigate('EditEquipmentPage')}
+          />
+        ),
+      });
+    }, [navigation]);
+
     return (
       <View>
         <Button onPress={TruncateTablePressed} title="Truncate ALL data" />
         {equipmentList.map(equipment => {
           return (
             <View key={equipment.id}>
+              <Text>Hello!</Text>
               <Text>{equipment.name}</Text>
             </View>
           );

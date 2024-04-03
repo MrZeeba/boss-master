@@ -46,6 +46,7 @@ export default function TabNavigation() {
         name="Equipment"
         component={EquipmentPage}
         options={{
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="bow-arrow"
