@@ -9,7 +9,7 @@ import {
   tableName as shootSessionsTableName,
 } from '../sqlite/ShootSessionsDb';
 
-export default function EditShootSession() {
+export default function EditShootSessionPage() {
   const [sqlResultText, setSQLResultText] = useState('...');
 
   return (
