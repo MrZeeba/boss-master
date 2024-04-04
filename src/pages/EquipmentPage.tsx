@@ -6,7 +6,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Text, View } from 'react-native';
 import { Equipment } from '../models/Equipment';
-import { Create, tableName as equipmentTableName } from '../sqlite/EquipmentDb';
+import { EquipmentDb } from '../sqlite/EquipmentDb';
 import { GetAll, TruncateTable } from '../sqlite/LocalDb';
 
 /*
@@ -41,14 +41,14 @@ export default function EquipmentPage({ navigation }) {
     const equipment = new Equipment();
     equipment.name = 'I am equipment!';
 
-    Create(equipment, id => {
+    EquipmentDb.Create(equipment, id => {
       console.log(`New equipment created with id ${id}`);
       navigation.navigate('EditEquipmentPage', { id });
     });
   }
 
   async function TruncateTablePressed() {
-    TruncateTable(equipmentTableName, sqlResults => {
+    TruncateTable(EquipmentDb.tableName, sqlResults => {
       console.log(`${sqlResults} rows deleted`);
     });
   }

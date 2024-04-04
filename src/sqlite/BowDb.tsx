@@ -1,6 +1,13 @@
-export const BowDB: DbTable = {
+import { Bow } from '../models/Bow';
+
+export const BowDB: DbTable<Bow> = {
   tableName: '',
-  Create<Type>(item: Type, callback: (id: number | undefined) => void) {
+
+  Validate() {
+    throw new Error('Function not implemented.');
+  },
+
+  Create(item: Bow, callback: (id: number | undefined) => void) {
     throw new Error('Function not implemented.');
   },
 };
