@@ -30,7 +30,8 @@ export default function EquipmentPage({ navigation }) {
           name="plus"
           size={32}
           color="black"
-          onPress={() => navigation.navigate('EditEquipmentPage')}
+          onPress={() => NewItemPressed()}
+          style={{ paddingRight: 20 }}
         />
       ),
     });
@@ -42,6 +43,7 @@ export default function EquipmentPage({ navigation }) {
 
     Create(equipment, id => {
       console.log(`New equipment created with id ${id}`);
+      navigation.navigate('EditEquipmentPage', { id });
     });
   }
 

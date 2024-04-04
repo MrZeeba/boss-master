@@ -26,7 +26,7 @@ export function Create(
   equipment: Equipment,
   callback: (id: number | undefined) => void,
 ) {
-  console.log('Creating new equipment record', { equipment });
+  console.log('Creating new record', { equipment });
   const db = GetDatabase();
 
   db.transaction(tx => {

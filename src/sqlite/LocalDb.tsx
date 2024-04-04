@@ -6,7 +6,7 @@ let _localDB: SQLite.Database;
 /*
 Return an open connection
 */
-export function GetDatabase() {
+export function GetDatabase(): SQLite.Database {
   if (Platform.OS === 'web') {
     console.error(
       'This application does not currently support web due to the database infrastructure!',
@@ -14,6 +14,7 @@ export function GetDatabase() {
   }
 
   if (!_localDB) {
+    console.log('Established a new connection to the database');
     _localDB = SQLite.openDatabase('boss-master.db');
   }
 

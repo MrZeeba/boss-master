@@ -1,6 +1,6 @@
 import { BowType } from '../Enums/BowType';
-import { Equipment } from './Equipment';
 
-export class Bow extends Equipment {
+export class Bow {
+  id: number;
   type: BowType;
 }
