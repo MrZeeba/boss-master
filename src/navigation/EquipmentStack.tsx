@@ -16,11 +16,12 @@ export default function EquipmentStack() {
       <EquipmentStack.Screen
         name="EquipmentPage"
         component={EquipmentPage}
-        options={{ title: 'Bows' }}
+        options={{ title: 'Equipment' }}
       />
       <EquipmentStack.Screen
         name="EditEquipmentPage"
         component={EditEquipmentPage}
+        options={{ title: 'New Equipment' }}
       />
     </EquipmentStack.Navigator>
   );

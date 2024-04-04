@@ -4,10 +4,7 @@ import { BowType } from '../Enums/BowType';
 import { Bow } from '../models/Bow';
 import { ShootSession } from '../models/ShootSession';
 import { TruncateTable } from '../sqlite/LocalDb';
-import {
-  Create,
-  tableName as shootSessionsTableName,
-} from '../sqlite/ShootSessionsDb';
+import { ShootSessionsDb } from '../sqlite/ShootSessionsDb';
 
 export default function EditShootSessionPage() {
   const [sqlResultText, setSQLResultText] = useState('...');
@@ -31,7 +28,7 @@ export default function EditShootSessionPage() {
     const date = new Date().toISOString();
     session.dateShot = date;
 
-    Create(session, id => {
+    ShootSessionsDb.Create(session, id => {
       const resultString = `Session was inserted with id: ${id}`;
       console.log(resultString);
       setSQLResultText(resultString);
@@ -39,7 +36,7 @@ export default function EditShootSessionPage() {
   }
 
   async function TruncateTablePressed() {
-    TruncateTable(shootSessionsTableName, sqlResults => {
+    TruncateTable(ShootSessionsDb.tableName, sqlResults => {
       setSQLResultText(`${sqlResults} rows deleted`);
     });
   }

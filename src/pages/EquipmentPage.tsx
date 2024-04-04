@@ -4,7 +4,7 @@ The root stack for the equipment page
 import { Feather } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Button, Text, View } from 'react-native';
+import { Button, Text, TouchableOpacity, View } from 'react-native';
 import { Equipment } from '../models/Equipment';
 import { EquipmentDb } from '../sqlite/EquipmentDb';
 import { GetAll, TruncateTable } from '../sqlite/LocalDb';
@@ -26,13 +26,14 @@ export default function EquipmentPage({ navigation }) {
     // Use `setOptions` to setup the button
     navigation.setOptions({
       headerRight: () => (
-        <Feather
-          name="plus"
-          size={32}
-          color="black"
-          onPress={() => NewItemPressed()}
-          style={{ paddingRight: 20 }}
-        />
+        <TouchableOpacity onPress={() => NewItemPressed()}>
+          <Feather
+            name="plus"
+            size={32}
+            color="black"
+            style={{ marginRight: 20 }}
+          />
+        </TouchableOpacity>
       ),
     });
   }, [navigation]);
