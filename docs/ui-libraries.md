@@ -11,3 +11,7 @@ Installing libraries should be done via the `npx expo install <lib>` command. Th
 ## [Expo Vector Icons](https://icons.expo.fyi/Index)
 
 - Primarily this is where I get icons for the app
+
+## [React Hook Form](https://react-hook-form.com/get-started#TypeScript)
+
+Used for forms and submission

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Button, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
+import Button from '../Components/Button';
 import { BowType } from '../Enums/BowType';
 import { Bow } from '../models/Bow';
 import { ShootSession } from '../models/ShootSession';
@@ -11,8 +12,8 @@ export default function EditShootSessionPage() {
 
   return (
     <View>
-      <Button onPress={NewItemPressed} title="Add temp session data" />
-      <Button onPress={TruncateTablePressed} title="Truncate ALL data" />
+      <Button title="Add temp session data" onPress={NewItemPressed} />
+      <Button title="Truncate ALL data" onPress={TruncateTablePressed} />
       <Text>{sqlResultText}</Text>
     </View>
   );

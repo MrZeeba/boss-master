@@ -1,7 +1,10 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback } from 'react';
-import { Text, View } from 'react-native';
+import { Controller, useForm } from 'react-hook-form';
+import { Text, TextInput, View } from 'react-native';
 import Button from '../Components/Button';
+import { Bow } from '../models/Bow';
+import { styles } from '../styles';
 
 export function EditEquipmentPage({ route, navigation }) {
   const { id } = route.params;
@@ -12,11 +15,34 @@ export function EditEquipmentPage({ route, navigation }) {
     }, []),
   );
 
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<Bow>();
+
+  const onSubmit = handleSubmit(data => console.log(data));
+
+  console.log('errors', errors);
+
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>This items id is {id}</Text>
-      <Text>This is a modal!</Text>
-      <Button title="Leave this place" onPress={navigation.}/>
+    <View style={styles.formArea}>
+      <Text>Name</Text>
+      <Controller
+        control={control}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <TextInput
+            style={styles.textInput}
+            maxLength={25}
+            onBlur={onBlur}
+            onChangeText={value => onChange(value)}
+            value={value}
+          />
+        )}
+        name="name"
+        rules={{ required: true }}
+      />
+      <Button title="Save" onPress={onSubmit} />
     </View>
   );
 }
