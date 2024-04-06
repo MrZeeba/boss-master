@@ -4,7 +4,8 @@ The root stack for the equipment page
 import { Feather } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Button, Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
+import CustomButton from '../Components/CustomButton';
 import { Equipment } from '../models/Equipment';
 import { EquipmentDb } from '../sqlite/EquipmentDb';
 import { GetAll, TruncateTable } from '../sqlite/LocalDb';
@@ -56,7 +57,7 @@ export default function EquipmentPage({ navigation }) {
 
   return (
     <View>
-      <Button onPress={TruncateTablePressed} title="Truncate ALL data" />
+      <CustomButton onPress={TruncateTablePressed} title="Truncate ALL data" />
       {equipmentList.map(equipment => {
         return (
           <View key={equipment.id}>
