@@ -26,13 +26,6 @@ export const styles = StyleSheet.create({
     color: 'white',
   },
 
-  textInput: {
-    backgroundColor: 'white',
-    height: 40,
-    padding: 10,
-    borderRadius: 4,
-  },
-
   formArea: {
     margin: 10,
   },

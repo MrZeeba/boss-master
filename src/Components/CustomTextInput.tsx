@@ -1,6 +1,5 @@
 import { Control, Controller } from 'react-hook-form';
-import { TextInput, View } from 'react-native';
-import { styles } from '../styles';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 
 interface CustomTextInputProps {
   control: Control<any, any>;
@@ -8,6 +7,7 @@ interface CustomTextInputProps {
   placeholder?: string;
   secureTextEntry?: boolean;
   maxLength?: number;
+  rules: object;
 }
 
 /*
@@ -17,26 +17,57 @@ export default function CustomTextInput({
   control,
   name,
   placeholder,
-  secureTextEntry,
+  secureTextEntry = false,
   maxLength,
+  rules = {},
 }: CustomTextInputProps) {
   return (
-    <View>
-      <Controller
-        control={control}
-        name={name}
-        render={({ field: { onChange, onBlur } }) => (
-          <TextInput
-            style={styles.textInput}
-            maxLength={maxLength}
-            onBlur={onBlur}
-            onChangeText={onChange}
-            placeholder={placeholder}
-            secureTextEntry={secureTextEntry}
-          />
-        )}
-        rules={{ required: true }}
-      />
-    </View>
+    <Controller
+      control={control}
+      name={name}
+      rules={rules}
+      render={({ field: { onChange, onBlur }, fieldState: { error } }) => (
+        <>
+          <View
+            style={[
+              styles.container,
+              { borderColor: error ? 'red' : styles.container.borderColor },
+            ]}>
+            <TextInput
+              style={styles.input}
+              maxLength={maxLength}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              placeholder={placeholder}
+              secureTextEntry={secureTextEntry}
+            />
+          </View>
+          {error && (
+            <Text style={styles.inputErrorMessage}>
+              {error.message ?? 'Error'}
+            </Text>
+          )}
+        </>
+      )}
+    />
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'white',
+    borderColor: 'lightgrey',
+    borderWidth: 1,
+    borderRadius: 4,
+  },
+
+  input: {
+    height: 40,
+    padding: 10,
+  },
+
+  inputErrorMessage: {
+    color: 'red',
+    alignSelf: 'stretch',
+  },
+});
