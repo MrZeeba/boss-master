@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Text, View } from 'react-native';
-import Button from '../Components/Button';
+import Button from '../Components/CustomButton';
 import { BowType } from '../Enums/BowType';
 import { Bow } from '../models/Bow';
 import { ShootSession } from '../models/ShootSession';
