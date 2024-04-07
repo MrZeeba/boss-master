@@ -11,10 +11,10 @@ export const EquipmentDb: DbTable<Equipment> = {
     db.transaction(tx => {
       tx.executeSql(
         `CREATE TABLE IF NOT EXISTS ${this.tableName} 
-              (id INTEGER PRIMARY KEY AUTOINCREMENT, 
-               name TEXT,
-               type TEXT
-               )`,
+            (id INTEGER PRIMARY KEY AUTOINCREMENT, 
+             name TEXT,
+             type TEXT
+             )`,
         undefined,
         (_, result) => {
           console.log(`Validate ${this.tableName}: SUCCESS`);
@@ -37,6 +37,34 @@ export const EquipmentDb: DbTable<Equipment> = {
         (_, error) => {
           console.warn(error);
           callback(undefined);
+          return false;
+        },
+      );
+    });
+  },
+
+  Delete(
+    id: number,
+    callback: (result: { errors: string; recordsDeleted: number }) => void,
+  ) {
+    console.log('Attempting to delete record with id', { id });
+    const db = GetDatabase();
+
+    db.transaction(tx => {
+      tx.executeSql(
+        `DELETE FROM ${this.tableName} WHERE ID = ?`,
+        [id],
+        (_, resultSet) => {
+          callback({
+            errors: '',
+            recordsDeleted: resultSet.rowsAffected,
+          });
+        },
+        (_, error) => {
+          callback({
+            errors: error.message,
+            recordsDeleted: 0,
+          });
           return false;
         },
       );

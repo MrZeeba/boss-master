@@ -1,9 +1,17 @@
 import { Control, Controller } from 'react-hook-form';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import {
+  InputModeOptions,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 
 interface CustomTextInputProps {
   control: Control<any, any>;
   name: string;
+  labelText: string;
+  inputMode: InputModeOptions;
   placeholder?: string;
   secureTextEntry?: boolean;
   maxLength?: number;
@@ -16,7 +24,9 @@ A custom text input which uses react-hook-form and wraps away some of the comple
 export default function CustomTextInput({
   control,
   name,
+  labelText,
   placeholder,
+  inputMode = 'text',
   secureTextEntry = false,
   maxLength,
   rules = {},
@@ -33,9 +43,11 @@ export default function CustomTextInput({
               styles.container,
               { borderColor: error ? 'red' : styles.container.borderColor },
             ]}>
+            <Text>{labelText}</Text>
             <TextInput
               style={styles.input}
               maxLength={maxLength}
+              inputMode={inputMode}
               onBlur={onBlur}
               onChangeText={onChange}
               placeholder={placeholder}

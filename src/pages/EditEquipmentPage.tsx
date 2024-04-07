@@ -1,11 +1,10 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Alert, Text, View } from 'react-native';
+import { Alert, View } from 'react-native';
 import Button from '../Components/CustomButton';
 import CustomTextInput from '../Components/CustomTextInput';
-import { Bow } from '../models/Bow';
-import { EquipmentDb } from '../sqlite/EquipmentDb';
+import { Equipment } from '../models/Equipment';
 import { styles } from '../styles';
 
 export function EditEquipmentPage({ route, navigation }) {
@@ -27,7 +26,7 @@ export function EditEquipmentPage({ route, navigation }) {
     handleSubmit,
     control,
     formState: { isDirty, errors },
-  } = useForm<Bow>();
+  } = useForm<Equipment>();
 
   console.log(`is the form dirty ${isDirty}`);
   console.log(errors);
@@ -54,7 +53,6 @@ export function EditEquipmentPage({ route, navigation }) {
             // If the user confirmed, then we dispatch the action we blocked earlier
             // This will continue the action that had triggered the removal of the screen
             onPress: () => {
-              EquipmentDb.Delete(id);
               navigation.dispatch(leaveData.data.action);
             },
           },
@@ -66,11 +64,12 @@ export function EditEquipmentPage({ route, navigation }) {
 
   return (
     <View style={styles.formArea}>
-      <Text>Name</Text>
       <CustomTextInput
         name="name"
+        labelText="Name"
         control={control}
         placeholder="A name for your bow i.e. Hoyt Matrix"
+        inputMode="text"
         maxLength={maxNameLength}
         rules={{
           required: 'A name is required',
