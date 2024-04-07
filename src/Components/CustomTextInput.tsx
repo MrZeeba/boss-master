@@ -6,6 +6,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
+import { globalStyles } from '../globalStyles';
 
 interface CustomTextInputProps {
   control: Control<any, any>;
@@ -38,14 +39,14 @@ export default function CustomTextInput({
       rules={rules}
       render={({ field: { onChange, onBlur }, fieldState: { error } }) => (
         <>
-          <View
-            style={[
-              styles.container,
-              { borderColor: error ? 'red' : styles.container.borderColor },
-            ]}>
+          <View style={globalStyles.pageContainer}>
             <Text>{labelText}</Text>
             <TextInput
-              style={styles.input}
+              style={[
+                globalStyles.container,
+                styles.input,
+                { borderColor: error ? 'red' : styles.input.borderColor },
+              ]}
               maxLength={maxLength}
               inputMode={inputMode}
               onBlur={onBlur}
@@ -66,16 +67,10 @@ export default function CustomTextInput({
 }
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: 'white',
-    borderColor: 'lightgrey',
-    borderWidth: 1,
-    borderRadius: 4,
-  },
-
   input: {
     height: 40,
-    padding: 10,
+    borderColor: 'lightgrey',
+    borderWidth: 1,
   },
 
   inputErrorMessage: {

@@ -6,7 +6,6 @@ import Button from '../Components/CustomButton';
 import CustomTextInput from '../Components/CustomTextInput';
 import { Equipment } from '../models/Equipment';
 import { EquipmentDb } from '../sqlite/EquipmentDb';
-import { styles } from '../styles';
 
 export function EditEquipmentPage({ navigation }) {
   const maxNameLength: number = 25;
@@ -69,7 +68,7 @@ export function EditEquipmentPage({ navigation }) {
   }
 
   return (
-    <View style={styles.formArea}>
+    <View>
       <CustomTextInput
         name="name"
         labelText="Name"

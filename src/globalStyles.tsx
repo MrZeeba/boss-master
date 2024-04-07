@@ -1,8 +1,22 @@
 import { StyleSheet } from 'react-native';
 
-export const styles = StyleSheet.create({
+export const globalStyles = StyleSheet.create({
   primaryColour: {
     backgroundColor: 'green',
+  },
+
+  pageContainer: {
+    marginTop: 5,
+    marginBottom: 5,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+
+  container: {
+    backgroundColor: 'white',
+    padding: 5,
+    elevation: 2,
+    borderRadius: 4,
   },
 
   button: {

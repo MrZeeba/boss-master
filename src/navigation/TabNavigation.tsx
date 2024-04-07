@@ -1,10 +1,10 @@
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { globalStyles } from '../globalStyles';
 import EditShootSession from '../pages/EditShootSessionPage';
 import HistoryPage from '../pages/HistoryPage';
 import ProfilePage from '../pages/ProfilePage';
 import SettingsPage from '../pages/SettingsPage';
-import { styles } from '../styles';
 import EquipmentStack from './EquipmentStack';
 
 const Tab = createBottomTabNavigator();
@@ -15,7 +15,7 @@ export default function TabNavigation() {
     <Tab.Navigator
       screenOptions={{
         tabBarShowLabel: false,
-        tabBarActiveTintColor: styles.primaryColour.backgroundColor,
+        tabBarActiveTintColor: globalStyles.primaryColour.backgroundColor,
         tabBarLabelStyle: {
           fontSize: 16,
         },

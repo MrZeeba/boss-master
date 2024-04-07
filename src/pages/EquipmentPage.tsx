@@ -4,8 +4,9 @@ The root stack for the equipment page
 import { Feather } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, TouchableOpacity, View } from 'react-native';
 import CustomButton from '../Components/CustomButton';
+import CustomCard from '../Components/CustomCard';
 import { Equipment } from '../models/Equipment';
 import { EquipmentDb } from '../sqlite/EquipmentDb';
 import { GetAll, TruncateTable } from '../sqlite/LocalDb';
@@ -52,10 +53,11 @@ export default function EquipmentPage({ navigation }) {
       {equipmentList.map(equipment => {
         return (
           <ScrollView key={equipment.id}>
-            <View>
-              <Text>{equipment.id}</Text>
-              <Text>{equipment.name}</Text>
-            </View>
+            <CustomCard
+              heading={equipment.name}
+              fieldOne={equipment.id.toString()}
+              fieldTwo="foo"
+            />
           </ScrollView>
         );
       })}
