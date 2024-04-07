@@ -5,11 +5,10 @@ import { Alert, View } from 'react-native';
 import Button from '../Components/CustomButton';
 import CustomTextInput from '../Components/CustomTextInput';
 import { Equipment } from '../models/Equipment';
+import { EquipmentDb } from '../sqlite/EquipmentDb';
 import { styles } from '../styles';
 
-export function EditEquipmentPage({ route, navigation }) {
-  const { id } = route.params;
-
+export function EditEquipmentPage({ navigation }) {
   const maxNameLength: number = 25;
 
   useFocusEffect(
@@ -25,7 +24,7 @@ export function EditEquipmentPage({ route, navigation }) {
   const {
     handleSubmit,
     control,
-    formState: { isDirty, errors },
+    formState: { isDirty, errors, isValid },
   } = useForm<Equipment>();
 
   console.log(`is the form dirty ${isDirty}`);
@@ -33,12 +32,19 @@ export function EditEquipmentPage({ route, navigation }) {
 
   function SavePressed(data) {
     console.log(data);
-    console.log(id);
     //const bow = new Bow(id, data);
+
+    const equipment = new Equipment();
+    equipment.name = data.name;
+
+    EquipmentDb.Create(equipment, id => {
+      console.log(`New equipment created with id ${id}`);
+      navigation.goBack();
+    });
   }
 
   function CancelPressed(leaveData) {
-    if (isDirty) {
+    if (isDirty && !isValid) {
       leaveData.preventDefault();
 
       // Prompt the user before leaving the screen
@@ -81,6 +87,16 @@ export function EditEquipmentPage({ route, navigation }) {
             value: maxNameLength,
             message: `Name must be no more than ${maxNameLength} characters`,
           },
+        }}
+      />
+      <CustomTextInput
+        name="drawweight"
+        labelText="Draw Weight (lbs)"
+        control={control}
+        placeholder="The draw weight/poundage of this bow"
+        inputMode="numeric"
+        rules={{
+          required: 'A draw weight is required',
         }}
       />
       <Button title="Save" onPress={handleSubmit(SavePressed)} />
