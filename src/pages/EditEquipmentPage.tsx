@@ -9,7 +9,7 @@ import { EquipmentDb } from '../sqlite/EquipmentDb';
 
 export function EditEquipmentPage({ navigation }) {
   const maxNameLength: number = 25;
-  const [isSaved, setIsSaved] = useState(false);
+  const [savePressed, setSavePressed] = useState(false);
 
   useFocusEffect(
     useCallback(() => {
@@ -25,12 +25,13 @@ export function EditEquipmentPage({ navigation }) {
 
   useEffect(
     () => navigation.addListener('beforeRemove', e => BeforeLeave(e)),
-    [isDirty, isSaved],
+    [isDirty, savePressed],
   );
 
   console.log(errors);
 
   function SavePressed(data) {
+    setSavePressed(true);
     console.log(data);
     //const bow = new Bow(id, data);
 
@@ -39,17 +40,13 @@ export function EditEquipmentPage({ navigation }) {
 
     EquipmentDb.Create(equipment, id => {
       console.log(`New equipment created with id ${id}`);
-      setIsSaved(true);
-      console.log(`Save state is ${isSaved}`);
       navigation.goBack();
     });
   }
 
   function BeforeLeave(leaveData) {
-    console.log(`is the form dirty ${isDirty}`);
     //Only prevent leaving if the user wasn't attempting a save action
-    console.log(`is the form saved ${isSaved}`);
-    if (isDirty && !isSaved) {
+    if (isDirty && !savePressed) {
       leaveData.preventDefault();
 
       // Prompt the user before leaving the screen
