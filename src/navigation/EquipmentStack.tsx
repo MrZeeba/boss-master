@@ -21,7 +21,7 @@ export default function EquipmentStack() {
       <EquipmentStack.Screen
         name="EditEquipmentPage"
         component={EditEquipmentPage}
-        options={{ title: 'New Equipment' }}
+        options={{ title: 'Create Bow' }}
       />
     </EquipmentStack.Navigator>
   );

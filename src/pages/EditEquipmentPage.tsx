@@ -3,7 +3,10 @@ import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Alert, View } from 'react-native';
 import Button from '../Components/CustomButton';
+import CustomPicker from '../Components/CustomPicker';
 import CustomTextInput from '../Components/CustomTextInput';
+import { EquipmentType } from '../Enums/EquipmentType';
+import { Bow } from '../models/Bow';
 import { Equipment } from '../models/Equipment';
 import { EquipmentDb } from '../sqlite/EquipmentDb';
 
@@ -36,7 +39,10 @@ export function EditEquipmentPage({ navigation }) {
     //const bow = new Bow(id, data);
 
     const equipment = new Equipment();
+    equipment.type = EquipmentType.Bow;
     equipment.name = data.name;
+
+    const bow = new Bow();
 
     EquipmentDb.Create(equipment, id => {
       console.log(`New equipment created with id ${id}`);
@@ -71,6 +77,13 @@ export function EditEquipmentPage({ navigation }) {
 
   return (
     <View>
+      <CustomPicker
+        name="bowType"
+        labelText="Type"
+        data={['hello', 'goodbye']}
+        control={control}
+        rules={{ required: 'A type of bow is required' }}
+      />
       <CustomTextInput
         name="name"
         labelText="Name"
