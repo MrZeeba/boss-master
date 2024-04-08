@@ -1,4 +1,5 @@
 import { Feather } from '@expo/vector-icons';
+import { useState } from 'react';
 import { Control, Controller } from 'react-hook-form';
 import { StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -21,6 +22,8 @@ export default function CustomPicker({
   labelText,
   rules = {},
 }: CustomTextInputProps) {
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+
   return (
     <Controller
       control={control}
@@ -30,7 +33,8 @@ export default function CustomPicker({
         <>
           <View style={globalStyles.pageContainer}>
             <Text>{labelText}</Text>
-            <TouchableOpacity onPress={Expand}>
+            <TouchableOpacity
+              onPress={() => setDropdownVisible(!dropdownVisible)}>
               <View
                 id="picker-container"
                 style={[
@@ -40,10 +44,15 @@ export default function CustomPicker({
                 ]}>
                 <Text>foo</Text>
                 <View style={styles.iconContainer}>
-                  <Feather name="chevrons-down" size={24} color="black" />
+                  {dropdownVisible ? (
+                    <Feather name="chevrons-up" size={24} color="black" />
+                  ) : (
+                    <Feather name="chevrons-down" size={24} color="black" />
+                  )}
                 </View>
               </View>
             </TouchableOpacity>
+            <Dropdown />
           </View>
           {error && (
             <Text style={styles.inputErrorMessage}>
@@ -55,8 +64,16 @@ export default function CustomPicker({
     />
   );
 
-  function Expand() {
-    console.log('Expanding');
+  function Dropdown() {
+    //switch chevrons
+    console.log(`drop down visible is currently`, dropdownVisible);
+    if (dropdownVisible) {
+      setDropdownVisible(true);
+      return <Text style={{ backgroundColor: 'red' }}>I was clicked!</Text>;
+    } else {
+      setDropdownVisible(false);
+      return null;
+    }
   }
 }
 
