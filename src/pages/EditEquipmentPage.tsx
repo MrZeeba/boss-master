@@ -80,7 +80,7 @@ export function EditEquipmentPage({ navigation }) {
       <CustomPicker
         name="bowType"
         labelText="Type"
-        data={['hello', 'goodbye']}
+        data={['hello', 'goodbye', 'ciao']}
         control={control}
         rules={{ required: 'A type of bow is required' }}
       />

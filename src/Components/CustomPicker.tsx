@@ -31,6 +31,7 @@ export default function CustomPicker({
   rules = {},
 }: CustomTextInputProps) {
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [selectedItem, setSelectedItem] = useState();
 
   if (defaultValue !== undefined) {
     if (!data.find(val => val === defaultValue))
@@ -58,7 +59,7 @@ export default function CustomPicker({
                   styles.picker,
                   { borderColor: error ? 'red' : styles.picker.borderColor },
                 ]}>
-                <Text>{defaultValue}</Text>
+                <Text>{selectedItem}</Text>
                 <View style={styles.iconContainer}>
                   <Feather
                     name={dropdownVisible ? 'chevrons-up' : 'chevrons-down'}
@@ -86,13 +87,17 @@ export default function CustomPicker({
       return (
         <View style={globalStyles.container}>
           {data.map((str, index) => (
-            <Text
-              key={index}
-              style={
-                index > 0 ? [styles.item, styles.upperItemBorder] : styles.item
-              }>
-              {str}
-            </Text>
+            <TouchableOpacity onPress={() => setSelectedItem(str)}>
+              <Text
+                key={index}
+                style={
+                  index > 0
+                    ? [styles.item, styles.upperItemBorder]
+                    : styles.item
+                }>
+                {str}
+              </Text>
+            </TouchableOpacity>
           ))}
         </View>
       );
