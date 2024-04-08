@@ -13,21 +13,18 @@ export default function CustomCard({
   fieldTwo,
 }: CustomCardProps) {
   return (
-    <View style={globalStyles.pageContainer}>
-      <View
-        style={[globalStyles.container, (style = { flexDirection: 'row' })]}>
-        <Image
-          id="image-thumbnail"
-          style={styles.thumbnail}
-          source={{
-            uri: 'https://upload.wikimedia.org/wikipedia/commons/8/87/Patrick_Stewart_by_Gage_Skidmore_2.jpg',
-          }}
-        />
-        <View id="middle-content">
-          <Text style={styles.cardHeading}>{heading}</Text>
-          <Text>{fieldOne}</Text>
-          <Text>{fieldTwo}</Text>
-        </View>
+    <View style={[styles.cardFlex, styles.cardContainer]}>
+      <Image
+        id="image-thumbnail"
+        style={styles.thumbnail}
+        source={{
+          uri: 'https://upload.wikimedia.org/wikipedia/commons/8/87/Patrick_Stewart_by_Gage_Skidmore_2.jpg',
+        }}
+      />
+      <View id="middle-content" style={globalStyles.pageContainer}>
+        <Text style={styles.cardHeading}>{heading}</Text>
+        <Text>{fieldOne}</Text>
+        <Text>{fieldTwo}</Text>
       </View>
     </View>
   );
@@ -36,13 +33,19 @@ export default function CustomCard({
 const styles = StyleSheet.create({
   cardHeading: {
     fontWeight: 'bold',
-    flex: 0.5,
+  },
+
+  cardContainer: {
+    marginTop: 5,
+    marginBottom: 5,
+    backgroundColor: 'white',
+  },
+
+  cardFlex: {
+    flexDirection: 'row',
   },
 
   thumbnail: {
-    flex: 0.3,
-    width: 50,
-    height: 50,
-    borderRadius: 40,
+    width: 100,
   },
 });
