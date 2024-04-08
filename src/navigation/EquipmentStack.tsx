@@ -2,6 +2,7 @@
 The root stack for the equipment page
 */
 import { createStackNavigator } from '@react-navigation/stack';
+import CustomBackButton from '../Components/CustomBackButton';
 import { EditEquipmentPage } from '../pages/EditEquipmentPage';
 import EquipmentPage from '../pages/EquipmentPage';
 
@@ -21,7 +22,10 @@ export default function EquipmentStack() {
       <EquipmentStack.Screen
         name="EditEquipmentPage"
         component={EditEquipmentPage}
-        options={{ title: 'New Equipment' }}
+        options={({ navigation }) => ({
+          title: 'New Equipment',
+          headerLeft: () => <CustomBackButton navigation={navigation} />,
+        })}
       />
     </EquipmentStack.Navigator>
   );
