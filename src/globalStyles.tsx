@@ -1,8 +1,9 @@
 import { StyleSheet } from 'react-native';
+import { globalColours } from './globalColours';
 
 export const globalStyles = StyleSheet.create({
   primaryColour: {
-    backgroundColor: 'green',
+    backgroundColor: globalColours.primary,
   },
 
   pageContainer: {
@@ -28,7 +29,7 @@ export const globalStyles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 4,
     elevation: 3,
-    backgroundColor: 'green',
+    backgroundColor: globalColours.primary,
   },
 
   text: {

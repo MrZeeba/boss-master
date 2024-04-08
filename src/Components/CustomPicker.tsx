@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Control, Controller } from 'react-hook-form';
 import { StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { globalColours } from '../globalColours';
 import { globalStyles } from '../globalStyles';
 
 interface CustomTextInputProps {
@@ -10,7 +11,12 @@ interface CustomTextInputProps {
   name: string;
   labelText: string;
   data: string[];
+  defaultValue?: string;
   rules: object;
+}
+
+interface DataProps {
+  data: string[];
 }
 
 /*
@@ -20,9 +26,19 @@ export default function CustomPicker({
   control,
   name,
   labelText,
+  data,
+  defaultValue,
   rules = {},
 }: CustomTextInputProps) {
   const [dropdownVisible, setDropdownVisible] = useState(false);
+
+  if (defaultValue !== undefined) {
+    if (!data.find(val => val === defaultValue))
+      console.error(
+        'Data values passed into Custom Picker do contain default value',
+        defaultValue,
+      );
+  }
 
   return (
     <Controller
@@ -42,17 +58,17 @@ export default function CustomPicker({
                   styles.picker,
                   { borderColor: error ? 'red' : styles.picker.borderColor },
                 ]}>
-                <Text>foo</Text>
+                <Text>{defaultValue}</Text>
                 <View style={styles.iconContainer}>
-                  {dropdownVisible ? (
-                    <Feather name="chevrons-up" size={24} color="black" />
-                  ) : (
-                    <Feather name="chevrons-down" size={24} color="black" />
-                  )}
+                  <Feather
+                    name={dropdownVisible ? 'chevrons-up' : 'chevrons-down'}
+                    size={24}
+                    color="black"
+                  />
                 </View>
               </View>
             </TouchableOpacity>
-            <Dropdown />
+            <Dropdown data={data} />
           </View>
           {error && (
             <Text style={styles.inputErrorMessage}>
@@ -64,12 +80,22 @@ export default function CustomPicker({
     />
   );
 
-  function Dropdown() {
-    //switch chevrons
-    console.log(`drop down visible is currently`, dropdownVisible);
+  function Dropdown({ data }: DataProps) {
     if (dropdownVisible) {
       setDropdownVisible(true);
-      return <Text style={{ backgroundColor: 'red' }}>I was clicked!</Text>;
+      return (
+        <View style={globalStyles.container}>
+          {data.map((str, index) => (
+            <Text
+              key={index}
+              style={
+                index > 0 ? [styles.item, styles.upperItemBorder] : styles.item
+              }>
+              {str}
+            </Text>
+          ))}
+        </View>
+      );
     } else {
       setDropdownVisible(false);
       return null;
@@ -83,8 +109,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center', //Alignts in one axix (v)
     height: 40,
-    borderColor: 'lightgrey',
+    borderColor: globalColours.border,
     borderWidth: 1,
+  },
+
+  item: {
+    paddingTop: 10,
+    paddingBottom: 10,
+  },
+
+  upperItemBorder: {
+    borderTopWidth: 1,
+    borderColor: globalColours.separator,
   },
 
   iconContainer: {

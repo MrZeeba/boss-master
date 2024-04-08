@@ -6,6 +6,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
+import { globalColours } from '../globalColours';
 import { globalStyles } from '../globalStyles';
 
 interface CustomTextInputProps {
@@ -45,7 +46,11 @@ export default function CustomTextInput({
               style={[
                 globalStyles.container,
                 styles.input,
-                { borderColor: error ? 'red' : styles.input.borderColor },
+                {
+                  borderColor: error
+                    ? globalColours.errorBorder
+                    : styles.input.borderColor,
+                },
               ]}
               maxLength={maxLength}
               inputMode={inputMode}
@@ -69,12 +74,12 @@ export default function CustomTextInput({
 const styles = StyleSheet.create({
   input: {
     height: 40,
-    borderColor: 'lightgrey',
+    borderColor: globalColours.border,
     borderWidth: 1,
   },
 
   inputErrorMessage: {
-    color: 'red',
+    color: globalColours.errorBorder,
     alignSelf: 'stretch',
   },
 });
