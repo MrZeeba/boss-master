@@ -31,7 +31,7 @@ export default function CustomPicker({
   rules = {},
 }: CustomTextInputProps) {
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const [selectedItem, setSelectedItem] = useState();
+  const [selectedItem, setSelectedItem] = useState('');
 
   if (defaultValue !== undefined) {
     if (!data.find(val => val === defaultValue))
@@ -87,9 +87,13 @@ export default function CustomPicker({
       return (
         <View style={globalStyles.container}>
           {data.map((str, index) => (
-            <TouchableOpacity onPress={() => setSelectedItem(str)}>
+            <TouchableOpacity
+              key={index}
+              onPress={() => {
+                setSelectedItem(str);
+                setDropdownVisible(false);
+              }}>
               <Text
-                key={index}
                 style={
                   index > 0
                     ? [styles.item, styles.upperItemBorder]
