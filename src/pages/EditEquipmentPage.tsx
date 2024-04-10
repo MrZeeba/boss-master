@@ -5,6 +5,7 @@ import { Alert, View } from 'react-native';
 import Button from '../Components/CustomButton';
 import CustomPicker from '../Components/CustomPicker';
 import CustomTextInput from '../Components/CustomTextInput';
+import { BowType } from '../Enums/BowType';
 import { EquipmentType } from '../Enums/EquipmentType';
 import { Bow } from '../models/Bow';
 import { Equipment } from '../models/Equipment';
@@ -80,7 +81,7 @@ export function EditEquipmentPage({ navigation }) {
       <CustomPicker
         name="bowType"
         labelText="Type"
-        data={['hello', 'goodbye', 'ciao']}
+        data={Object.keys(BowType)}
         control={control}
         rules={{ required: 'A type of bow is required' }}
       />

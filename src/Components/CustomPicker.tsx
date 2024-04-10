@@ -41,6 +41,11 @@ export default function CustomPicker({
       );
   }
 
+  function handleSelect(item: string): void {
+    setSelectedItem(item);
+    setDropdownVisible(false);
+  }
+
   return (
     <Controller
       control={control}
@@ -69,7 +74,9 @@ export default function CustomPicker({
                 </View>
               </View>
             </TouchableOpacity>
-            <Dropdown data={data} />
+            {dropdownVisible && (
+              <Dropdown data={data} onSelect={handleSelect} />
+            )}
           </View>
           {error && (
             <Text style={styles.inputErrorMessage}>
@@ -81,34 +88,30 @@ export default function CustomPicker({
     />
   );
 
-  function Dropdown({ data }: DataProps) {
-    if (dropdownVisible) {
-      setDropdownVisible(true);
-      return (
-        <View style={globalStyles.container}>
-          {data.map((str, index) => (
-            <TouchableOpacity
-              key={index}
-              onPress={() => {
-                setSelectedItem(str);
-                setDropdownVisible(false);
-              }}>
-              <Text
-                style={
-                  index > 0
-                    ? [styles.item, styles.upperItemBorder]
-                    : styles.item
-                }>
-                {str}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-      );
-    } else {
-      setDropdownVisible(false);
-      return null;
-    }
+  //onSelect is a function we pass in. This function uses the intersect operator (&) to take in onSelect too
+  function Dropdown({
+    data,
+    onSelect,
+  }: DataProps & { onSelect: (item: string) => void }) {
+    return (
+      <View style={globalStyles.container}>
+        {data.map((str, index) => (
+          <TouchableOpacity
+            key={index}
+            onPress={() => {
+              onSelect(str);
+              setSelectedItem(str);
+            }}>
+            <Text
+              style={
+                index > 0 ? [styles.item, styles.upperItemBorder] : styles.item
+              }>
+              {str}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+    );
   }
 }
 
