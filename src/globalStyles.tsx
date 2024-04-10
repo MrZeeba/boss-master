@@ -13,6 +13,11 @@ export const globalStyles = StyleSheet.create({
     marginRight: 10,
   },
 
+  text: {
+    fontSize: 15,
+    lineHeight: 1.2,
+  },
+
   container: {
     backgroundColor: 'white',
     padding: 5,
@@ -32,7 +37,7 @@ export const globalStyles = StyleSheet.create({
     backgroundColor: globalColours.primary,
   },
 
-  text: {
+  buttonText: {
     fontSize: 16,
     lineHeight: 21,
     fontWeight: 'bold',

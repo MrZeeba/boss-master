@@ -10,13 +10,13 @@ interface CustomTextInputProps {
   control: Control<any, any>;
   name: string;
   labelText: string;
-  data: string[];
+  data: Map<string, string | number>;
   defaultValue?: string;
   rules: object;
 }
 
 interface DataProps {
-  data: string[];
+  data: Map<string, string | number>;
 }
 
 /*
@@ -34,12 +34,14 @@ export default function CustomPicker({
   const [selectedItem, setSelectedItem] = useState('');
 
   if (defaultValue !== undefined) {
-    if (!data.find(val => val === defaultValue))
+    if (!data.has(defaultValue))
       console.error(
         'Data values passed into Custom Picker do contain default value',
         defaultValue,
       );
   }
+
+  console.log('passed in data was', data);
 
   function handleSelect(item: string): void {
     setSelectedItem(item);
@@ -95,18 +97,19 @@ export default function CustomPicker({
   }: DataProps & { onSelect: (item: string) => void }) {
     return (
       <View style={globalStyles.container}>
-        {data.map((str, index) => (
+        {[...data.entries()].map(([value, key]) => (
           <TouchableOpacity
-            key={index}
+            key={key}
             onPress={() => {
-              onSelect(str);
-              setSelectedItem(str);
+              onSelect(value.toString());
             }}>
             <Text
               style={
-                index > 0 ? [styles.item, styles.upperItemBorder] : styles.item
+                (key as number) > 0
+                  ? [styles.item, styles.upperItemBorder]
+                  : styles.item //First item should not have an upper border
               }>
-              {str}
+              {value}
             </Text>
           </TouchableOpacity>
         ))}

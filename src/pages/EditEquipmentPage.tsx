@@ -1,12 +1,14 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Alert, View } from 'react-native';
+import { Alert, Image, StyleSheet, View } from 'react-native';
 import Button from '../Components/CustomButton';
+import CustomNotesInput from '../Components/CustomNotesInput';
 import CustomPicker from '../Components/CustomPicker';
 import CustomTextInput from '../Components/CustomTextInput';
 import { BowType } from '../Enums/BowType';
 import { EquipmentType } from '../Enums/EquipmentType';
+import EnumToMap from '../Enums/Helper';
 import { Bow } from '../models/Bow';
 import { Equipment } from '../models/Equipment';
 import { EquipmentDb } from '../sqlite/EquipmentDb';
@@ -78,10 +80,16 @@ export function EditEquipmentPage({ navigation }) {
 
   return (
     <View>
+      <View style={styles.imageContainer}>
+        <Image
+          style={styles.image}
+          source={require('../../assets/bow_placeholder.png')}
+        />
+      </View>
       <CustomPicker
         name="bowType"
         labelText="Type"
-        data={Object.keys(BowType)}
+        data={EnumToMap(BowType)}
         control={control}
         rules={{ required: 'A type of bow is required' }}
       />
@@ -114,7 +122,36 @@ export function EditEquipmentPage({ navigation }) {
           required: 'A draw weight is required',
         }}
       />
+      <CustomNotesInput
+        name="notes"
+        labelText="Notes"
+        control={control}
+        maxLength={250}
+        placeholder="Notes about this piece of equipment"
+      />
       <Button title="Save" onPress={handleSubmit(SavePressed)} />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  image: {
+    //tintColor: globalColours.primary,
+    //backgroundColor: 'blue',
+    //Undo scale from container to prevent image distortion
+    transform: [{ scaleX: 0.5 }],
+    alignSelf: 'center',
+    flex: 1,
+    width: '50%',
+    height: '50%',
+  },
+
+  imageContainer: {
+    borderBottomLeftRadius: 200,
+    borderBottomRightRadius: 200,
+    overflow: 'hidden',
+    height: 200,
+    transform: [{ scaleX: 2 }],
+    backgroundColor: 'darkgrey',
+  },
+});

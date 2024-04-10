@@ -1,11 +1,5 @@
 import { Control, Controller } from 'react-hook-form';
-import {
-  InputModeOptions,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { globalColours } from '../globalColours';
 import { globalStyles } from '../globalStyles';
 
@@ -13,26 +7,31 @@ interface CustomTextInputProps {
   control: Control<any, any>;
   name: string;
   labelText: string;
-  inputMode?: InputModeOptions;
   placeholder?: string;
-  secureTextEntry?: boolean;
   maxLength?: number;
+  maxLines?: number;
   rules?: object;
 }
 
 /*
-A custom text input which uses react-hook-form and wraps away some of the complexity it involves
+A custom note input which uses react-hook-form and wraps away some of the complexity it involves
 */
-export default function CustomTextInput({
+export default function CustomNotesInput({
   control,
   name,
   labelText,
   placeholder,
-  inputMode = 'text',
-  secureTextEntry = false,
   maxLength,
+  maxLines = 5,
   rules = {},
 }: CustomTextInputProps) {
+  const calculateHeight = () => {
+    return {
+      height:
+        maxLines * globalStyles.text.lineHeight * globalStyles.text.fontSize,
+    };
+  };
+
   return (
     <Controller
       control={control}
@@ -44,6 +43,7 @@ export default function CustomTextInput({
             <Text>{labelText}</Text>
             <TextInput
               style={[
+                calculateHeight(),
                 globalStyles.container,
                 styles.input,
                 {
@@ -52,12 +52,12 @@ export default function CustomTextInput({
                     : styles.input.borderColor,
                 },
               ]}
+              multiline
+              numberOfLines={maxLines}
               maxLength={maxLength}
-              inputMode={inputMode}
               onBlur={onBlur}
               onChangeText={onChange}
               placeholder={placeholder}
-              secureTextEntry={secureTextEntry}
             />
           </View>
           {error && (
@@ -73,9 +73,9 @@ export default function CustomTextInput({
 
 const styles = StyleSheet.create({
   input: {
-    height: 40,
     borderColor: globalColours.border,
     borderWidth: 1,
+    verticalAlign: 'top',
   },
 
   inputErrorMessage: {
