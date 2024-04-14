@@ -12,6 +12,7 @@ interface CustomTextInputProps {
   labelText: string;
   data: Map<string, string | number>;
   defaultValue?: string;
+  onSelect?: (value: string) => void;
   rules: object;
 }
 
@@ -28,6 +29,7 @@ export default function CustomPicker({
   labelText,
   data,
   defaultValue,
+  onSelect,
   rules = {},
 }: CustomTextInputProps) {
   const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -46,6 +48,8 @@ export default function CustomPicker({
   function handleSelect(item: string): void {
     setSelectedItem(item);
     setDropdownVisible(false);
+    //Call any subscribers to the exposed onchange method
+    onSelect?.(item);
   }
 
   return (
@@ -53,7 +57,7 @@ export default function CustomPicker({
       control={control}
       name={name}
       rules={rules}
-      render={({ field: { onChange, onBlur }, fieldState: { error } }) => (
+      render={({ field: { onChange }, fieldState: { error } }) => (
         <>
           <View style={globalStyles.pageContainer}>
             <Text>{labelText}</Text>
@@ -77,7 +81,11 @@ export default function CustomPicker({
               </View>
             </TouchableOpacity>
             {dropdownVisible && (
-              <Dropdown data={data} onSelect={handleSelect} />
+              <Dropdown
+                data={data}
+                onSelect={handleSelect}
+                hookOnChange={onChange}
+              />
             )}
           </View>
           {error && (
@@ -94,7 +102,10 @@ export default function CustomPicker({
   function Dropdown({
     data,
     onSelect,
-  }: DataProps & { onSelect: (item: string) => void }) {
+    hookOnChange,
+  }: DataProps & { onSelect: (item: string) => void } & {
+    hookOnChange: (...event: any[]) => void;
+  }) {
     return (
       <View style={globalStyles.container}>
         {[...data.entries()].map(([value, key]) => (
@@ -102,6 +113,8 @@ export default function CustomPicker({
             key={key}
             onPress={() => {
               onSelect(value.toString());
+              //To pass validation for react hook form
+              hookOnChange(value.toString());
             }}>
             <Text
               style={

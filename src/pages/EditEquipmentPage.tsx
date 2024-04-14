@@ -9,6 +9,7 @@ import CustomTextInput from '../Components/CustomTextInput';
 import { BowType } from '../Enums/BowType';
 import { EquipmentType } from '../Enums/EquipmentType';
 import EnumToMap from '../Enums/Helper';
+import { globalColours } from '../globalColours';
 import { Bow } from '../models/Bow';
 import { Equipment } from '../models/Equipment';
 import { EquipmentDb } from '../sqlite/EquipmentDb';
@@ -136,14 +137,12 @@ export function EditEquipmentPage({ navigation }) {
 
 const styles = StyleSheet.create({
   image: {
-    //tintColor: globalColours.primary,
+    tintColor: globalColours.primary,
     //backgroundColor: 'blue',
     //Undo scale from container to prevent image distortion
     transform: [{ scaleX: 0.5 }],
     alignSelf: 'center',
     flex: 1,
-    width: '50%',
-    height: '50%',
   },
 
   imageContainer: {
@@ -152,6 +151,6 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     height: 200,
     transform: [{ scaleX: 2 }],
-    backgroundColor: 'darkgrey',
+    backgroundColor: globalColours.secondary,
   },
 });
