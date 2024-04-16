@@ -3,12 +3,14 @@ import { globalStyles } from '../globalStyles';
 
 interface CustomCardProps {
   heading: string;
+  image: string;
   fieldOne: string;
   fieldTwo: string;
 }
 
 export default function CustomCard({
   heading,
+  image,
   fieldOne,
   fieldTwo,
 }: CustomCardProps) {
@@ -18,7 +20,7 @@ export default function CustomCard({
         id="image-thumbnail"
         style={styles.thumbnail}
         source={{
-          uri: 'https://upload.wikimedia.org/wikipedia/commons/8/87/Patrick_Stewart_by_Gage_Skidmore_2.jpg',
+          uri: image,
         }}
       />
       <View id="middle-content" style={globalStyles.pageContainer}>

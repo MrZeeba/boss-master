@@ -29,8 +29,8 @@ export const EquipmentDb: DbTable<Equipment> = {
 
     db.transaction(tx => {
       tx.executeSql(
-        `INSERT INTO ${this.tableName} (name) VALUES(?)`,
-        [equipment.name],
+        `INSERT INTO ${this.tableName} (name, type, image, notes) VALUES(?, ?, ?, ?)`,
+        [equipment.name, equipment.type, equipment.image, equipment.notes],
         (_, resultSet) => {
           callback(resultSet.insertId);
         },
