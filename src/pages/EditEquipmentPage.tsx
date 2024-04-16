@@ -1,15 +1,15 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Alert, Image, StyleSheet, View } from 'react-native';
+import { Alert, View } from 'react-native';
 import Button from '../Components/CustomButton';
+import CustomImagePicker from '../Components/CustomImagePicker';
 import CustomNotesInput from '../Components/CustomNotesInput';
 import CustomPicker from '../Components/CustomPicker';
 import CustomTextInput from '../Components/CustomTextInput';
 import { BowType } from '../Enums/BowType';
 import { EquipmentType } from '../Enums/EquipmentType';
 import EnumToMap from '../Enums/Helper';
-import { globalColours } from '../globalColours';
 import { Bow } from '../models/Bow';
 import { Equipment } from '../models/Equipment';
 import { EquipmentDb } from '../sqlite/EquipmentDb';
@@ -81,12 +81,9 @@ export function EditEquipmentPage({ navigation }) {
 
   return (
     <View>
-      <View style={styles.imageContainer}>
-        <Image
-          style={styles.image}
-          source={require('../../assets/bow_placeholder.png')}
-        />
-      </View>
+      <CustomImagePicker
+        placeholderSrc={require('../../assets/bow_placeholder.png')}
+      />
       <CustomPicker
         name="bowType"
         labelText="Type"
@@ -134,23 +131,3 @@ export function EditEquipmentPage({ navigation }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  image: {
-    tintColor: globalColours.primary,
-    //backgroundColor: 'blue',
-    //Undo scale from container to prevent image distortion
-    transform: [{ scaleX: 0.5 }],
-    alignSelf: 'center',
-    flex: 1,
-  },
-
-  imageContainer: {
-    borderBottomLeftRadius: 200,
-    borderBottomRightRadius: 200,
-    overflow: 'hidden',
-    height: 200,
-    transform: [{ scaleX: 2 }],
-    backgroundColor: globalColours.secondary,
-  },
-});

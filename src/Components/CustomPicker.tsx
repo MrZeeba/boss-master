@@ -43,8 +43,6 @@ export default function CustomPicker({
       );
   }
 
-  console.log('passed in data was', data);
-
   function handleSelect(item: string): void {
     setSelectedItem(item);
     setDropdownVisible(false);

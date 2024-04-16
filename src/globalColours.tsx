@@ -2,6 +2,6 @@ export const globalColours = {
   primary: 'green',
   border: 'lightgrey',
   separator: 'lightgrey',
-  secondary: 'darkgrey',
+  secondary: 'gold',
   errorBorder: 'red',
 };
