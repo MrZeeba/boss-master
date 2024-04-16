@@ -4,4 +4,6 @@ export class Bow {
   id: number;
   name: string;
   type: BowType;
+  length: number;
+  drawWeight: number;
 }

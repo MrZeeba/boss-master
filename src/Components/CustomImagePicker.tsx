@@ -1,6 +1,7 @@
 import { Feather } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { useState } from 'react';
+import { Control, Controller } from 'react-hook-form';
 import { Image, ImageStyle, StyleSheet, View } from 'react-native';
 import { globalColours } from '../globalColours';
 
@@ -14,6 +15,8 @@ export enum CustomImagePickerStyle {
 }
 
 interface CustomImagePickerProps {
+  name: string;
+  control: Control<any, any>;
   style?: ImageStyle;
   placeholderSrc?: number;
 }
@@ -24,12 +27,17 @@ style - is a css style object
 placeholderSrc - should be passed in via a 'require' statement
 */
 export default function CustomImagePicker({
+  name,
+  control,
   style,
   placeholderSrc,
 }: CustomImagePickerProps) {
   const [image, setImage] = useState<string>();
 
-  const pickImage = async () => {
+  const pickImage = async (
+    onChange: (value: string) => void,
+    onBlur: () => void,
+  ) => {
     // No permissions request is necessary for launching the image library
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -40,16 +48,32 @@ export default function CustomImagePicker({
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
+      onChange(result.assets[0].uri);
+      onBlur();
     }
   };
 
   return (
-    <View style={styles.imageContainer}>
-      {image ? renderImage() : renderPlaceholder(placeholderSrc)}
-    </View>
+    <Controller
+      name={name}
+      control={control}
+      render={({ field: { onChange, onBlur }, fieldState: { error } }) => (
+        <>
+          <View style={styles.imageContainer}>
+            {image
+              ? renderImage()
+              : renderPlaceholder(placeholderSrc, onChange, onBlur)}
+          </View>
+        </>
+      )}
+    />
   );
 
-  function renderPlaceholder(placeholderSrc: number | undefined) {
+  function renderPlaceholder(
+    placeholderSrc: number | undefined,
+    onChange: (value: string) => void,
+    onBlur: () => void,
+  ) {
     return (
       <>
         <Image
@@ -61,14 +85,13 @@ export default function CustomImagePicker({
           name="camera"
           size={150}
           color="darkgreen"
-          onPress={pickImage}
+          onPress={() => pickImage(onChange, onBlur)}
         />
       </>
     );
   }
 
   function renderImage() {
-    console.log(image);
     return <Image style={styles.image} source={{ uri: image }} />;
   }
 }

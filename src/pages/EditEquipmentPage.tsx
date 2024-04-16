@@ -20,7 +20,7 @@ export function EditEquipmentPage({ navigation }) {
 
   useFocusEffect(
     useCallback(() => {
-      console.log('User has focused add equipment modal');
+      //console.log('User has focused add equipment modal');
     }, []),
   );
 
@@ -35,16 +35,16 @@ export function EditEquipmentPage({ navigation }) {
     [isDirty, savePressed],
   );
 
-  console.log(errors);
-
   function SavePressed(data) {
     setSavePressed(true);
-    console.log(data);
+    console.log('DATA FROM FORM', data);
     //const bow = new Bow(id, data);
 
     const equipment = new Equipment();
     equipment.type = EquipmentType.Bow;
     equipment.name = data.name;
+    equipment.image = data.image;
+    equipment.notes = data.notes;
 
     const bow = new Bow();
 
@@ -82,6 +82,8 @@ export function EditEquipmentPage({ navigation }) {
   return (
     <View>
       <CustomImagePicker
+        name="image"
+        control={control}
         placeholderSrc={require('../../assets/bow_placeholder.png')}
       />
       <CustomPicker
