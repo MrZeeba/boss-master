@@ -5,13 +5,10 @@ import { Feather } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
 import { ScrollView, TouchableOpacity, View } from 'react-native';
-import CustomButton from '../Components/CustomButton';
 import CustomCard from '../Components/CustomCard';
 import { globalStyles } from '../globalStyles';
 import { Equipment } from '../models/Equipment';
-import { testBowData } from '../models/fixtures/test_bowdata';
-import { EquipmentDb } from '../sqlite/EquipmentDb';
-import { GetAll, TruncateTable } from '../sqlite/LocalDb';
+import { GetAll } from '../sqlite/LocalDb';
 
 /*
 Equipment is currently just a bow but may be expanded in the future
@@ -43,30 +40,13 @@ export default function EquipmentPage({ navigation }) {
     });
   }, [navigation]);
 
-  async function TruncateTablePressed() {
-    TruncateTable(EquipmentDb.tableName, sqlResults => {
-      console.log(`${sqlResults} rows deleted`);
-    });
-  }
-
-  async function InsertTestData() {
-    testBowData.forEach(value => {
-      const equipment = new Equipment();
-      equipment.name = value.name;
-      EquipmentDb.Create(equipment, id => {
-        console.log('Created new equipment with id', id);
-      });
-    });
-  }
-
   return (
     <View style={globalStyles.pageContainer}>
-      <CustomButton onPress={TruncateTablePressed} title="Truncate ALL data" />
-      <CustomButton onPress={InsertTestData} title="Insert test data" />
       {equipmentList.map(equipment => {
         return (
           <ScrollView key={equipment.id}>
             <CustomCard
+              image={equipment.image}
               heading={equipment.name}
               fieldOne={equipment.id.toString()}
               fieldTwo="foo"

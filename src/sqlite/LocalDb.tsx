@@ -26,6 +26,8 @@ Deletes an entire table including the structure of it
 */
 export function DropTable(
   tableName: string,
+  recreate: boolean = true,
+  validateFunction: () => void,
   callback: (success: boolean) => void,
 ) {
   const db = GetDatabase();
@@ -35,7 +37,7 @@ export function DropTable(
       `DROP TABLE IF EXISTS ${tableName}`,
       [],
       () => {
-        callback(true);
+        if (recreate) callback(validateFunction());
       },
       (_, error: SQLite.SQLError) => {
         console.error(`Error dropping table ${tableName}: ${error.message}`);

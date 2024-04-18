@@ -4,7 +4,7 @@ import { GetDatabase } from './LocalDb';
 export const EquipmentDb: DbTable<Equipment> = {
   tableName: 'equipment',
 
-  Validate() {
+  Validate(): boolean {
     console.log('Validating equipment schema');
     const db = GetDatabase();
 
@@ -13,14 +13,18 @@ export const EquipmentDb: DbTable<Equipment> = {
         `CREATE TABLE IF NOT EXISTS ${this.tableName} 
             (id INTEGER PRIMARY KEY AUTOINCREMENT, 
              name TEXT,
-             type TEXT
+             type TEXT,
+             image TEXT,
+             notes TEXT
              )`,
         undefined,
         (_, result) => {
           console.log(`Validate ${this.tableName}: SUCCESS`);
+          return true;
         },
       );
     });
+    return false;
   },
 
   Create(equipment: Equipment, callback: (id: number | undefined) => void) {
