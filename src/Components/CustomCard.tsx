@@ -4,6 +4,7 @@ import { globalStyles } from '../globalStyles';
 interface CustomCardProps {
   heading: string;
   image: string;
+  placeholderImageUri?: string;
   fieldOne: string;
   fieldTwo: string;
 }
@@ -11,16 +12,18 @@ interface CustomCardProps {
 export default function CustomCard({
   heading,
   image,
+  placeholderImageUri,
   fieldOne,
   fieldTwo,
 }: CustomCardProps) {
+  console.log(image, placeholderImageUri);
   return (
     <View style={[styles.cardFlex, styles.cardContainer]}>
       <Image
         id="image-thumbnail"
         style={styles.thumbnail}
         source={{
-          uri: image,
+          uri: image ? image : placeholderImageUri,
         }}
       />
       <View id="middle-content" style={globalStyles.pageContainer}>

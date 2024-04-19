@@ -1,5 +1,5 @@
 import { Equipment } from '../models/Equipment';
-import { GetDatabase } from './LocalDb';
+import { GetAll, GetDatabase } from './LocalDb';
 
 export const EquipmentDb: DbTable<Equipment> = {
   tableName: 'equipment',
@@ -72,6 +72,14 @@ export const EquipmentDb: DbTable<Equipment> = {
           return false;
         },
       );
+    });
+  },
+
+  GetAll(callback: (result: Equipment[]) => void) {
+    GetAll<Equipment>(this.tableName, equipment => {
+      //Convert necessary enums
+      equipment.map();
+      callback(result);
     });
   },
 };

@@ -47,9 +47,10 @@ export default function EquipmentPage({ navigation }) {
           <ScrollView key={equipment.id}>
             <CustomCard
               image={equipment.image}
+              placeholderImageUri="../../assets/bow_placeholder.png"
               heading={equipment.name}
-              fieldOne={equipment.id.toString()}
-              fieldTwo="foo"
+              fieldOne={equipment.type.name}
+              fieldTwo={equipment.notes}
             />
           </ScrollView>
         );

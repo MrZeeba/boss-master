@@ -1,9 +1,9 @@
-import { EquipmentType } from '../Enums/EquipmentType';
+import { DropdownObject } from './DropdownObject';
 
 export class Equipment {
   id: number;
   name: string;
-  type: EquipmentType;
+  type: DropdownObject;
   image: string;
   notes: string;
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import Button from '../Components/CustomButton';
-import { BowType } from '../Enums/BowType';
+import { BOWTYPE } from '../Enums/BowType';
 import { Bow } from '../models/Bow';
 import { ShootSession } from '../models/ShootSession';
 import { ShootSessionsDb } from '../sqlite/ShootSessionsDb';
@@ -18,7 +18,7 @@ export default function EditShootSessionPage() {
     session.note = 'Hello! I am a note!';
 
     const bow = new Bow();
-    bow.type = BowType.Recurve;
+    bow.type = BOWTYPE.Recurve;
     session.bow = bow;
 
     const date = new Date().toISOString();

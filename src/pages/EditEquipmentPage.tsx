@@ -7,9 +7,8 @@ import CustomImagePicker from '../Components/CustomImagePicker';
 import CustomNotesInput from '../Components/CustomNotesInput';
 import CustomPicker from '../Components/CustomPicker';
 import CustomTextInput from '../Components/CustomTextInput';
-import { BowType } from '../Enums/BowType';
+import { BOWTYPE } from '../Enums/BowType';
 import { EquipmentType } from '../Enums/EquipmentType';
-import EnumToMap from '../Enums/Helper';
 import { Bow } from '../models/Bow';
 import { Equipment } from '../models/Equipment';
 import { EquipmentDb } from '../sqlite/EquipmentDb';
@@ -41,7 +40,7 @@ export function EditEquipmentPage({ navigation }) {
     //const bow = new Bow(id, data);
 
     const equipment = new Equipment();
-    equipment.type = EquipmentType.Bow;
+    equipment.type = EquipmentType.Bow.id;
     equipment.name = data.name;
     equipment.image = data.image;
     equipment.notes = data.notes;
@@ -89,7 +88,7 @@ export function EditEquipmentPage({ navigation }) {
       <CustomPicker
         name="bowType"
         labelText="Type"
-        data={EnumToMap(BowType)}
+        data={new Map(Object.entries(BOWTYPE))}
         control={control}
         rules={{ required: 'A type of bow is required' }}
       />

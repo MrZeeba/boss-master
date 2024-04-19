@@ -16,7 +16,7 @@ export default function EquipmentStack() {
       <EquipmentStack.Screen
         name="EquipmentPage"
         component={EquipmentPage}
-        options={{ title: 'Equipment' }}
+        options={{ title: 'Equipment (Bows)' }}
       />
       <EquipmentStack.Screen
         name="EditEquipmentPage"
