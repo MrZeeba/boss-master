@@ -16,14 +16,13 @@ export default function CustomCard({
   fieldOne,
   fieldTwo,
 }: CustomCardProps) {
-  console.log(image, placeholderImageUri);
   return (
     <View style={[styles.cardFlex, styles.cardContainer]}>
       <Image
         id="image-thumbnail"
         style={styles.thumbnail}
         source={{
-          uri: image ? image : placeholderImageUri,
+          uri: image ?? placeholderImageUri,
         }}
       />
       <View id="middle-content" style={globalStyles.pageContainer}>

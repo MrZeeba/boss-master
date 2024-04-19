@@ -40,7 +40,7 @@ export function EditEquipmentPage({ navigation }) {
     //const bow = new Bow(id, data);
 
     const equipment = new Equipment();
-    equipment.type = EquipmentType.Bow.id;
+    equipment.type = EquipmentType.Bow;
     equipment.name = data.name;
     equipment.image = data.image;
     equipment.notes = data.notes;

@@ -2,4 +2,5 @@
 export type DropdownObject = {
   id: number;
   name: string;
+  description?: string;
 };
