@@ -1,3 +1,4 @@
+import { DropdownObject } from '../models/DropdownObject';
 import { Equipment } from '../models/Equipment';
 import { GetAll, GetDatabase } from './LocalDb';
 
@@ -42,7 +43,7 @@ export const EquipmentDb: DbTable<Equipment> = {
         ],
         (_, resultSet) => {
           callback(resultSet.insertId);
-          CreateFKRecord<DbTable<any>>(equipment.id);
+          CreateFKRecord<DbTable<any>>(equipment.type, equipment.id);
         },
         (_, error) => {
           console.warn(error);
@@ -90,6 +91,11 @@ export const EquipmentDb: DbTable<Equipment> = {
   },
 };
 
-function CreateFKRecord<T>(id: number) {
-  throw new Error('Function not implemented.');
+function CreateFKRecord<T>(type: DropdownObject, id: number) {
+  switch (type.name) {
+    case 'Bow': {
+      console.log('was a bow');
+      break;
+    }
+  }
 }
