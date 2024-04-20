@@ -5,21 +5,17 @@ import { StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { globalColours } from '../globalColours';
 import { globalStyles } from '../globalStyles';
+import { DropdownObject } from '../models/DropdownObject';
 
 interface CustomTextInputProps {
   control: Control<any, any>;
   name: string;
   labelText: string;
-  data: Map<string, string | number>;
+  data: { [key: string]: DropdownObject };
   defaultValue?: string;
   onSelect?: (value: string) => void;
   rules: object;
 }
-
-interface DataProps {
-  data: Map<string, string | number>;
-}
-
 /*
 A custom text input which uses react-hook-form and wraps away some of the complexity it involves
 */
@@ -36,7 +32,7 @@ export default function CustomPicker({
   const [selectedItem, setSelectedItem] = useState('');
 
   if (defaultValue !== undefined) {
-    if (!data.has(defaultValue))
+    if (!Object.keys(data).includes(defaultValue))
       console.error(
         'Data values passed into Custom Picker do contain default value',
         defaultValue,
@@ -101,26 +97,28 @@ export default function CustomPicker({
     data,
     onSelect,
     hookOnChange,
-  }: DataProps & { onSelect: (item: string) => void } & {
-    hookOnChange: (...event: any[]) => void;
+  }: {
+    data: { [key: string]: DropdownObject };
+    onSelect: (item: string) => void;
+    hookOnChange: (value: DropdownObject) => void;
   }) {
     return (
       <View style={globalStyles.container}>
-        {[...data.entries()].map(([value, key]) => (
+        {Object.values(data).map(item => (
           <TouchableOpacity
-            key={key}
+            key={item.id}
             onPress={() => {
-              onSelect(value.toString());
+              onSelect(item.name);
               //To pass validation for react hook form
-              hookOnChange(value.toString());
+              hookOnChange(item);
             }}>
             <Text
               style={
-                (key as number) > 0
+                Object.values(data).indexOf(item) > 0
                   ? [styles.item, styles.upperItemBorder]
                   : styles.item //First item should not have an upper border
               }>
-              {value}
+              {item.name}
             </Text>
           </TouchableOpacity>
         ))}

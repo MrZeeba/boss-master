@@ -3,22 +3,22 @@ import { DropdownObject } from '../models/DropdownObject';
 export const BOWTYPE: { [key: string]: DropdownObject } = {
   Longbow: {
     id: 0,
-    name: 'Long Bow',
+    name: 'Longbow',
   },
   Flatbow: {
-    id: 0,
-    name: 'Flat Bow',
+    id: 1,
+    name: 'Flatbow',
   },
   Barebow: {
-    id: 0,
-    name: 'Bare Bow',
+    id: 2,
+    name: 'Barebow',
   },
   Recurve: {
-    id: 0,
+    id: 3,
     name: 'Recurve',
   },
   Compound: {
-    id: 0,
+    id: 4,
     name: 'Compound',
   },
 };

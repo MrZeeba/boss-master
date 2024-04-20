@@ -34,9 +34,15 @@ export const EquipmentDb: DbTable<Equipment> = {
     db.transaction(tx => {
       tx.executeSql(
         `INSERT INTO ${this.tableName} (name, type, image, notes) VALUES(?, ?, ?, ?)`,
-        [equipment.name, equipment.type, equipment.image, equipment.notes],
+        [
+          equipment.name,
+          equipment.type.toString(),
+          equipment.image,
+          equipment.notes,
+        ],
         (_, resultSet) => {
           callback(resultSet.insertId);
+          CreateFKRecord<DbTable<any>>(equipment.id);
         },
         (_, error) => {
           console.warn(error);
@@ -83,3 +89,7 @@ export const EquipmentDb: DbTable<Equipment> = {
     });
   },
 };
+
+function CreateFKRecord<T>(id: number) {
+  throw new Error('Function not implemented.');
+}

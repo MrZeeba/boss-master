@@ -88,7 +88,7 @@ export function EditEquipmentPage({ navigation }) {
       <CustomPicker
         name="bowType"
         labelText="Type"
-        data={new Map(Object.entries(BOWTYPE))}
+        data={BOWTYPE}
         control={control}
         rules={{ required: 'A type of bow is required' }}
       />
