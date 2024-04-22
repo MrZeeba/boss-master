@@ -1,5 +1,5 @@
 import { ShootSession } from '../models/ShootSession';
-import { GetDatabase } from './LocalDb';
+import { GetDatabase, ValidationError } from './LocalDb';
 
 /*
 Validates the schema for this table
@@ -23,6 +23,10 @@ export const ShootSessionsDb: DbTable<ShootSession> = {
         undefined,
         () => {
           console.log(`Validate ${this.tableName}: SUCCESS`);
+        },
+        (_, error) => {
+          ValidationError(error);
+          return false;
         },
       );
     });

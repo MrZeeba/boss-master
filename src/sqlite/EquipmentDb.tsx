@@ -1,101 +1,91 @@
-import { DropdownObject } from '../models/DropdownObject';
 import { Equipment } from '../models/Equipment';
-import { GetAll, GetDatabase } from './LocalDb';
+import LocalDB from './LocalDb';
 
-export const EquipmentDb: DbTable<Equipment> = {
-  tableName: 'equipment',
+/*
+Provides interactivity with the equipment table
+Must follow a singleton pattern as Typescript does not allow static methods on a interface.
+*/
+export class EquipmentDb implements DbTable<Equipment> {
+  private static instance: EquipmentDb;
+
+  private constructor() {}
+
+  static getInstance(): EquipmentDb {
+    if (!this.instance) EquipmentDb.instance = new EquipmentDb();
+    return EquipmentDb.instance;
+  }
 
   Validate(): boolean {
     console.log('Validating equipment schema');
-    const db = GetDatabase();
 
-    db.transaction(tx => {
-      tx.executeSql(
-        `CREATE TABLE IF NOT EXISTS ${this.tableName} 
-            (id INTEGER PRIMARY KEY AUTOINCREMENT, 
-             name TEXT,
-             type TEXT,
-             image TEXT,
-             notes TEXT
-             )`,
-        undefined,
-        (_, result) => {
-          console.log(`Validate ${this.tableName}: SUCCESS`);
-          return true;
-        },
-      );
-    });
-    return false;
-  },
+    return LocalDB.ExecuteTransaction(
+      `CREATE TABLE IF NOT EXISTS ${LocalDB.EQUIPMENT_TABLE_NAME} 
+      (id INTEGER PRIMARY KEY AUTOINCREMENT, 
+       name TEXT,
+       type TEXT,
+       image TEXT,
+       notes TEXT
+       )`,
+      undefined,
+      _ => {
+        console.log(`Validate ${LocalDB.EQUIPMENT_TABLE_NAME}: SUCCESS`);
+      },
+      (_, error) => {
+        LocalDB.ValidationError(error);
+        return false;
+      },
+    );
+  }
 
   Create(equipment: Equipment, callback: (id: number | undefined) => void) {
     console.log('Creating new record', { equipment });
-    const db = GetDatabase();
 
-    db.transaction(tx => {
-      tx.executeSql(
-        `INSERT INTO ${this.tableName} (name, type, image, notes) VALUES(?, ?, ?, ?)`,
-        [
-          equipment.name,
-          equipment.type.toString(),
-          equipment.image,
-          equipment.notes,
-        ],
-        (_, resultSet) => {
-          callback(resultSet.insertId);
-          CreateFKRecord<DbTable<any>>(equipment.type, equipment.id);
-        },
-        (_, error) => {
-          console.warn(error);
-          callback(undefined);
-          return false;
-        },
-      );
-    });
-  },
+    LocalDB.ExecuteTransaction(
+      `INSERT INTO ${LocalDB.EQUIPMENT_TABLE_NAME} (name, type, image, notes) VALUES(?, ?, ?, ?)`,
+      [
+        equipment.name,
+        equipment.type.toString(),
+        equipment.image,
+        equipment.notes,
+      ],
+      (_, resultSet) => {
+        console.log('Success');
+        callback(resultSet.insertId);
+      },
+      (_, error) => {
+        console.warn(error);
+        callback(undefined);
+        return false;
+      },
+    );
+  }
 
   Delete(
     id: number,
     callback: (result: { errors: string; recordsDeleted: number }) => void,
   ) {
     console.log('Attempting to delete record with id', { id });
-    const db = GetDatabase();
 
-    db.transaction(tx => {
-      tx.executeSql(
-        `DELETE FROM ${this.tableName} WHERE ID = ?`,
-        [id],
-        (_, resultSet) => {
-          callback({
-            errors: '',
-            recordsDeleted: resultSet.rowsAffected,
-          });
-        },
-        (_, error) => {
-          callback({
-            errors: error.message,
-            recordsDeleted: 0,
-          });
-          return false;
-        },
-      );
-    });
-  },
+    LocalDB.ExecuteTransaction(
+      `DELETE FROM ${LocalDB.EQUIPMENT_TABLE_NAME} WHERE ID = ?`,
+      [id],
+      (_, resultSet) => {
+        callback({
+          errors: '',
+          recordsDeleted: resultSet.rowsAffected,
+        });
+      },
+      (_, error) => {
+        callback({
+          errors: error.message,
+          recordsDeleted: 0,
+        });
+        return false;
+      },
+    );
+  }
 
   GetAll(callback: (result: Equipment[]) => void) {
-    GetAll<Equipment>(this.tableName, equipment => {
-      //Convert necessary enums
-      equipment.map();
-      callback(result);
-    });
-  },
-};
-
-function CreateFKRecord<T>(type: DropdownObject, id: number) {
-  switch (type.name) {
-    case 'Bow': {
-      console.log('was a bow');
-      break;
-    }
+    throw new Error('Function not implemented.');
   }
 }

@@ -4,11 +4,11 @@ The root stack for the equipment page
 import { Feather } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
-import { ScrollView, TouchableOpacity, View } from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import CustomCard from '../Components/CustomCard';
 import { globalStyles } from '../globalStyles';
 import { Equipment } from '../models/Equipment';
-import { GetAll } from '../sqlite/LocalDb';
+import LocalDB from '../sqlite/LocalDb';
 
 /*
 Equipment is currently just a bow but may be expanded in the future
@@ -18,7 +18,9 @@ export default function EquipmentPage({ navigation }) {
 
   useFocusEffect(
     useCallback(() => {
-      GetAll<Equipment>('equipment', results => setEquipmentList(results));
+      LocalDB.GetAll<Equipment>(LocalDB.EQUIPMENT_TABLE_NAME, results =>
+        setEquipmentList(results),
+      );
     }, []),
   );
 
@@ -39,22 +41,25 @@ export default function EquipmentPage({ navigation }) {
       ),
     });
   }, [navigation]);
-
+  console.log(equipmentList.length);
   return (
     <View style={globalStyles.pageContainer}>
-      {equipmentList.map(equipment => {
-        return (
-          <ScrollView key={equipment.id}>
+      <ScrollView>
+        {equipmentList.length > 0 ? (
+          equipmentList.map(equipment => (
             <CustomCard
+              key={equipment.id}
               image={equipment.image}
               placeholderImageUri="../../assets/bow_placeholder.png"
               heading={equipment.name}
               fieldOne={equipment.type.name}
               fieldTwo={equipment.notes}
             />
-          </ScrollView>
-        );
-      })}
+          ))
+        ) : (
+          <Text>No equipment found</Text>
+        )}
+      </ScrollView>
     </View>
   );
 }

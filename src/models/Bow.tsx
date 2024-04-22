@@ -1,9 +1,9 @@
-import { BowType } from '../Enums/BowType';
+import { DropdownObject } from './DropdownObject';
 
 export class Bow {
   id: number;
   name: string;
-  type: BowType;
+  type: DropdownObject;
   length: number;
   drawWeight: number;
 }

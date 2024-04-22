@@ -11,6 +11,7 @@ import { BOWTYPE } from '../Enums/BowType';
 import { EquipmentType } from '../Enums/EquipmentType';
 import { Bow } from '../models/Bow';
 import { Equipment } from '../models/Equipment';
+import { BowDb } from '../sqlite/BowDb';
 import { EquipmentDb } from '../sqlite/EquipmentDb';
 
 export function EditEquipmentPage({ navigation }) {
@@ -36,7 +37,7 @@ export function EditEquipmentPage({ navigation }) {
 
   function SavePressed(data) {
     setSavePressed(true);
-    console.log('DATA FROM FORM', data);
+    console.log('DATA PASSED FROM FORM', data);
     //const bow = new Bow(id, data);
 
     const equipment = new Equipment();
@@ -47,8 +48,11 @@ export function EditEquipmentPage({ navigation }) {
 
     const bow = new Bow();
 
-    EquipmentDb.Create(equipment, id => {
+    const equipmentDb = EquipmentDb.getInstance();
+    equipmentDb.Create(equipment, id => {
       console.log(`New equipment created with id ${id}`);
+      const theBowDb = new BowDb();
+      //theBowDb.
       navigation.goBack();
     });
   }
