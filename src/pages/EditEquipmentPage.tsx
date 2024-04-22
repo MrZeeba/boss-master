@@ -47,12 +47,21 @@ export function EditEquipmentPage({ navigation }) {
     equipment.notes = data.notes;
 
     const bow = new Bow();
+    bow.drawWeight = data.drawweight;
 
     const equipmentDb = EquipmentDb.getInstance();
     equipmentDb.Create(equipment, id => {
-      console.log(`New equipment created with id ${id}`);
-      const theBowDb = new BowDb();
-      //theBowDb.
+      console.log(
+        `New equipment created with id ${id}, creating child record...`,
+      );
+
+      const bowDb = BowDb.getInstance();
+      bowDb.Create(bow, id, bowId => {
+        console.log(
+          `New bow child record of equipment ${id} created with id`,
+          bowId,
+        );
+      });
       navigation.goBack();
     });
   }

@@ -1,10 +1,14 @@
 import * as SQLite from 'expo-sqlite';
 import { Platform } from 'react-native';
+import { BowDb } from './BowDb';
+import { EquipmentDb } from './EquipmentDb';
+import { ShootSessionsDb } from './ShootSessionsDb';
 
 export default class LocalDB {
   static DATABASE_NAME: string = 'boss-master.db';
   static DATABASE_VERSION: string = '1.0';
 
+  static SHOOTSESSIONS_TABLE_NAME: string = 'shoot_sessions';
   static EQUIPMENT_TABLE_NAME: string = 'equipment';
   static BOW_TABLE_NAME: string = 'bow';
 
@@ -145,7 +149,25 @@ export default class LocalDB {
     });
   }
 
-  static ValidationError(error: SQLite.SQLError) {
-    console.error('There was a problem during database validation', error);
+  static ValidationError(typeName: string, error: SQLite.SQLError) {
+    console.error(
+      `There was a problem during database validation of type ${typeName}`,
+      error,
+    );
+  }
+
+  static Restructure(recreate: boolean = true) {
+    const db = this.connectToDatabase();
+    db.closeSync();
+    if (db._closed) db.deleteAsync();
+
+    //Recreate
+    if (recreate) this.ValidateDB();
+  }
+
+  static ValidateDB() {
+    EquipmentDb.GetInstance().Validate();
+    BowDb.GetInstance().Validate();
+    ShootSessionsDb.GetInstance().Validate();
   }
 }

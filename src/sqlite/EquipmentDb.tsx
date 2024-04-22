@@ -5,14 +5,14 @@ import LocalDB from './LocalDb';
 Provides interactivity with the equipment table
 Must follow a singleton pattern as Typescript does not allow static methods on a interface.
 */
-export class EquipmentDb implements DbTable<Equipment> {
+export class EquipmentDb implements ITable<Equipment> {
   private static instance: EquipmentDb;
 
   private constructor() {}
 
-  static getInstance(): EquipmentDb {
-    if (!this.instance) EquipmentDb.instance = new EquipmentDb();
-    return EquipmentDb.instance;
+  static GetInstance(): EquipmentDb {
+    if (!this.instance) this.instance = new EquipmentDb();
+    return this.instance;
   }
 
   Validate(): boolean {
@@ -31,13 +31,13 @@ export class EquipmentDb implements DbTable<Equipment> {
         console.log(`Validate ${LocalDB.EQUIPMENT_TABLE_NAME}: SUCCESS`);
       },
       (_, error) => {
-        LocalDB.ValidationError(error);
+        LocalDB.ValidationError(EquipmentDb.name, error);
         return false;
       },
     );
   }
 
-  Create(equipment: Equipment, callback: (id: number | undefined) => void) {
+  Create(equipment: Equipment, callback: (id: number) => void) {
     console.log('Creating new record', { equipment });
 
     LocalDB.ExecuteTransaction(
@@ -50,11 +50,10 @@ export class EquipmentDb implements DbTable<Equipment> {
       ],
       (_, resultSet) => {
         console.log('Success');
-        callback(resultSet.insertId);
+        if (resultSet.insertId) callback(resultSet.insertId);
       },
       (_, error) => {
         console.warn(error);
-        callback(undefined);
         return false;
       },
     );
@@ -83,9 +82,5 @@ export class EquipmentDb implements DbTable<Equipment> {
         return false;
       },
     );
-  }
-
-  GetAll(callback: (result: Equipment[]) => void) {
-    throw new Error('Function not implemented.');
   }
 }

@@ -1,54 +1,56 @@
 import { ShootSession } from '../models/ShootSession';
-import { GetDatabase, ValidationError } from './LocalDb';
+import LocalDB from './LocalDb';
 
 /*
 Validates the schema for this table
 */
-export const ShootSessionsDb: DbTable<ShootSession> = {
-  tableName: 'shootsessions',
+export class ShootSessionsDb implements ITable<ShootSession> {
+  private static instance: ShootSessionsDb;
 
-  Validate() {
-    const db = GetDatabase();
+  private constructor() {}
 
-    db.transaction(tx => {
-      tx.executeSql(
-        `CREATE TABLE IF NOT EXISTS ${this.tableName} 
-          (id INTEGER PRIMARY KEY AUTOINCREMENT, 
-           note TEXT,
-           dateShot TEXT,
-           bow_id INTEGER NOT NULL,
-           FOREIGN KEY (bow_id)
-            REFERENCES equipment(id)
-           )`,
-        undefined,
-        () => {
-          console.log(`Validate ${this.tableName}: SUCCESS`);
-        },
-        (_, error) => {
-          ValidationError(error);
-          return false;
-        },
-      );
-    });
-  },
+  static GetInstance(): ShootSessionsDb {
+    if (!this.instance) this.instance = new ShootSessionsDb();
+    return this.instance;
+  }
+
+  Validate(): boolean {
+    LocalDB.ExecuteTransaction(
+      `CREATE TABLE IF NOT EXISTS ${LocalDB.SHOOTSESSIONS_TABLE_NAME} 
+    (id INTEGER PRIMARY KEY AUTOINCREMENT, 
+     note TEXT,
+     dateShot TEXT,
+     bow_id INTEGER NOT NULL,
+     FOREIGN KEY (bow_id)
+      REFERENCES equipment(id)
+     )`,
+      undefined,
+      () => {
+        console.log(`Validate ${LocalDB.SHOOTSESSIONS_TABLE_NAME}: SUCCESS`);
+      },
+      (_, error) => {
+        LocalDB.ValidationError(ShootSessionsDb.name, error);
+        return false;
+      },
+    );
+
+    return true;
+  }
 
   Create(session: ShootSession, callback: (id: number | undefined) => void) {
     console.log('Attempting to insert shooting session', { session });
-    const db = GetDatabase();
 
-    db.transaction(tx => {
-      tx.executeSql(
-        `INSERT INTO ${this.tableName} (bow_id, note, dateShot) VALUES(?, ?, ?)`,
-        [session.bow.type, session.note, session.dateShot],
-        (_, resultSet) => {
-          callback(resultSet.insertId);
-        },
-        (_, error) => {
-          console.warn(error);
-          callback(undefined);
-          return false;
-        },
-      );
-    });
-  },
-};
+    LocalDB.ExecuteTransaction(
+      `INSERT INTO ${LocalDB.SHOOTSESSIONS_TABLE_NAME} (bow_id, note, dateShot) VALUES(?, ?, ?)`,
+      [session.bow.type.id, session.note, session.dateShot],
+      (_, resultSet) => {
+        callback(resultSet.insertId);
+      },
+      (_, error) => {
+        console.warn(error);
+        callback(undefined);
+        return false;
+      },
+    );
+  }
+}
