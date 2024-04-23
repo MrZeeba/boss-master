@@ -13,11 +13,19 @@ export default class LocalDb {
   static BOW_TABLE_NAME: string = 'bow';
 
   private static instance: LocalDb | null = null;
-  public static db: SQLite.SQLiteDatabase | null = null;
+  private static db: SQLite.SQLiteDatabase | null = null;
 
   private constructor() {}
 
-  private static connectToDatabase(): SQLite.SQLiteDatabase {
+  static GetInstance(): LocalDb {
+    if (!this.instance) {
+      this.instance = new LocalDb();
+      this.GetDatabaseInstance();
+    }
+    return this.instance;
+  }
+
+  static GetDatabaseInstance(): SQLite.SQLiteDatabase {
     if (Platform.OS === 'web') {
       console.error(
         'This application does not currently support web due to the database infrastructure!',
@@ -33,12 +41,26 @@ export default class LocalDb {
     return this.db;
   }
 
-  static GetInstance(): LocalDb {
-    if (!this.instance) {
-      this.instance = new LocalDb();
-      this.connectToDatabase();
-    }
-    return this.instance;
+  static async Validate(sql: string, tableName: string): Promise<boolean> {
+    console.log(`DB VALIDATION on table:`, tableName);
+    const db = this.GetDatabaseInstance();
+
+    await db.withExclusiveTransactionAsync(async () => {
+      db.runAsync(sql)
+        .then(fulfilledResult => {
+          console.log(`Successfully validated ${tableName}`, fulfilledResult);
+          return true;
+        })
+        .catch(rejectedResult => {
+          console.error('Failed validation', sql, rejectedResult);
+          return false;
+        })
+        .finally(() =>
+          console.log('Completed Validation on table:', tableName),
+        );
+    });
+
+    return false;
   }
 
   /*
@@ -123,10 +145,21 @@ export default class LocalDb {
   }
 
   static async Restructure() {
+    const db = this.GetDatabaseInstance();
+
     console.log('Closing connection');
-    this.db?.closeSync();
+    db.closeSync();
+
+    console.log('Deleting database file', this.DATABASE_PATH);
     SQLite.deleteDatabaseSync(this.DATABASE_NAME);
-    //Recreate
-    this.connectToDatabase();
+
+    const dbFileInfo = await FileSystem.getInfoAsync(this.DATABASE_PATH);
+    if (!dbFileInfo.exists) {
+      console.log('Successfully deleted database file');
+      this.db = null;
+    }
+
+    console.log('Recreating structure...');
+    this.GetDatabaseInstance();
   }
 }

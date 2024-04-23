@@ -17,14 +17,8 @@ export class EquipmentDb implements ITable<Equipment> {
     return this.instance;
   }
 
-  async Validate(): Promise<boolean> {
-    console.log('Validating equipment schema');
-    LocalDb.GetInstance();
-    const db = LocalDb.db;
-
-    console.log(db);
-
-    const sql = `CREA22TE TABLE IF NOT EXISTS ${LocalDb.EQUIPMENT_TABLE_NAME} 
+  Validate() {
+    const sql = `CREATE TABLE IF NOT EXISTS ${LocalDb.EQUIPMENT_TABLE_NAME} 
     (id INTEGER PRIMARY KEY AUTOINCREMENT, 
     name TEXT,
     type TEXT,
@@ -32,21 +26,7 @@ export class EquipmentDb implements ITable<Equipment> {
     notes TEXT
     )`;
 
-    await db?.withTransactionAsync(async () => {
-      db
-        ?.runAsync(sql)
-        .then(fulfilledResult => {
-          console.log('Success', fulfilledResult);
-          return true;
-        })
-        .catch(rejectedResult => {
-          console.log('Failed validation', sql, rejectedResult);
-          return false;
-        })
-        .finally(() => console.log('Completed Query'));
-    });
-
-    return false;
+    LocalDb.Validate(sql, LocalDb.EQUIPMENT_TABLE_NAME);
   }
 
   Create(equipment: Equipment, callback: (id: number) => void) {
