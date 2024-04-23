@@ -1,5 +1,5 @@
 import { Equipment } from '../models/Equipment';
-import LocalDB from './LocalDb';
+import LocalDb from './LocalDb';
 
 /*
 Provides interactivity with the equipment table
@@ -11,37 +11,49 @@ export class EquipmentDb implements ITable<Equipment> {
   private constructor() {}
 
   static GetInstance(): EquipmentDb {
-    if (!this.instance) this.instance = new EquipmentDb();
+    if (!this.instance) {
+      this.instance = new EquipmentDb();
+    }
     return this.instance;
   }
 
-  Validate(): boolean {
+  async Validate(): Promise<boolean> {
     console.log('Validating equipment schema');
+    LocalDb.GetInstance();
+    const db = LocalDb.db;
 
-    return LocalDB.ExecuteTransaction(
-      `CREATE TABLE IF NOT EXISTS ${LocalDB.EQUIPMENT_TABLE_NAME} 
-      (id INTEGER PRIMARY KEY AUTOINCREMENT, 
-       name TEXT,
-       type TEXT,
-       image TEXT,
-       notes TEXT
-       )`,
-      undefined,
-      _ => {
-        console.log(`Validate ${LocalDB.EQUIPMENT_TABLE_NAME}: SUCCESS`);
-      },
-      (_, error) => {
-        LocalDB.ValidationError(EquipmentDb.name, error);
-        return false;
-      },
-    );
+    console.log(db);
+
+    const sql = `CREA22TE TABLE IF NOT EXISTS ${LocalDb.EQUIPMENT_TABLE_NAME} 
+    (id INTEGER PRIMARY KEY AUTOINCREMENT, 
+    name TEXT,
+    type TEXT,
+    image TEXT,
+    notes TEXT
+    )`;
+
+    await db?.withTransactionAsync(async () => {
+      db
+        ?.runAsync(sql)
+        .then(fulfilledResult => {
+          console.log('Success', fulfilledResult);
+          return true;
+        })
+        .catch(rejectedResult => {
+          console.log('Failed validation', sql, rejectedResult);
+          return false;
+        })
+        .finally(() => console.log('Completed Query'));
+    });
+
+    return false;
   }
 
   Create(equipment: Equipment, callback: (id: number) => void) {
     console.log('Creating new record', { equipment });
 
-    LocalDB.ExecuteTransaction(
-      `INSERT INTO ${LocalDB.EQUIPMENT_TABLE_NAME} (name, type, image, notes) VALUES(?, ?, ?, ?)`,
+    LocalDb.ExecuteTransaction(
+      `INSERT INTO ${LocalDb.EQUIPMENT_TABLE_NAME} (name, type, image, notes) VALUES(?, ?, ?, ?)`,
       [
         equipment.name,
         equipment.type.toString(),
@@ -65,8 +77,8 @@ export class EquipmentDb implements ITable<Equipment> {
   ) {
     console.log('Attempting to delete record with id', { id });
 
-    LocalDB.ExecuteTransaction(
-      `DELETE FROM ${LocalDB.EQUIPMENT_TABLE_NAME} WHERE ID = ?`,
+    LocalDb.ExecuteTransaction(
+      `DELETE FROM ${LocalDb.EQUIPMENT_TABLE_NAME} WHERE ID = ?`,
       [id],
       (_, resultSet) => {
         callback({

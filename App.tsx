@@ -1,9 +1,11 @@
 import { NavigationContainer } from '@react-navigation/native';
 import TabNavigation from './src/navigation/TabNavigation';
-import LocalDB from './src/sqlite/LocalDb';
+import { EquipmentDb } from './src/sqlite/EquipmentDb';
 
 export default function App() {
-  LocalDB.ValidateDB();
+  EquipmentDb.GetInstance().Validate();
+  //BowDb.GetInstance().Validate();
+  //ShootSessionsDb.GetInstance().Validate();
 
   return (
     <NavigationContainer>

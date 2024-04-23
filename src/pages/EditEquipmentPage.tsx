@@ -49,13 +49,13 @@ export function EditEquipmentPage({ navigation }) {
     const bow = new Bow();
     bow.drawWeight = data.drawweight;
 
-    const equipmentDb = EquipmentDb.getInstance();
+    const equipmentDb = EquipmentDb.GetInstance();
     equipmentDb.Create(equipment, id => {
       console.log(
         `New equipment created with id ${id}, creating child record...`,
       );
 
-      const bowDb = BowDb.getInstance();
+      const bowDb = BowDb.GetInstance();
       bowDb.Create(bow, id, bowId => {
         console.log(
           `New bow child record of equipment ${id} created with id`,

@@ -1,19 +1,19 @@
-import * as SQLite from 'expo-sqlite';
+import * as FileSystem from 'expo-file-system';
+import * as SQLite from 'expo-sqlite/next';
 import { Platform } from 'react-native';
-import { BowDb } from './BowDb';
-import { EquipmentDb } from './EquipmentDb';
-import { ShootSessionsDb } from './ShootSessionsDb';
 
-export default class LocalDB {
+export default class LocalDb {
   static DATABASE_NAME: string = 'boss-master.db';
   static DATABASE_VERSION: string = '1.0';
+  static DATABASE_PATH: string =
+    FileSystem.documentDirectory + `/SQLite/${LocalDb.DATABASE_NAME}`;
 
   static SHOOTSESSIONS_TABLE_NAME: string = 'shoot_sessions';
   static EQUIPMENT_TABLE_NAME: string = 'equipment';
   static BOW_TABLE_NAME: string = 'bow';
 
-  private static instance: LocalDB | null = null;
-  private static db: SQLite.SQLiteDatabase | null = null;
+  private static instance: LocalDb | null = null;
+  public static db: SQLite.SQLiteDatabase | null = null;
 
   private constructor() {}
 
@@ -25,44 +25,31 @@ export default class LocalDB {
     }
 
     if (!this.db) {
-      this.db = SQLite.openDatabase(
-        LocalDB.DATABASE_NAME,
-        LocalDB.DATABASE_VERSION,
-      );
+      console.log('Database location', this.DATABASE_PATH);
+
+      this.db = SQLite.openDatabaseSync(LocalDb.DATABASE_NAME);
       console.log('Established a new connection to the database');
     }
     return this.db;
   }
 
-  static GetInstance(): LocalDB {
+  static GetInstance(): LocalDb {
     if (!this.instance) {
-      this.instance = new LocalDB();
+      this.instance = new LocalDb();
+      this.connectToDatabase();
     }
     return this.instance;
   }
 
-  static ExecuteTransaction(
-    sql: string,
-    args: SQLite.SQLStatementArg[] | undefined,
-    callback?: SQLite.SQLStatementCallback | undefined,
-    errorCallback?: SQLite.SQLStatementErrorCallback | undefined,
-  ) {
-    const db = this.connectToDatabase();
-
-    db.transaction(
-      tx => {
-        tx.executeSql(sql, args, callback, errorCallback);
-      },
-      err => {
-        console.error('There was a problem executing the transaction', err);
-        return false;
-      },
-      () => {
-        console.log('Transaction executed successfully');
-      },
-    );
-
-    return true;
+  /*
+  Return all of a type
+  */
+  static GetAll<Type>(tableName: string, callback: (result: Type[]) => void) {
+    this.db
+      ?.getAllAsync<Type>(`SELECT * FROM ${tableName}`)
+      .then(result => console.log('Promise completed with result', result))
+      .catch(error => console.log('Uh oh', error))
+      .finally(() => console.log("I'm doing this anyway"));
   }
 
   /*
@@ -128,27 +115,6 @@ export default class LocalDB {
     });
   }
 
-  /*
-  Return all of a type
-  */
-  static GetAll<Type>(tableName: string, callback: (result: Type[]) => void) {
-    const db = this.connectToDatabase();
-
-    db.transaction(tx => {
-      tx.executeSql(
-        `SELECT * FROM ${tableName}`,
-        [],
-        (_, resultSet) => {
-          callback(resultSet.rows._array);
-        },
-        (_, error) => {
-          console.log(error);
-          return false;
-        },
-      );
-    });
-  }
-
   static ValidationError(typeName: string, error: SQLite.SQLError) {
     console.error(
       `There was a problem during database validation of type ${typeName}`,
@@ -156,18 +122,11 @@ export default class LocalDB {
     );
   }
 
-  static Restructure(recreate: boolean = true) {
-    const db = this.connectToDatabase();
-    db.closeSync();
-    if (db._closed) db.deleteAsync();
-
+  static async Restructure() {
+    console.log('Closing connection');
+    this.db?.closeSync();
+    SQLite.deleteDatabaseSync(this.DATABASE_NAME);
     //Recreate
-    if (recreate) this.ValidateDB();
-  }
-
-  static ValidateDB() {
-    EquipmentDb.GetInstance().Validate();
-    BowDb.GetInstance().Validate();
-    ShootSessionsDb.GetInstance().Validate();
+    this.connectToDatabase();
   }
 }

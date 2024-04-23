@@ -1,14 +1,21 @@
 import { useState } from 'react';
 import { Text, View } from 'react-native';
 import CustomButton from '../Components/CustomButton';
+import { ExportDb } from '../debug/ExportDb';
+import { BowDb } from '../sqlite/BowDb';
 import { EquipmentDb } from '../sqlite/EquipmentDb';
-import { DropTable, TruncateTable } from '../sqlite/LocalDb';
+import LocalDB, { DropTable, TruncateTable } from '../sqlite/LocalDb';
 import { ShootSessionsDb } from '../sqlite/ShootSessionsDb';
 
 export default function SettingsPage() {
   const [sqlResultText, setSQLResultText] = useState('...');
 
-  function RestructurePressed() {}
+  function restructurePressed() {
+    LocalDB.Restructure();
+    EquipmentDb.GetInstance().Validate();
+    BowDb.GetInstance().Validate();
+    ShootSessionsDb.GetInstance().Validate();
+  }
 
   return (
     <View>
@@ -17,45 +24,47 @@ export default function SettingsPage() {
       <Text style={{ fontWeight: 'bold' }}>General</Text>
       <CustomButton
         title="Restructure DB"
-        onPress={() => RestructurePressed()}
+        onPress={() => restructurePressed()}
       />
+
+      <CustomButton title="Export DB" onPress={() => ExportDb()} />
 
       <Text style={{ fontWeight: 'bold' }}>Shoot Sessions</Text>
       <CustomButton
         title="Truncate Shoot Sessions"
-        onPress={() => TruncateTablePressed(ShootSessionsDb)}
+        onPress={() => truncateTablePressed(ShootSessionsDb)}
       />
       <CustomButton
         title="Recreate Shoot Sessions (Deletes Data)"
-        onPress={() => RecreateTablePressed(ShootSessionsDb)}
+        onPress={() => recreateTablePressed(ShootSessionsDb)}
       />
 
       <Text style={{ fontWeight: 'bold' }}>Equipment</Text>
       <CustomButton
-        onPress={() => TruncateTablePressed(EquipmentDb)}
+        onPress={() => truncateTablePressed(EquipmentDb)}
         title="Truncate ALL data"
       />
       <CustomButton
-        onPress={() => RecreateTablePressed(EquipmentDb)}
+        onPress={() => recreateTablePressed(EquipmentDb)}
         title="Recreate Table (Drops Data)"
       />
-      <CustomButton onPress={InsertTestData} title="Insert test data" />
+      <CustomButton onPress={insertTestData} title="Insert test data" />
     </View>
   );
 
-  async function TruncateTablePressed<T extends DbTable<any>>(table: T) {
+  async function truncateTablePressed<T extends DbTable<any>>(table: T) {
     TruncateTable(table.tableName, sqlResults => {
       setSQLResultText(`${sqlResults} rows deleted`);
     });
   }
 
-  async function RecreateTablePressed<T extends DbTable<any>>(table: T) {
+  async function recreateTablePressed<T extends DbTable<any>>(table: T) {
     DropTable(table.tableName, true, table.Validate, sqlResults => {
       setSQLResultText(`${sqlResults} rows deleted`);
     });
   }
 
-  async function InsertTestData() {
+  async function insertTestData() {
     console.log('throw currently broken!');
 
     const testBowData = [];

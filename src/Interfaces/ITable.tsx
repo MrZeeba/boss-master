@@ -1,5 +1,5 @@
 interface ITable<Type> {
-  Validate(): boolean;
+  Validate(): Promise<boolean>;
   Create(item: Type, callback: (id: number) => void): void;
   Delete(
     id: number,
