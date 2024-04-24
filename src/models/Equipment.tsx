@@ -6,4 +6,5 @@ export class Equipment {
   type: DropdownObject;
   image: string;
   notes: string;
+  childFK: any;
 }

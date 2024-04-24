@@ -19,10 +19,11 @@ export class BowDb implements IChildTable<Bow> {
   Validate() {
     const sql = `CREATE TABLE IF NOT EXISTS ${LocalDB.BOW_TABLE_NAME} 
     (id INTEGER PRIMARY KEY AUTOINCREMENT, 
-    draw_weight TEXT,
-    equipment_id INTEGER NOT NULL,
-    FOREIGN KEY (equipment_id)
-      REFERENCES equipment(id)
+      bow_type TEXT,
+      equipment_id INTEGER NOT NULL,
+      draw_weight TEXT,
+      FOREIGN KEY (equipment_id)
+        REFERENCES equipment(id)
     )`;
 
     LocalDb.Validate(sql, LocalDB.BOW_TABLE_NAME);
@@ -32,8 +33,12 @@ export class BowDb implements IChildTable<Bow> {
     return new Promise<number>((success, fail) => {
       const db = LocalDb.GetDatabaseInstance();
 
-      const sql: string = `INSERT INTO ${LocalDB.BOW_TABLE_NAME} (equipment_id, draw_weight) VALUES(?, ?)`;
-      const params: SQLiteBindParams = [parentId, bow.drawWeight];
+      const sql: string = `INSERT INTO ${LocalDB.BOW_TABLE_NAME} (equipment_id, bow_type, draw_weight) VALUES(?,?,?)`;
+      const params: SQLiteBindParams = [
+        parentId,
+        bow.type.toString(),
+        bow.drawWeight,
+      ];
 
       db.runAsync(sql, params)
         .then(result => {
