@@ -1,11 +1,11 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback, useState } from 'react';
 import { Text, View } from 'react-native';
-import { ShootSession } from '../models/ShootSession';
-import LocalDb from '../sqlite/LocalDb';
+import { ShootSessionData } from '../../models/ShootSessionData';
+import LocalDb from '../../sqlite/LocalDb';
 
 export default function HistoryPage() {
-  const [shootSessions, setShootSessions] = useState<ShootSession[]>([]);
+  const [shootSessions, setShootSessions] = useState<ShootSessionData[]>([]);
 
   /*
   Makes effect only run when values are changed, cannot use hooks as we're changing screen
@@ -13,7 +13,7 @@ export default function HistoryPage() {
   */
   useFocusEffect(
     useCallback(() => {
-      LocalDb.GetAll<ShootSession>(LocalDb.SHOOTSESSIONS_TABLE_NAME).then(
+      LocalDb.GetAll<ShootSessionData>(LocalDb.SHOOTSESSIONS_TABLE_NAME).then(
         results => {
           setShootSessions(results);
         },
@@ -21,7 +21,7 @@ export default function HistoryPage() {
     }, []),
   );
 
-  return shootSessions.map((shootSession: ShootSession, index) => {
+  return shootSessions.map((shootSession: ShootSessionData, index) => {
     console.log('Loaded session', shootSession);
     return (
       <View key={index}>

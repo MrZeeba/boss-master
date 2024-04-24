@@ -1,9 +1,9 @@
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { globalStyles } from '../globalStyles';
-import HistoryPage from '../pages/HistoryPage';
 import ProfilePage from '../pages/ProfilePage';
 import SettingsPage from '../pages/SettingsPage';
+import HistoryPage from '../pages/ShootSessions/HistoryPage';
 import EquipmentStack from './EquipmentStack';
 import ShootSessionStack from './ShootSessionStack';
 

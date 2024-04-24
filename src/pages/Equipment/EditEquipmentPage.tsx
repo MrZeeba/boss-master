@@ -2,18 +2,18 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Alert, View } from 'react-native';
-import Button from '../Components/CustomButton';
-import CustomImagePicker from '../Components/CustomImagePicker';
-import CustomNotesInput from '../Components/CustomNotesInput';
-import CustomPicker from '../Components/CustomPicker';
-import CustomTextInput from '../Components/CustomTextInput';
-import { BOWTYPE } from '../Enums/BowType';
-import { EquipmentType } from '../Enums/EquipmentType';
-import { Bow } from '../models/Bow';
-import { Equipment } from '../models/Equipment';
-import { BowDb } from '../sqlite/BowDb';
-import { EquipmentDb } from '../sqlite/EquipmentDb';
-import LocalDb from '../sqlite/LocalDb';
+import Button from '../../Components/CustomButton';
+import CustomImagePicker from '../../Components/CustomImagePicker';
+import CustomNotesInput from '../../Components/CustomNotesInput';
+import CustomPicker from '../../Components/CustomPicker';
+import CustomTextInput from '../../Components/CustomTextInput';
+import { BOWTYPE } from '../../Enums/BowType';
+import { EquipmentType } from '../../Enums/EquipmentType';
+import { Bow } from '../../models/Bow';
+import { Equipment } from '../../models/Equipment';
+import { BowDb } from '../../sqlite/BowDb';
+import { EquipmentDb } from '../../sqlite/EquipmentDb';
+import LocalDb from '../../sqlite/LocalDb';
 
 export default function EditEquipmentPage({ navigation }) {
   const maxNameLength: number = 25;
@@ -115,7 +115,7 @@ export default function EditEquipmentPage({ navigation }) {
       <CustomImagePicker
         name="image"
         control={control}
-        placeholderSrc={require('../../assets/bow_placeholder.png')}
+        placeholderSrc={require('../../../assets/bow_placeholder.png')}
       />
       <CustomPicker
         name="bowType"

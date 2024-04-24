@@ -13,29 +13,27 @@ Equipment is currently just a bow but may be expanded in the future
 export default function ShootSessionStack({ navigation }) {
   const ShootSessionStack = createStackNavigator();
 
-  const eggs = false;
+  const draft = false;
 
   useFocusEffect(
     useCallback(() => {
       console.log('User has focused modal');
 
-      eggs
-        ? navigation.navigate('EditScorecardPage')
-        : navigation.navigate('NewShootSessionPage');
+      if (draft) navigation.navigate('EditScorecardPage');
     }, []),
   );
 
   return (
-    <ShootSessionStack.Navigator>
-      <ShootSessionStack.Screen
-        name="EditScorecardPage"
-        component={EditScorecardPage}
-        options={{ title: 'Scorecard' }}
-      />
+    <ShootSessionStack.Navigator initialRouteName="NewShootSessionPage">
       <ShootSessionStack.Screen
         name="NewShootSessionPage"
         component={NewShootSessionPage}
         options={{ title: 'New session' }}
+      />
+      <ShootSessionStack.Screen
+        name="EditScorecardPage"
+        component={EditScorecardPage}
+        options={{ title: 'Scorecard', headerLeft: () => null }}
       />
     </ShootSessionStack.Navigator>
   );

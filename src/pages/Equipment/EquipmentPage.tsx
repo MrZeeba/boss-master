@@ -5,10 +5,10 @@ import { Feather } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import CustomCard from '../Components/CustomCard';
-import { globalStyles } from '../globalStyles';
-import { Equipment } from '../models/Equipment';
-import LocalDB from '../sqlite/LocalDb';
+import CustomCard from '../../Components/CustomCard';
+import { globalStyles } from '../../globalStyles';
+import { Equipment } from '../../models/Equipment';
+import LocalDB from '../../sqlite/LocalDb';
 
 /*
 Equipment is currently just a bow but may be expanded in the future

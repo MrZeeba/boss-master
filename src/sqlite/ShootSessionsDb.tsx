@@ -1,4 +1,4 @@
-import { ShootSession } from '../models/ShootSession';
+import { ShootSession } from '../models/ShootSessionData';
 import LocalDb, { default as LocalDB } from './LocalDb';
 
 /*
