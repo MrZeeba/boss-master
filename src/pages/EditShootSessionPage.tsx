@@ -20,7 +20,7 @@ export default function EditShootSessionPage() {
     session.note = 'Hello! I am a note!';
 
     const bow = new Bow();
-    bow.type = BOWTYPE.Recurve;
+    bow.classification = BOWTYPE.Recurve;
     session.bow = bow;
 
     const date = new Date().toISOString();

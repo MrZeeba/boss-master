@@ -48,6 +48,7 @@ export function EditEquipmentPage({ navigation }) {
     equipment.notes = data.notes;
 
     const bow = new Bow();
+    bow.classification = data.bowType;
     bow.drawWeight = data.drawweight;
 
     const equipmentDb = EquipmentDb.GetInstance();
