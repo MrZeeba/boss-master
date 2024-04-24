@@ -1,53 +1,67 @@
+/*
+The root stack for the equipment page
+*/
+import { Feather } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
-import { useCallback, useState } from 'react';
-import { Button, Text, View } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import CustomCard from '../Components/CustomCard';
+import { globalStyles } from '../globalStyles';
 import { Equipment } from '../models/Equipment';
-import { Create, tableName as equipmentTableName } from '../sqlite/EquipmentDb';
-import { DropTable, GetAll, TruncateTable } from '../sqlite/LocalDb';
+import LocalDB from '../sqlite/LocalDb';
 
-export default function EquipmentPage() {
+/*
+Equipment is currently just a bow but may be expanded in the future
+*/
+export default function EquipmentPage({ navigation }) {
   const [equipmentList, setEquipmentList] = useState<Equipment[]>([]);
 
   useFocusEffect(
     useCallback(() => {
-      GetAll<Equipment>('equipment', results => setEquipmentList(results));
+      LocalDB.GetAll<Equipment>(LocalDB.EQUIPMENT_TABLE_NAME)
+        .then(results => setEquipmentList(results))
+        .catch(error =>
+          console.error('Critical error loading equipment results', error),
+        );
     }, []),
   );
 
-  async function NewItemPressed() {
-    const equipment = new Equipment();
-    equipment.name = 'I am equipment!';
-
-    Create(equipment, id => {
-      console.log(`New equipment created with id ${id}`);
+  //Hook into the header add item icon
+  useEffect(() => {
+    // Use `setOptions` to setup the button
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          onPress={() => navigation.navigate('EditEquipmentPage')}>
+          <Feather
+            name="plus"
+            size={32}
+            color="black"
+            style={{ marginRight: 20 }}
+          />
+        </TouchableOpacity>
+      ),
     });
-  }
-
-  async function DeleteTablePressed() {
-    DropTable(equipmentTableName, sqlResults => {
-      console.log(sqlResults);
-    });
-  }
-
-  async function TruncateTablePressed() {
-    TruncateTable(equipmentTableName, sqlResults => {
-      console.log(`${sqlResults} rows deleted`);
-    });
-  }
-
+  }, [navigation]);
+  console.log(equipmentList.length);
   return (
-    <View>
-      <Text>equipment!</Text>
-      <Button onPress={NewItemPressed} title="Add temp equipment data" />
-      <Button onPress={DeleteTablePressed} title="Delete ALL data & schema" />
-      <Button onPress={TruncateTablePressed} title="Truncate ALL data" />
-      {equipmentList.map(equipment => {
-        return (
-          <View key={equipment.id}>
-            <Text>{equipment.name}</Text>
-          </View>
-        );
-      })}
+    <View style={globalStyles.pageContainer}>
+      <ScrollView>
+        {equipmentList.length > 0 ? (
+          equipmentList.map(equipment => (
+            <CustomCard
+              key={equipment.id}
+              image={equipment.image}
+              placeholderImageUri="../../assets/bow_placeholder.png"
+              heading={equipment.name}
+              fieldOne={equipment.type.name}
+              fieldTwo={equipment.notes}
+            />
+          ))
+        ) : (
+          <Text>No equipment found</Text>
+        )}
+      </ScrollView>
     </View>
   );
 }

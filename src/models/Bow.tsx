@@ -1,6 +1,9 @@
-import { BowType } from '../enums/BowType';
-import { Equipment } from './Equipment';
+import { DropdownObject } from './DropdownObject';
 
-export class Bow extends Equipment {
-  type: BowType;
+export class Bow {
+  id: number;
+  name: string;
+  type: DropdownObject;
+  length: number;
+  drawWeight: number;
 }

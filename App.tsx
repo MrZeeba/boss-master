@@ -1,15 +1,17 @@
 import { NavigationContainer } from '@react-navigation/native';
-import NavigationBar from './src/navigation/NavigationBar';
-import { Validate as ValidateEquipment } from './src/sqlite/EquipmentDb';
-import { Validate as ValidateShootSessions } from './src/sqlite/ShootSessionsDb';
+import TabNavigation from './src/navigation/TabNavigation';
+import { BowDb } from './src/sqlite/BowDb';
+import { EquipmentDb } from './src/sqlite/EquipmentDb';
+import { ShootSessionsDb } from './src/sqlite/ShootSessionsDb';
 
 export default function App() {
-  ValidateEquipment();
-  ValidateShootSessions();
+  EquipmentDb.GetInstance().Validate();
+  BowDb.GetInstance().Validate();
+  ShootSessionsDb.GetInstance().Validate();
 
   return (
     <NavigationContainer>
-      <NavigationBar />
+      <TabNavigation />
     </NavigationContainer>
   );
 }
