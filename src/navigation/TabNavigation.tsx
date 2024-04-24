@@ -1,11 +1,11 @@
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { globalStyles } from '../globalStyles';
-import EditShootSession from '../pages/EditShootSessionPage';
 import HistoryPage from '../pages/HistoryPage';
 import ProfilePage from '../pages/ProfilePage';
 import SettingsPage from '../pages/SettingsPage';
 import EquipmentStack from './EquipmentStack';
+import ShootSessionStack from './ShootSessionStack';
 
 const Tab = createBottomTabNavigator();
 const iconSize: number = 32;
@@ -50,8 +50,9 @@ export default function TabNavigation() {
       />
       <Tab.Screen
         name="Shoot"
-        component={EditShootSession}
+        component={ShootSessionStack}
         options={{
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <Feather name="target" size={largeIconSize} color={color} />
           ),

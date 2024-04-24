@@ -7,7 +7,7 @@ import { ShootSession } from '../models/ShootSession';
 import RoundData from '../models/data/rounds.json';
 import { ShootSessionsDb } from '../sqlite/ShootSessionsDb';
 
-export default function EditShootSessionPage() {
+export default function EditShootSessionPage({ navigation }) {
   return (
     <View>
       <Text>{RoundData.rounds.indoor.portsmouth.displayName}</Text>

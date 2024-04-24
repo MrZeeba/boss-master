@@ -2,7 +2,7 @@
 The root stack for the equipment page
 */
 import { createStackNavigator } from '@react-navigation/stack';
-import { EditEquipmentPage } from '../pages/EditEquipmentPage';
+import EditEquipmentPage from '../pages/EditEquipmentPage';
 import EquipmentPage from '../pages/EquipmentPage';
 
 /*

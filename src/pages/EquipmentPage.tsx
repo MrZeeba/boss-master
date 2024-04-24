@@ -43,7 +43,6 @@ export default function EquipmentPage({ navigation }) {
       ),
     });
   }, [navigation]);
-  console.log(equipmentList.length);
   return (
     <View style={globalStyles.pageContainer}>
       <ScrollView>

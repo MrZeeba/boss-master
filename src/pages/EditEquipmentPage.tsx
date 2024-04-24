@@ -15,7 +15,7 @@ import { BowDb } from '../sqlite/BowDb';
 import { EquipmentDb } from '../sqlite/EquipmentDb';
 import LocalDb from '../sqlite/LocalDb';
 
-export function EditEquipmentPage({ navigation }) {
+export default function EditEquipmentPage({ navigation }) {
   const maxNameLength: number = 25;
   const [savePressed, setSavePressed] = useState(false);
 
