@@ -3,9 +3,10 @@ The root stack for the shooting sessions
 */
 import { useFocusEffect } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import EditScorecardPage from '../pages/ShootSessions/EditScorecardPage';
 import NewShootSessionPage from '../pages/ShootSessions/NewShootSessionPage';
+import { ShootSessionsDb } from '../sqlite/ShootSessionDb';
 
 /*
 Equipment is currently just a bow but may be expanded in the future
@@ -13,13 +14,13 @@ Equipment is currently just a bow but may be expanded in the future
 export default function ShootSessionStack({ navigation }) {
   const ShootSessionStack = createStackNavigator();
 
-  const draft = false;
+  const [draft, setDraft] = useState<Scorecard>();
 
   useFocusEffect(
     useCallback(() => {
-      console.log('User has focused modal');
+      setDraft(ShootSessionsDb.GetDraft());
 
-      if (draft) navigation.navigate('EditScorecardPage');
+      if (isDraft) navigation.navigate('EditScorecardPage');
     }, []),
   );
 

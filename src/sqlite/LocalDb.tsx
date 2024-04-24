@@ -8,7 +8,8 @@ export default class LocalDb {
   static DATABASE_PATH: string =
     FileSystem.documentDirectory + `/SQLite/${LocalDb.DATABASE_NAME}`;
 
-  static SHOOTSESSIONS_TABLE_NAME: string = 'shoot_sessions';
+  static SHOOTSESSION_TABLE_NAME: string = 'shoot_session';
+  static END_TABLE_NAME: string = 'end';
   static EQUIPMENT_TABLE_NAME: string = 'equipment';
   static BOW_TABLE_NAME: string = 'bow';
 

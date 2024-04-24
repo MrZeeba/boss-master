@@ -15,7 +15,7 @@ export class ShootSessionsDb implements ITable<ShootSession> {
   }
 
   Validate() {
-    const sql = `CREATE TABLE IF NOT EXISTS ${LocalDB.SHOOTSESSIONS_TABLE_NAME} 
+    const sql = `CREATE TABLE IF NOT EXISTS ${LocalDB.SHOOTSESSION_TABLE_NAME} 
     (id INTEGER PRIMARY KEY AUTOINCREMENT, 
     note TEXT,
     date_shot TEXT,
@@ -24,14 +24,14 @@ export class ShootSessionsDb implements ITable<ShootSession> {
       REFERENCES equipment(id)
     )`;
 
-    LocalDb.Validate(sql, LocalDB.SHOOTSESSIONS_TABLE_NAME);
+    LocalDb.Validate(sql, LocalDB.SHOOTSESSION_TABLE_NAME);
   }
 
   Create(session: ShootSession, callback: (id: number | undefined) => void) {
     console.log('Attempting to insert shooting session', { session });
 
     LocalDB.ExecuteTransaction(
-      `INSERT INTO ${LocalDB.SHOOTSESSIONS_TABLE_NAME} (bow_id, note, date_shot) VALUES(?, ?, ?)`,
+      `INSERT INTO ${LocalDB.SHOOTSESSION_TABLE_NAME} (bow_id, note, date_shot) VALUES(?, ?, ?)`,
       [session.bow.type.id, session.note, session.dateShot],
       (_, resultSet) => {
         callback(resultSet.insertId);
