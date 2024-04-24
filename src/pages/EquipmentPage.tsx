@@ -18,9 +18,11 @@ export default function EquipmentPage({ navigation }) {
 
   useFocusEffect(
     useCallback(() => {
-      LocalDB.GetAll<Equipment>(LocalDB.EQUIPMENT_TABLE_NAME, results =>
-        setEquipmentList(results),
-      );
+      LocalDB.GetAll<Equipment>(LocalDB.EQUIPMENT_TABLE_NAME)
+        .then(results => setEquipmentList(results))
+        .catch(error =>
+          console.error('Critical error loading equipment results', error),
+        );
     }, []),
   );
 

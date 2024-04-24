@@ -66,12 +66,9 @@ export default class LocalDb {
   /*
   Return all of a type
   */
-  static GetAll<Type>(tableName: string, callback: (result: Type[]) => void) {
-    this.db
-      ?.getAllAsync<Type>(`SELECT * FROM ${tableName}`)
-      .then(result => console.log('Promise completed with result', result))
-      .catch(error => console.log('Uh oh', error))
-      .finally(() => console.log("I'm doing this anyway"));
+  static GetAll<Type>(tableName: string): Promise<Type[]> {
+    const db = this.GetDatabaseInstance();
+    return db.getAllAsync<Type>(`SELECT * FROM ${tableName}`);
   }
 
   /*
@@ -102,6 +99,11 @@ export default class LocalDb {
         },
       );
     });
+  }
+
+  static Delete(tableName: string, rowId: number) {
+    const db = this.GetDatabaseInstance();
+    console.error('Not implemented!');
   }
 
   /*

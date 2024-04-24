@@ -13,6 +13,7 @@ import { Bow } from '../models/Bow';
 import { Equipment } from '../models/Equipment';
 import { BowDb } from '../sqlite/BowDb';
 import { EquipmentDb } from '../sqlite/EquipmentDb';
+import LocalDb from '../sqlite/LocalDb';
 
 export function EditEquipmentPage({ navigation }) {
   const maxNameLength: number = 25;
@@ -50,20 +51,37 @@ export function EditEquipmentPage({ navigation }) {
     bow.drawWeight = data.drawweight;
 
     const equipmentDb = EquipmentDb.GetInstance();
-    equipmentDb.Create(equipment, id => {
-      console.log(
-        `New equipment created with id ${id}, creating child record...`,
-      );
 
-      const bowDb = BowDb.GetInstance();
-      bowDb.Create(bow, id, bowId => {
+    equipmentDb
+      .Create(equipment)
+      .then(id => {
         console.log(
-          `New bow child record of equipment ${id} created with id`,
-          bowId,
+          `New equipment created with id ${id}, creating child record...`,
         );
+
+        const bowDb = BowDb.GetInstance();
+        bowDb
+          .Create(bow, id)
+          .then(bowId => {
+            console.log(
+              `New bow child record of equipment ${id} created with id`,
+              bowId,
+            );
+            navigation.goBack();
+          })
+          .catch(error => {
+            console.warn(
+              'Failed to create bow child record, rolling back parent with id',
+              id,
+              error,
+            );
+            LocalDb.Delete(LocalDb.EQUIPMENT_TABLE_NAME, id);
+          });
+      })
+      .catch(error => {
+        //Display or deal with error
+        console.warn(error);
       });
-      navigation.goBack();
-    });
   }
 
   function BeforeLeave(leaveData) {

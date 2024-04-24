@@ -1,3 +1,4 @@
+import { SQLiteBindParams } from 'expo-sqlite/next';
 import { Bow } from '../models/Bow';
 import LocalDb, { default as LocalDB } from './LocalDb';
 
@@ -27,33 +28,22 @@ export class BowDb implements IChildTable<Bow> {
     LocalDb.Validate(sql, LocalDB.BOW_TABLE_NAME);
   }
 
-  Create(
-    item: Bow,
-    parentId: number,
-    callback: (id: number | undefined) => void,
-  ) {
-    LocalDB.ExecuteTransaction(
-      `INSERT INTO ${LocalDB.BOW_TABLE_NAME} (equipment_id, draw_weight) VALUES(?, ?)`,
-      [parentId, item.drawWeight],
-      (_, resultSet) => {
-        console.log('Success');
-        if (resultSet.insertId) callback(resultSet.insertId);
-      },
-      (_, error) => {
-        console.warn(error);
-        return false;
-      },
-    );
-  }
+  Create(bow: Bow, parentId: number): Promise<number> {
+    return new Promise<number>((success, fail) => {
+      const db = LocalDb.GetDatabaseInstance();
 
-  GetAll(callback: (result: Bow[]) => void) {
-    throw new Error('Function not implemented.');
-  }
+      const sql: string = `INSERT INTO ${LocalDB.BOW_TABLE_NAME} (equipment_id, draw_weight) VALUES(?, ?)`;
+      const params: SQLiteBindParams = [parentId, bow.drawWeight];
 
-  Delete(
-    id: number,
-    callback: (result: { errors: string; recordsDeleted: number }) => void,
-  ) {
-    throw new Error('Function not implemented.');
+      db.runAsync(sql, params)
+        .then(result => {
+          console.log('Changes made', result.changes);
+          success(result.lastInsertRowId);
+        })
+        .catch(error => {
+          console.warn('Failed to create record', error);
+          fail(error);
+        });
+    });
   }
 }
