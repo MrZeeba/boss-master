@@ -30,6 +30,7 @@ export class BowDb implements IChildTable<Bow> {
   }
 
   Create(bow: Bow, parentId: number): Promise<number> {
+    console.log('Attempting to create bow', bow);
     return new Promise<number>((success, fail) => {
       const db = LocalDb.GetDatabaseInstance();
 

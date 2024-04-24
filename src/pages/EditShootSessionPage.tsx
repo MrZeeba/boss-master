@@ -1,14 +1,16 @@
 import React from 'react';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 import Button from '../Components/CustomButton';
 import { BOWTYPE } from '../Enums/BowType';
 import { Bow } from '../models/Bow';
 import { ShootSession } from '../models/ShootSession';
+import RoundData from '../models/data/rounds.json';
 import { ShootSessionsDb } from '../sqlite/ShootSessionsDb';
 
 export default function EditShootSessionPage() {
   return (
     <View>
+      <Text>{RoundData.rounds.indoor.portsmouth.displayName}</Text>
       <Button title="Add temp session data" onPress={NewItemPressed} />
     </View>
   );

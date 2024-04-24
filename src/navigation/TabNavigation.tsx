@@ -9,6 +9,7 @@ import EquipmentStack from './EquipmentStack';
 
 const Tab = createBottomTabNavigator();
 const iconSize: number = 32;
+const largeIconSize: number = 46;
 
 export default function TabNavigation() {
   return (
@@ -20,15 +21,6 @@ export default function TabNavigation() {
           fontSize: 16,
         },
       }}>
-      <Tab.Screen
-        name="Shoot"
-        component={EditShootSession}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <Feather name="target" size={iconSize} color={color} />
-          ),
-        }}
-      />
       <Tab.Screen
         name="History"
         component={HistoryPage}
@@ -53,6 +45,15 @@ export default function TabNavigation() {
               size={iconSize}
               color={color}
             />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Shoot"
+        component={EditShootSession}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <Feather name="target" size={largeIconSize} color={color} />
           ),
         }}
       />

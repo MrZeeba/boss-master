@@ -75,7 +75,7 @@ export function EditEquipmentPage({ navigation }) {
               id,
               error,
             );
-            LocalDb.Delete(LocalDb.EQUIPMENT_TABLE_NAME, id);
+            LocalDb.DeleteRecord(LocalDb.EQUIPMENT_TABLE_NAME, id);
           });
       })
       .catch(error => {

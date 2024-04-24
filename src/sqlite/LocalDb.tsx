@@ -101,9 +101,22 @@ export default class LocalDb {
     });
   }
 
-  static Delete(tableName: string, rowId: number) {
+  static async DeleteRecord(tableName: string, rowId: number) {
     const db = this.GetDatabaseInstance();
-    console.error('Not implemented!');
+
+    const sql: string = `DELETE FROM ${tableName} WHERE id = ?`;
+    const params: SQLite.SQLiteBindParams = [rowId];
+
+    await db
+      .runAsync(sql, params)
+      .then(result => {
+        console.log(
+          `${result.changes} rows deleted from ${tableName} with id ${rowId}`,
+        );
+      })
+      .catch(error => {
+        console.log('Failed to delete row', error);
+      });
   }
 
   /*
