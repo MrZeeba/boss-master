@@ -1,5 +1,5 @@
 import { Text, View } from 'react-native';
-import { ShootSessionData } from '../../models/ShootSessionData';
+import { ShootSession } from '../../models/ShootSession';
 
 /*
 An active scoring session. This is someone in the middle of shooting a round
@@ -9,7 +9,7 @@ export default function EditScorecardPage({
   sessionData,
 }: {
   navigation: any;
-  sessionData: ShootSessionData;
+  sessionData: ShootSession;
 }) {
   return (
     <View>

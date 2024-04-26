@@ -2,7 +2,7 @@
 import * as SQLite from 'expo-sqlite';
 import { BowType } from '../../Enums/BowType';
 import { Bow } from '../../models/Bow';
-import { ShootSession } from '../../models/ShootSessionData';
+import { ShootSession } from '../../models/ShootSession';
 import * as LocalDB from '../LocalDb';
 import { Create } from '../ShootSessionDb';
 

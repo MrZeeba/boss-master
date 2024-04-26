@@ -1,6 +1,6 @@
 import { Bow } from './Bow';
 
-export class ShootSessionData {
+export class ShootSession {
   id: number | undefined;
   dateShot: string;
   bow: Bow;

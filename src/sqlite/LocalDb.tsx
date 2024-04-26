@@ -39,6 +39,7 @@ export default class LocalDb {
       this.db = SQLite.openDatabaseSync(LocalDb.DATABASE_NAME);
       console.log('Established a new connection to the database');
     }
+
     return this.db;
   }
 
@@ -70,6 +71,32 @@ export default class LocalDb {
   static GetAll<Type>(tableName: string): Promise<Type[]> {
     const db = this.GetDatabaseInstance();
     return db.getAllAsync<Type>(`SELECT * FROM ${tableName}`);
+  }
+
+  /*
+  Return a specific record by type
+  */
+  static GetById<Type>(
+    tableName: string,
+    id: number,
+    idColumn: string = 'id',
+  ): Promise<Type | null> {
+    const db = this.GetDatabaseInstance();
+    return db.getFirstAsync<Type>(
+      `SELECT TOP(1) FROM ${tableName} WHERE ? = ?`,
+      [idColumn, id],
+    );
+  }
+
+  /*
+  Performs a query on the database and returns the result promise
+  */
+  static GetBySQL<Type>(
+    sql: string,
+    params: SQLite.SQLiteBindParams,
+  ): Promise<Type[]> {
+    const db = this.GetDatabaseInstance();
+    return db.getAllAsync<Type>(sql, params);
   }
 
   /*

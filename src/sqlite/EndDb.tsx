@@ -16,7 +16,7 @@ export class EndDb implements IChildTable<End> {
 
   Validate() {
     const sql: string = `
-        CREATE TABLE ${LocalDb.END_TABLE_NAME} (
+        CREATE TABLE IF NOT EXISTS ${LocalDb.END_TABLE_NAME} (
             "id"	INTEGER,
             "shoot_session_id"	INTEGER,
             "image"	INTEGER,
