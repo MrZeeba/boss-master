@@ -52,20 +52,24 @@ export class ShootSessionDb implements ITable<ShootSession> {
       });
   }
 
-  Create(session: ShootSession, callback: (id: number | undefined) => void) {
+  Create(session: ShootSession): Promise<number | undefined> {
     console.log('Attempting to insert shooting session', { session });
 
-    LocalDB.ExecuteTransaction(
-      `INSERT INTO ${LocalDB.SHOOTSESSION_TABLE_NAME} (bow_id, note, date_shot) VALUES(?, ?, ?)`,
-      [session.bow.type.id, session.note, session.dateShot],
-      (_, resultSet) => {
-        callback(resultSet.insertId);
-      },
-      (_, error) => {
-        console.warn(error);
-        callback(undefined);
-        return false;
-      },
-    );
+    const sql: string = `INSERT INTO ${LocalDb.SHOOTSESSION_TABLE_NAME} (bow_id, note, date_shot) VALUES (?, ?, ?)`;
+
+    const params: SQLiteBindParams = [
+      session.bow.type.id,
+      session.note,
+      session.dateShot,
+    ];
+
+    return LocalDb.Insert(sql, params)
+      .then(id => {
+        return id;
+      })
+      .catch(error => {
+        console.error(error);
+        return undefined;
+      });
   }
 }

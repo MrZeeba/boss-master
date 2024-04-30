@@ -100,6 +100,30 @@ export default class LocalDb {
   }
 
   /*
+  Performs an insert statement on the database and returns the last inserted ID
+  */
+  static Insert(
+    sql: string,
+    params: SQLite.SQLiteBindParams,
+  ): Promise<number | undefined> {
+    const db = this.GetDatabaseInstance();
+
+    return db
+      .runAsync(sql, params)
+      .then(result => {
+        if (result.changes > 0) {
+          return result.lastInsertRowId;
+        } else {
+          return undefined; // No rows were inserted
+        }
+      })
+      .catch(error => {
+        console.error('Error inserting data:', error);
+        throw error; // Rethrow the error for handling at a higher level
+      });
+  }
+
+  /*
   Deletes an entire table including the structure of it
   */
   static DropTable(
