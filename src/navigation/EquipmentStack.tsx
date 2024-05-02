@@ -2,6 +2,7 @@
 The root stack for the equipment page
 */
 import { createStackNavigator } from '@react-navigation/stack';
+import { globalConstants } from '../globalConstants';
 import EditEquipmentPage from '../pages/Equipment/EditEquipmentPage';
 import EquipmentPage from '../pages/Equipment/EquipmentPage';
 
@@ -14,12 +15,12 @@ export default function EquipmentStack() {
   return (
     <EquipmentStack.Navigator>
       <EquipmentStack.Screen
-        name="EquipmentPage"
+        name={globalConstants.routes.equipmentPage}
         component={EquipmentPage}
         options={{ title: 'Equipment (Bows)' }}
       />
       <EquipmentStack.Screen
-        name="EditEquipmentPage"
+        name={globalConstants.routes.editEquipmentPage}
         component={EditEquipmentPage}
         options={{ title: 'Create Bow' }}
       />

@@ -4,6 +4,7 @@ The root stack for the shooting sessions
 import { useFocusEffect } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useCallback, useState } from 'react';
+import { globalConstants } from '../globalConstants';
 import { ShootSession } from '../models/ShootSession';
 import EditScorecardPage from '../pages/ShootSessions/EditScorecardPage';
 import NewShootSessionPage from '../pages/ShootSessions/NewShootSessionPage';
@@ -23,19 +24,20 @@ export default function ShootSessionStack({ navigation }) {
     useCallback(() => {
       shootSessionDb.GetDraft().then(draft => setDraft(draft));
 
-      if (draft) navigation.navigate('EditScorecardPage');
+      if (draft) navigation.navigate(globalConstants.routes.scoreCardPage);
     }, []),
   );
 
   return (
-    <ShootSessionStack.Navigator initialRouteName="NewShootSessionPage">
+    <ShootSessionStack.Navigator
+      initialRouteName={globalConstants.routes.newShootSessionPage}>
       <ShootSessionStack.Screen
-        name="NewShootSessionPage"
+        name={globalConstants.routes.newShootSessionPage}
         component={NewShootSessionPage}
         options={{ title: 'New session' }}
       />
       <ShootSessionStack.Screen
-        name="EditScorecardPage"
+        name={globalConstants.routes.scoreCardPage}
         component={EditScorecardPage}
         options={{ title: 'Scorecard', headerLeft: () => null }}
       />

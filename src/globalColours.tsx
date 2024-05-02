@@ -1,7 +1,8 @@
 export const globalColours = {
-  primary: 'green',
+  primary: '#72705B', //emerald
   border: 'lightgrey',
   separator: 'lightgrey',
-  secondary: 'gold',
+  secondary: '#50C878', //green
+  highlight: '#E8C547', //gold highlight
   errorBorder: 'red',
 };
