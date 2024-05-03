@@ -13,7 +13,7 @@ export default function HistoryPage() {
   */
   useFocusEffect(
     useCallback(() => {
-      LocalDb.GetAll<ShootSession>(LocalDb.SHOOTSESSIONS_TABLE_NAME).then(
+      LocalDb.GetAll<ShootSession>(LocalDb.SHOOTSESSION_TABLE_NAME).then(
         results => {
           setShootSessions(results);
         },
