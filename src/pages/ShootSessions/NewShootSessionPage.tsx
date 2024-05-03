@@ -2,6 +2,7 @@ import { Feather } from '@expo/vector-icons';
 import { View } from 'react-native';
 import CustomButton from '../../Components/CustomButton';
 import { globalColours } from '../../globalColours';
+import { globalConstants } from '../../globalConstants';
 import { globalStyles } from '../../globalStyles';
 import * as RoundData from '../../models/data/rounds.json';
 
@@ -16,17 +17,23 @@ export default function NewShootSessionPage({ navigation }) {
         icon={
           <Feather name="target" size={50} color={globalColours.secondary} />
         }
-        onPress={() => console.log('Eggs!')}
+        onPress={() => {
+          navigation.navigate(globalConstants.routes.practiceSessionPage);
+        }}
       />
       <CustomButton
         title={RoundData.types.outdoor.displayName}
         icon={<Feather name="sun" size={50} color={globalColours.secondary} />}
-        onPress={() => console.log('Bacon!')}
+        onPress={() => {
+          navigation.navigate(globalConstants.routes.outdoorSessionPage);
+        }}
       />
       <CustomButton
         title={RoundData.types.indoor.displayName}
         icon={<Feather name="home" size={50} color={globalColours.secondary} />}
-        onPress={() => console.log('Hello!')}
+        onPress={() => {
+          navigation.navigate(globalConstants.routes.indoorSessionPage);
+        }}
       />
     </View>
   );
