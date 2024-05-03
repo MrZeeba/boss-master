@@ -7,10 +7,10 @@ import CustomImagePicker from '../../Components/CustomImagePicker';
 import CustomNotesInput from '../../Components/CustomNotesInput';
 import CustomPicker from '../../Components/CustomPicker';
 import CustomTextInput from '../../Components/CustomTextInput';
-import { BOWTYPE } from '../../Enums/BowType';
 import { EquipmentType } from '../../Enums/EquipmentType';
 import { Bow } from '../../models/Bow';
 import { Equipment } from '../../models/Equipment';
+import * as BowTypes from '../../models/data/bowtype.json';
 import { BowDb } from '../../sqlite/BowDb';
 import { EquipmentDb } from '../../sqlite/EquipmentDb';
 import LocalDb from '../../sqlite/LocalDb';
@@ -120,7 +120,7 @@ export default function EditEquipmentPage({ navigation }) {
       <CustomPicker
         name="bowType"
         labelText="Type"
-        data={BOWTYPE}
+        data={BowTypes}
         control={control}
         rules={{ required: 'A type of bow is required' }}
       />

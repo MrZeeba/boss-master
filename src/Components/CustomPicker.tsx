@@ -5,13 +5,12 @@ import { StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { globalColours } from '../globalColours';
 import { globalStyles } from '../globalStyles';
-import { DropdownObject } from '../models/DropdownObject';
 
 interface CustomTextInputProps {
   control: Control<any, any>;
   name: string;
   labelText: string;
-  data: { [key: string]: DropdownObject };
+  data: object;
   defaultValue?: string;
   onSelect?: (value: string) => void;
   rules: object;
@@ -98,27 +97,27 @@ export default function CustomPicker({
     onSelect,
     hookOnChange,
   }: {
-    data: { [key: string]: DropdownObject };
+    data: object;
     onSelect: (item: string) => void;
-    hookOnChange: (value: DropdownObject) => void;
+    hookOnChange: (value: string) => void;
   }) {
     return (
       <View style={globalStyles.container}>
-        {Object.values(data).map(item => (
+        {Object.keys(data).map(key => (
           <TouchableOpacity
-            key={item.id}
+            key={key}
             onPress={() => {
-              onSelect(item.name);
+              onSelect(data[key]);
               //To pass validation for react hook form
-              hookOnChange(item);
+              hookOnChange(data[key]);
             }}>
             <Text
               style={
-                Object.values(data).indexOf(item) > 0
+                Object.keys(data).indexOf(key) > 0
                   ? [styles.item, styles.upperItemBorder]
                   : styles.item //First item should not have an upper border
               }>
-              {item.name}
+              {data[key].displayName}
             </Text>
           </TouchableOpacity>
         ))}
