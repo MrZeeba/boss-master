@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
 
   upperItemBorder: {
     borderTopWidth: 1,
-    borderColor: globalColours.separator,
+    borderColor: globalColours.lightgrey,
   },
 
   iconContainer: {

@@ -51,4 +51,8 @@ export const globalStyles = StyleSheet.create({
   formArea: {
     margin: 10,
   },
+
+  selectedHighlight: {
+    backgroundColor: globalColours.lightgrey,
+  },
 });

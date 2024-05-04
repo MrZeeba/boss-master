@@ -6,9 +6,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { useCallback, useState } from 'react';
 import { globalConstants } from '../globalConstants';
 import { ShootSession } from '../models/ShootSession';
-import EditIndoorSessionPage from '../pages/ShootSessions/EditIndoorSessionPage';
-import EditOutdoorSessionPage from '../pages/ShootSessions/EditOutdoorSessionPage';
-import EditPracticeSessionPage from '../pages/ShootSessions/EditPracticeSessionPage';
 import EditScorecardPage from '../pages/ShootSessions/EditScorecardPage';
 import NewShootSessionPage from '../pages/ShootSessions/NewShootSessionPage';
 import { ShootSessionDb } from '../sqlite/ShootSessionDb';
@@ -43,21 +40,6 @@ export default function ShootSessionStack({ navigation }) {
         name={globalConstants.routes.scoreCardPage}
         component={EditScorecardPage}
         options={{ title: 'Scorecard', headerLeft: () => null }}
-      />
-      <ShootSessionStack.Screen
-        name={globalConstants.routes.practiceSessionPage}
-        component={EditPracticeSessionPage}
-        options={{ title: 'Practice Session' }}
-      />
-      <ShootSessionStack.Screen
-        name={globalConstants.routes.outdoorSessionPage}
-        component={EditOutdoorSessionPage}
-        options={{ title: 'Outdoor Session' }}
-      />
-      <ShootSessionStack.Screen
-        name={globalConstants.routes.indoorSessionPage}
-        component={EditIndoorSessionPage}
-        options={{ title: 'Indoor Session' }}
       />
     </ShootSessionStack.Navigator>
   );
