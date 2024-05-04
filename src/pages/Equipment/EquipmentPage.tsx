@@ -74,7 +74,7 @@ export default function EquipmentPage({ navigation, route }) {
 
   function goBack(selectedEquipment: Equipment) {
     console.log('Passing equipment back to previous screen', selectedEquipment);
-    navigation.navigate(prevScreen, { equipment: selectedEquipment });
+    navigation.navigate(prevScreen, { bow: selectedEquipment });
   }
 
   function view(equipment: Equipment) {

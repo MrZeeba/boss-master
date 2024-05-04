@@ -13,7 +13,7 @@ export default function ProfilePage() {
       <View style={{ backgroundColor: globalColours.primary, flex: 0.3 }}>
         <Text>#72705B</Text>
       </View>
-      <View style={{ backgroundColor: globalColours.thirdary, flex: 0.3 }}>
+      <View style={{ backgroundColor: globalColours.tertiary, flex: 0.3 }}>
         <Text>#E8C547</Text>
       </View>
       <View style={{ backgroundColor: globalColours.secondary, flex: 0.3 }}>

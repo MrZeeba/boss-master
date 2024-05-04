@@ -16,8 +16,8 @@ Metadata page for gathering information before a round can be shot such as the t
 */
 export default function NewShootSessionPage({ navigation, route }) {
   const [selected, setSelected] = useState('');
-  const { bow } = route.params;
-  const theBow = bow as Bow;
+  const { bow }: { bow: Bow } = route.params;
+  console.log('here', route.params);
 
   useEffect(() => {
     // Define your function here
@@ -37,14 +37,15 @@ export default function NewShootSessionPage({ navigation, route }) {
             })
           }
         />
-        {bow ?? (
+        {bow ? (
           <CustomCard
-            heading={theBow.name}
-            image={theBow.image}
-            fieldOne={theBow.notes}
-            fieldTwo={theBow.type}
+            image={bow.image}
+            placeholderImageUri="../../assets/bow_placeholder.png"
+            heading={bow.name}
+            fieldOne={bow.type.name}
+            fieldTwo={bow.notes}
           />
-        )}
+        ) : null}
       </View>
 
       <View style={styles.rowContainer}>
