@@ -110,6 +110,10 @@ export default function EditEquipmentPage({ navigation }) {
     }
   }
 
+  // Explicitly type bowTypesJson as ObjectWithDisplayName
+  const bowTypes: ObjectWithDisplayName =
+    BowTypes as unknown as ObjectWithDisplayName;
+
   return (
     <View>
       <CustomImagePicker
@@ -120,7 +124,7 @@ export default function EditEquipmentPage({ navigation }) {
       <CustomPicker
         name="bowType"
         labelText="Type"
-        data={BowTypes}
+        data={bowTypes}
         control={control}
         rules={{ required: 'A type of bow is required' }}
       />

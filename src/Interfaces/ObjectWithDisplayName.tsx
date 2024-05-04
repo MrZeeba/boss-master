@@ -1,0 +1,3 @@
+interface ObjectWithDisplayName {
+  displayName: string;
+}

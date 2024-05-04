@@ -2,8 +2,11 @@ import { Feather } from '@expo/vector-icons';
 import { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import CustomButton from '../../Components/CustomButton';
+import CustomCard from '../../Components/CustomCard';
 import { globalColours } from '../../globalColours';
+import { globalConstants } from '../../globalConstants';
 import { globalStyles } from '../../globalStyles';
+import { Bow } from '../../models/Bow';
 import * as RoundData from '../../models/data/rounds.json';
 import { IndoorSessionComponent } from './Components/IndoorSessionComponent';
 import { OutdoorSessionComponent } from './Components/OutdoorSessionComponent';
@@ -11,8 +14,10 @@ import { OutdoorSessionComponent } from './Components/OutdoorSessionComponent';
 /*
 Metadata page for gathering information before a round can be shot such as the type
 */
-export default function NewShootSessionPage({ navigation }) {
+export default function NewShootSessionPage({ navigation, route }) {
   const [selected, setSelected] = useState('');
+  const { bow } = route.params;
+  const theBow = bow as Bow;
 
   useEffect(() => {
     // Define your function here
@@ -22,10 +27,26 @@ export default function NewShootSessionPage({ navigation }) {
 
   return (
     <View style={globalStyles.pageContainer}>
-      <CustomButton
-        title="Select Bow"
-        onPress={() => console.log('Select bow was pressed')}
-      />
+      <View>
+        <CustomButton
+          title="Select Bow"
+          onPress={() =>
+            navigation.navigate(globalConstants.routes.equipmentPage, {
+              selectMode: true,
+              prevScreen: globalConstants.routes.newShootSessionPage,
+            })
+          }
+        />
+        {bow ?? (
+          <CustomCard
+            heading={theBow.name}
+            image={theBow.image}
+            fieldOne={theBow.notes}
+            fieldTwo={theBow.type}
+          />
+        )}
+      </View>
+
       <View style={styles.rowContainer}>
         <CustomButton
           title={RoundData.types.outdoor.displayName}
