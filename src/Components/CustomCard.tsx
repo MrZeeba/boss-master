@@ -8,6 +8,7 @@ interface CustomCardProps {
   placeholderImageUri?: string;
   fieldOne: string;
   fieldTwo: string;
+  disableTap?: boolean;
   onPress?: () => void;
 }
 
@@ -17,12 +18,11 @@ export default function CustomCard({
   placeholderImageUri,
   fieldOne,
   fieldTwo,
+  disableTap = false,
   onPress,
 }: CustomCardProps) {
-  return (
-    <TouchableOpacity
-      style={[styles.cardFlex, styles.cardContainer]}
-      onPress={onPress}>
+  const content = (
+    <>
       <Image
         id="image-thumbnail"
         style={styles.thumbnail}
@@ -35,6 +35,16 @@ export default function CustomCard({
         <Text>{fieldOne}</Text>
         <Text>{fieldTwo}</Text>
       </View>
+    </>
+  );
+
+  return disableTap ? (
+    <View style={[styles.cardFlex, styles.cardContainer]}>{content}</View>
+  ) : (
+    <TouchableOpacity
+      style={[styles.cardFlex, styles.cardContainer]}
+      onPress={onPress}>
+      {content}
     </TouchableOpacity>
   );
 }

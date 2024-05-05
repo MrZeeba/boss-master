@@ -44,6 +44,7 @@ export default function NewShootSessionPage({ navigation, route }) {
             heading={bow.name}
             fieldOne={bow.type.name}
             fieldTwo={bow.notes}
+            disableTap
           />
         ) : null}
       </View>
