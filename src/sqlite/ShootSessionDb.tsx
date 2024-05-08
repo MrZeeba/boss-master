@@ -20,6 +20,7 @@ export class ShootSessionDb implements ITable<ShootSession> {
       CREATE TABLE IF NOT EXISTS ${LocalDb.SHOOTSESSION_TABLE_NAME} (
       "id"	INTEGER,
       "note"	TEXT,
+      "round" TEXT,
       "dateShot"	TEXT,
       "bow_id"	INTEGER NOT NULL,
       "is_draft"	INTEGER,
@@ -53,14 +54,18 @@ export class ShootSessionDb implements ITable<ShootSession> {
   }
 
   Create(session: ShootSession): Promise<number | undefined> {
-    console.log('Attempting to insert shooting session', { session });
+    console.log('Attempting to insert shooting session', session);
 
-    const sql: string = `INSERT INTO ${LocalDb.SHOOTSESSION_TABLE_NAME} (bow_id, note, date_shot) VALUES (?, ?, ?)`;
+    console.warn('THIS IS THE BOW', session.bow);
+
+    const sql: string = `INSERT INTO ${LocalDb.SHOOTSESSION_TABLE_NAME} (bow_id, round, note, date_shot, is_draft) VALUES (?, ?, ?, ?, ?)`;
 
     const params: SQLiteBindParams = [
       session.bow.type.id,
+      session.round,
       session.note,
       session.dateShot,
+      true,
     ];
 
     return LocalDb.Insert(sql, params)

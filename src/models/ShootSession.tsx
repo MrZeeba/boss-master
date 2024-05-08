@@ -5,4 +5,5 @@ export class ShootSession {
   dateShot: string;
   bow: Bow;
   note: string;
+  round: string; //switch to type when we have it
 }

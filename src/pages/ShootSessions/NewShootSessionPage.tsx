@@ -1,13 +1,18 @@
 import { Feather } from '@expo/vector-icons';
 import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { StyleSheet, View } from 'react-native';
 import CustomButton from '../../Components/CustomButton';
 import CustomCard from '../../Components/CustomCard';
+import CustomNotesInput from '../../Components/CustomNotesInput';
+import getCurrentDateTime from '../../Helper/Date';
 import { globalColours } from '../../globalColours';
 import { globalConstants } from '../../globalConstants';
 import { globalStyles } from '../../globalStyles';
 import { Bow } from '../../models/Bow';
+import { ShootSession } from '../../models/ShootSession';
 import * as RoundData from '../../models/data/rounds.json';
+import { ShootSessionDb } from '../../sqlite/ShootSessionDb';
 import { IndoorSessionComponent } from './Components/IndoorSessionComponent';
 import { OutdoorSessionComponent } from './Components/OutdoorSessionComponent';
 
@@ -17,13 +22,34 @@ Metadata page for gathering information before a round can be shot such as the t
 export default function NewShootSessionPage({ navigation, route }) {
   const [selected, setSelected] = useState('');
   const { bow }: { bow: Bow } = route.params;
-  console.log('here', route.params);
+
+  const {
+    handleSubmit,
+    control,
+    formState: { isDirty, errors },
+  } = useForm<ShootSession>();
 
   useEffect(() => {
     // Define your function here
     // For example, console.log the selected value
     console.log('Selected value changed:', selected);
   }, [selected]);
+
+  /*
+  Save a shoot session to the DB flagging it as a draft
+  */
+  function SavePressed(data): Promise<number | undefined> {
+    const shootSession = new ShootSession();
+    shootSession.dateShot = getCurrentDateTime();
+    shootSession.note = data.notes;
+    shootSession.round = data.roundPicker;
+    shootSession.bow = bow;
+
+    console.log(shootSession);
+
+    const db = ShootSessionDb.GetInstance();
+    return db.Create(data);
+  }
 
   return (
     <View style={globalStyles.pageContainer}>
@@ -81,14 +107,22 @@ export default function NewShootSessionPage({ navigation, route }) {
         {(() => {
           switch (selected) {
             case 'outdoor':
-              return <OutdoorSessionComponent />;
+              return <OutdoorSessionComponent control={control} />;
             case 'indoor':
-              return <IndoorSessionComponent />;
+              return <IndoorSessionComponent control={control} />;
             default:
               return null; // or any other default component or placeholder
           }
         })()}
       </View>
+      <CustomNotesInput
+        name="notes"
+        labelText="Notes"
+        control={control}
+        maxLength={250}
+        placeholder="Additional information you want to include about this session"
+      />
+      <CustomButton title="Save" onPress={handleSubmit(SavePressed)} />
     </View>
   );
 }
