@@ -45,10 +45,10 @@ export default function NewShootSessionPage({ navigation, route }) {
     shootSession.round = data.roundPicker;
     shootSession.bow = bow;
 
-    console.log(shootSession);
+    console.log('THIS IS THE SHOOT SESSION', shootSession);
 
     const db = ShootSessionDb.GetInstance();
-    return db.Create(data);
+    return db.Create(shootSession);
   }
 
   return (
