@@ -13,11 +13,13 @@ export default function HistoryPage() {
   */
   useFocusEffect(
     useCallback(() => {
-      LocalDb.GetAll<ShootSession>(LocalDb.SHOOTSESSION_TABLE_NAME).then(
-        results => {
+      LocalDb.GetAll<ShootSession>(LocalDb.SHOOTSESSION_TABLE_NAME)
+        .then(results => {
           setShootSessions(results);
-        },
-      );
+        })
+        .catch(error =>
+          console.error('Critical error loading history results', error),
+        );
     }, []),
   );
 

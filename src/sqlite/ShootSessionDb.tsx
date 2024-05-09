@@ -21,7 +21,7 @@ export class ShootSessionDb implements ITable<ShootSession> {
       "id"	INTEGER,
       "note"	TEXT,
       "round" TEXT,
-      "dateShot"	TEXT,
+      "date_shot"	TEXT,
       "bow_id"	INTEGER NOT NULL,
       "is_draft"	INTEGER,
       PRIMARY KEY("id" AUTOINCREMENT),
@@ -39,7 +39,7 @@ export class ShootSessionDb implements ITable<ShootSession> {
   }
 
   async GetDraft(): Promise<ShootSession | undefined> {
-    const sql: string = `SELECT * FROM ${LocalDb.SHOOTSESSION_TABLE_NAME} WHERE is_draft = ? ORDER BY dateshot DESC LIMIT 1`;
+    const sql: string = `SELECT * FROM ${LocalDb.SHOOTSESSION_TABLE_NAME} WHERE is_draft = ? ORDER BY date_shot DESC LIMIT 1`;
 
     const params: SQLiteBindParams = [1];
 
@@ -56,12 +56,10 @@ export class ShootSessionDb implements ITable<ShootSession> {
   Create(session: ShootSession): Promise<number | undefined> {
     console.log('Attempting to insert shooting session', session);
 
-    console.warn('THIS IS THE BOW', session.bow);
-
     const sql: string = `INSERT INTO ${LocalDb.SHOOTSESSION_TABLE_NAME} (bow_id, round, note, date_shot, is_draft) VALUES (?, ?, ?, ?, ?)`;
 
     const params: SQLiteBindParams = [
-      session.bow.type.id,
+      session.bow.id,
       session.round,
       session.note,
       session.dateShot,
