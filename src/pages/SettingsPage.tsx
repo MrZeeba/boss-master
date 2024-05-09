@@ -5,7 +5,7 @@ import { ExportDb } from '../debug/ExportDb';
 import { BowDb } from '../sqlite/BowDb';
 import { EquipmentDb } from '../sqlite/EquipmentDb';
 import LocalDB, { DropTable, TruncateTable } from '../sqlite/LocalDb';
-import { ShootSessionsDb } from '../sqlite/ShootSessionsDb';
+import { ShootSessionsDb } from '../sqlite/ShootSessionDb';
 
 export default function SettingsPage() {
   const [sqlResultText, setSQLResultText] = useState('...');

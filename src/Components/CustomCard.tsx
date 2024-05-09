@@ -1,4 +1,5 @@
 import { Image, StyleSheet, Text, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { globalStyles } from '../globalStyles';
 
 interface CustomCardProps {
@@ -7,6 +8,8 @@ interface CustomCardProps {
   placeholderImageUri?: string;
   fieldOne: string;
   fieldTwo: string;
+  disableTap?: boolean;
+  onPress?: () => void;
 }
 
 export default function CustomCard({
@@ -15,9 +18,11 @@ export default function CustomCard({
   placeholderImageUri,
   fieldOne,
   fieldTwo,
+  disableTap = false,
+  onPress,
 }: CustomCardProps) {
-  return (
-    <View style={[styles.cardFlex, styles.cardContainer]}>
+  const content = (
+    <>
       <Image
         id="image-thumbnail"
         style={styles.thumbnail}
@@ -30,7 +35,17 @@ export default function CustomCard({
         <Text>{fieldOne}</Text>
         <Text>{fieldTwo}</Text>
       </View>
-    </View>
+    </>
+  );
+
+  return disableTap ? (
+    <View style={[styles.cardFlex, styles.cardContainer]}>{content}</View>
+  ) : (
+    <TouchableOpacity
+      style={[styles.cardFlex, styles.cardContainer]}
+      onPress={onPress}>
+      {content}
+    </TouchableOpacity>
   );
 }
 

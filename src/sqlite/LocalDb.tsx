@@ -8,7 +8,8 @@ export default class LocalDb {
   static DATABASE_PATH: string =
     FileSystem.documentDirectory + `/SQLite/${LocalDb.DATABASE_NAME}`;
 
-  static SHOOTSESSIONS_TABLE_NAME: string = 'shoot_sessions';
+  static SHOOTSESSION_TABLE_NAME: string = 'shoot_session';
+  static END_TABLE_NAME: string = 'end';
   static EQUIPMENT_TABLE_NAME: string = 'equipment';
   static BOW_TABLE_NAME: string = 'bow';
 
@@ -38,6 +39,7 @@ export default class LocalDb {
       this.db = SQLite.openDatabaseSync(LocalDb.DATABASE_NAME);
       console.log('Established a new connection to the database');
     }
+
     return this.db;
   }
 
@@ -72,6 +74,56 @@ export default class LocalDb {
   }
 
   /*
+  Return a specific record by type
+  */
+  static GetById<Type>(
+    tableName: string,
+    id: number,
+    idColumn: string = 'id',
+  ): Promise<Type | null> {
+    const db = this.GetDatabaseInstance();
+    return db.getFirstAsync<Type>(
+      `SELECT TOP(1) FROM ${tableName} WHERE ? = ?`,
+      [idColumn, id],
+    );
+  }
+
+  /*
+  Performs a query on the database and returns the result promise
+  */
+  static GetBySQL<Type>(
+    sql: string,
+    params: SQLite.SQLiteBindParams,
+  ): Promise<Type[]> {
+    const db = this.GetDatabaseInstance();
+    return db.getAllAsync<Type>(sql, params);
+  }
+
+  /*
+  Performs an insert statement on the database and returns the last inserted ID
+  */
+  static Insert(
+    sql: string,
+    params: SQLite.SQLiteBindParams,
+  ): Promise<number | undefined> {
+    const db = this.GetDatabaseInstance();
+
+    return db
+      .runAsync(sql, params)
+      .then(result => {
+        if (result.changes > 0) {
+          return result.lastInsertRowId;
+        } else {
+          return undefined; // No rows were inserted
+        }
+      })
+      .catch(error => {
+        console.error('Error inserting data:', error);
+        throw error; // Rethrow the error for handling at a higher level
+      });
+  }
+
+  /*
   Deletes an entire table including the structure of it
   */
   static DropTable(
@@ -101,9 +153,22 @@ export default class LocalDb {
     });
   }
 
-  static Delete(tableName: string, rowId: number) {
+  static async DeleteRecord(tableName: string, rowId: number) {
     const db = this.GetDatabaseInstance();
-    console.error('Not implemented!');
+
+    const sql: string = `DELETE FROM ${tableName} WHERE id = ?`;
+    const params: SQLite.SQLiteBindParams = [rowId];
+
+    await db
+      .runAsync(sql, params)
+      .then(result => {
+        console.log(
+          `${result.changes} rows deleted from ${tableName} with id ${rowId}`,
+        );
+      })
+      .catch(error => {
+        console.log('Failed to delete row', error);
+      });
   }
 
   /*

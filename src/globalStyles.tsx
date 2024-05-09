@@ -41,11 +41,18 @@ export const globalStyles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 21,
     fontWeight: 'bold',
-    letterSpacing: 0.25,
-    color: 'white',
+    letterSpacing: 0.4,
+    textShadowColor: 'rgba(0, 0, 0, .5)',
+    textShadowOffset: { width: -0.5, height: -0.5 },
+    textShadowRadius: 1,
+    color: globalColours.secondary,
   },
 
   formArea: {
     margin: 10,
+  },
+
+  selectedHighlight: {
+    backgroundColor: globalColours.lightgrey,
   },
 });

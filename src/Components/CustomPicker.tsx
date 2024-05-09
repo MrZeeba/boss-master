@@ -5,15 +5,14 @@ import { StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { globalColours } from '../globalColours';
 import { globalStyles } from '../globalStyles';
-import { DropdownObject } from '../models/DropdownObject';
 
 interface CustomTextInputProps {
   control: Control<any, any>;
   name: string;
   labelText: string;
-  data: { [key: string]: DropdownObject };
+  data: ObjectWithDisplayName;
   defaultValue?: string;
-  onSelect?: (value: string) => void;
+  onSelect?: (item: ObjectWithDisplayName) => void;
   rules: object;
 }
 /*
@@ -29,7 +28,9 @@ export default function CustomPicker({
   rules = {},
 }: CustomTextInputProps) {
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const [selectedItem, setSelectedItem] = useState('');
+  const [selectedItem, setSelectedItem] = useState<
+    ObjectWithDisplayName | undefined
+  >(undefined);
 
   if (defaultValue !== undefined) {
     if (!Object.keys(data).includes(defaultValue))
@@ -39,7 +40,7 @@ export default function CustomPicker({
       );
   }
 
-  function handleSelect(item: string): void {
+  function handleSelect(item: ObjectWithDisplayName): void {
     setSelectedItem(item);
     setDropdownVisible(false);
     //Call any subscribers to the exposed onchange method
@@ -64,7 +65,7 @@ export default function CustomPicker({
                   styles.picker,
                   { borderColor: error ? 'red' : styles.picker.borderColor },
                 ]}>
-                <Text>{selectedItem}</Text>
+                <Text>{selectedItem?.displayName}</Text>
                 <View style={styles.iconContainer}>
                   <Feather
                     name={dropdownVisible ? 'chevrons-up' : 'chevrons-down'}
@@ -98,27 +99,27 @@ export default function CustomPicker({
     onSelect,
     hookOnChange,
   }: {
-    data: { [key: string]: DropdownObject };
-    onSelect: (item: string) => void;
-    hookOnChange: (value: DropdownObject) => void;
+    data: object;
+    onSelect: (item: ObjectWithDisplayName) => void;
+    hookOnChange: (value: ObjectWithDisplayName) => void;
   }) {
     return (
       <View style={globalStyles.container}>
-        {Object.values(data).map(item => (
+        {Object.keys(data).map(key => (
           <TouchableOpacity
-            key={item.id}
+            key={key}
             onPress={() => {
-              onSelect(item.name);
+              onSelect(data[key]);
               //To pass validation for react hook form
-              hookOnChange(item);
+              hookOnChange(data[key]);
             }}>
             <Text
               style={
-                Object.values(data).indexOf(item) > 0
+                Object.keys(data).indexOf(key) > 0
                   ? [styles.item, styles.upperItemBorder]
                   : styles.item //First item should not have an upper border
               }>
-              {item.name}
+              {data[key].displayName}
             </Text>
           </TouchableOpacity>
         ))}
@@ -144,7 +145,7 @@ const styles = StyleSheet.create({
 
   upperItemBorder: {
     borderTopWidth: 1,
-    borderColor: globalColours.separator,
+    borderColor: globalColours.lightgrey,
   },
 
   iconContainer: {

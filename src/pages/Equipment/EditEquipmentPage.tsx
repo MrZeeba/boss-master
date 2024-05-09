@@ -2,20 +2,20 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Alert, View } from 'react-native';
-import Button from '../Components/CustomButton';
-import CustomImagePicker from '../Components/CustomImagePicker';
-import CustomNotesInput from '../Components/CustomNotesInput';
-import CustomPicker from '../Components/CustomPicker';
-import CustomTextInput from '../Components/CustomTextInput';
-import { BOWTYPE } from '../Enums/BowType';
-import { EquipmentType } from '../Enums/EquipmentType';
-import { Bow } from '../models/Bow';
-import { Equipment } from '../models/Equipment';
-import { BowDb } from '../sqlite/BowDb';
-import { EquipmentDb } from '../sqlite/EquipmentDb';
-import LocalDb from '../sqlite/LocalDb';
+import Button from '../../Components/CustomButton';
+import CustomImagePicker from '../../Components/CustomImagePicker';
+import CustomNotesInput from '../../Components/CustomNotesInput';
+import CustomPicker from '../../Components/CustomPicker';
+import CustomTextInput from '../../Components/CustomTextInput';
+import { EquipmentType } from '../../Enums/EquipmentType';
+import { Bow } from '../../models/Bow';
+import { Equipment } from '../../models/Equipment';
+import * as BowTypes from '../../models/data/bowtype.json';
+import { BowDb } from '../../sqlite/BowDb';
+import { EquipmentDb } from '../../sqlite/EquipmentDb';
+import LocalDb from '../../sqlite/LocalDb';
 
-export function EditEquipmentPage({ navigation }) {
+export default function EditEquipmentPage({ navigation }) {
   const maxNameLength: number = 25;
   const [savePressed, setSavePressed] = useState(false);
 
@@ -48,6 +48,7 @@ export function EditEquipmentPage({ navigation }) {
     equipment.notes = data.notes;
 
     const bow = new Bow();
+    bow.classification = data.bowType;
     bow.drawWeight = data.drawweight;
 
     const equipmentDb = EquipmentDb.GetInstance();
@@ -75,7 +76,7 @@ export function EditEquipmentPage({ navigation }) {
               id,
               error,
             );
-            LocalDb.Delete(LocalDb.EQUIPMENT_TABLE_NAME, id);
+            LocalDb.DeleteRecord(LocalDb.EQUIPMENT_TABLE_NAME, id);
           });
       })
       .catch(error => {
@@ -109,17 +110,21 @@ export function EditEquipmentPage({ navigation }) {
     }
   }
 
+  // Explicitly type bowTypesJson as ObjectWithDisplayName
+  const bowTypes: ObjectWithDisplayName =
+    BowTypes as unknown as ObjectWithDisplayName;
+
   return (
     <View>
       <CustomImagePicker
         name="image"
         control={control}
-        placeholderSrc={require('../../assets/bow_placeholder.png')}
+        placeholderSrc={require('../../../assets/bow_placeholder.png')}
       />
       <CustomPicker
         name="bowType"
         labelText="Type"
-        data={BOWTYPE}
+        data={bowTypes}
         control={control}
         rules={{ required: 'A type of bow is required' }}
       />

@@ -1,8 +1,8 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback, useState } from 'react';
 import { Text, View } from 'react-native';
-import { ShootSession } from '../models/ShootSession';
-import { GetAll } from '../sqlite/LocalDb';
+import { ShootSession } from '../../models/ShootSession';
+import LocalDb from '../../sqlite/LocalDb';
 
 export default function HistoryPage() {
   const [shootSessions, setShootSessions] = useState<ShootSession[]>([]);
@@ -13,9 +13,13 @@ export default function HistoryPage() {
   */
   useFocusEffect(
     useCallback(() => {
-      GetAll<ShootSession>('shootsessions', results =>
-        setShootSessions(results),
-      );
+      LocalDb.GetAll<ShootSession>(LocalDb.SHOOTSESSION_TABLE_NAME)
+        .then(results => {
+          setShootSessions(results);
+        })
+        .catch(error =>
+          console.error('Critical error loading history results', error),
+        );
     }, []),
   );
 
