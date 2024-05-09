@@ -77,7 +77,7 @@ export default function NewShootSessionPage({ navigation, route }) {
 
       <View style={styles.rowContainer}>
         <CustomButton
-          title={roundData.types.outdoor.displayName}
+          title={roundData.outdoor.displayName}
           icon={
             <Feather name="sun" size={50} color={globalColours.secondary} />
           }
@@ -90,7 +90,7 @@ export default function NewShootSessionPage({ navigation, route }) {
           }}
         />
         <CustomButton
-          title={roundData.types.indoor.displayName}
+          title={roundData.indoor.displayName}
           icon={
             <Feather name="home" size={50} color={globalColours.secondary} />
           }

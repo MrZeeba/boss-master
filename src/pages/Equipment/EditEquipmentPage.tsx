@@ -10,7 +10,7 @@ import CustomTextInput from '../../Components/CustomTextInput';
 import { EquipmentType } from '../../Enums/EquipmentType';
 import { Bow } from '../../models/Bow';
 import { Equipment } from '../../models/Equipment';
-import * as BowTypes from '../../models/data/bowtype.json';
+import { bowTypes } from '../../models/data/bowtypes';
 import { BowDb } from '../../sqlite/BowDb';
 import { EquipmentDb } from '../../sqlite/EquipmentDb';
 import LocalDb from '../../sqlite/LocalDb';
@@ -109,10 +109,6 @@ export default function EditEquipmentPage({ navigation }) {
       );
     }
   }
-
-  // Explicitly type bowTypesJson as ObjectWithDisplayName
-  const bowTypes: ObjectWithDisplayName =
-    BowTypes as unknown as ObjectWithDisplayName;
 
   return (
     <View>

@@ -10,7 +10,7 @@ export function OutdoorSessionComponent({ control }) {
         labelText="Round"
         name="roundPicker"
         control={control}
-        data={roundData.types.outdoor}
+        data={roundData.outdoor.rounds}
         rules={{ required: 'A type of round is required' }}
       />
       <CustomInfoArea />

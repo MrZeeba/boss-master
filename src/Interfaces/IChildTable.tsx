@@ -1,4 +1,4 @@
-interface IChildTable<Type> extends ITable<Type> {
+export interface IChildTable<Type> extends ITable<Type> {
   Create(
     item: Type,
     parentId: number,

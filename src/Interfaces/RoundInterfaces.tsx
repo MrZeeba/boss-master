@@ -1,21 +1,17 @@
+import { IDisplayNameObject } from './IDisplayNameObject';
+
 /*
 This file contains a list of definitions for round data to bring structure to the data
 */
-interface ISessionType {
-  types: {
-    practice: IRoundType;
-    outdoor: IRoundType;
-    indoor: IRoundType;
-  };
+export interface ISessionType {
+  [key: string]: IRoundType;
 }
 
-interface IRoundType {
-  displayName: string;
+export interface IRoundType extends IDisplayNameObject {
   rounds: { [key: string]: IRound };
 }
 
-interface IRound {
-  displayName: string;
+export interface IRound extends IDisplayNameObject {
   distanceType: 'metric' | 'imperial';
   faceSize: number;
   zoneScoring: number;

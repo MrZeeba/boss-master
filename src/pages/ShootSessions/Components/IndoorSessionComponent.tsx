@@ -9,7 +9,7 @@ export function IndoorSessionComponent({ control }) {
         labelText="Round"
         name="roundPicker"
         control={control}
-        data={roundData.types.indoor}
+        data={roundData.indoor.rounds}
         rules={{ required: 'A type of round is required' }}
       />
     </View>
