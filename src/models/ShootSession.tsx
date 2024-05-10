@@ -6,10 +6,10 @@ export class ShootSession {
   dateShot: string;
   bow: Bow;
   note: string;
-  roundJson: string;
+  roundJson: string; //Populated from the database column
   private _parsedRound?: any; // Private field to store the parsed JSON
 
-  // Getter method for the round property
+  // Getter method for the round property. This is required to rebuild the IRound object after it being stored in the database as JSON
   get round(): IRound {
     if (!this._parsedRound && this.roundJson) {
       // Lazy parsing of JSON data
@@ -18,7 +18,7 @@ export class ShootSession {
     return this._parsedRound;
   }
 
-  // Ensure whenever round is set that the json field is updated
+  // Allows us to set as an IRound object too, which also populates the roundJson for database operation
   set round(value: IRound) {
     this._parsedRound = value;
     this.roundJson = JSON.stringify(value);

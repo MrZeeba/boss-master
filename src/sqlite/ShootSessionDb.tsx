@@ -26,7 +26,7 @@ export class ShootSessionDb implements ITable<ShootSession> {
       "bowId"	INTEGER NOT NULL,
       "isDraft"	INTEGER,
       PRIMARY KEY("id" AUTOINCREMENT),
-      FOREIGN KEY("bow_id") REFERENCES "equipment"("id")
+      FOREIGN KEY("bowId") REFERENCES "equipment"("id")
     );`;
 
     return LocalDb.Validate(sql, LocalDb.SHOOTSESSION_TABLE_NAME);
@@ -34,7 +34,9 @@ export class ShootSessionDb implements ITable<ShootSession> {
 
   Restructure(): void {
     LocalDb.DropTable(LocalDb.SHOOTSESSION_TABLE_NAME)
-      .then(() => this.Validate())
+      .then(() =>
+        this.Validate().then(() => console.log('Successfully restructured')),
+      )
       .catch(error => console.error(error));
   }
 
