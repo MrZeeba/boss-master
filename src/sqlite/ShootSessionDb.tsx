@@ -1,4 +1,5 @@
 import { SQLiteBindParams } from 'expo-sqlite/next';
+import { ITable } from '../Interfaces/ITable';
 import { ShootSession } from '../models/ShootSession';
 import LocalDb from './LocalDb';
 
@@ -15,20 +16,26 @@ export class ShootSessionDb implements ITable<ShootSession> {
     return this.instance;
   }
 
-  Validate() {
+  Validate(): Promise<boolean> {
     const sql = `
       CREATE TABLE IF NOT EXISTS ${LocalDb.SHOOTSESSION_TABLE_NAME} (
       "id"	INTEGER,
       "note"	TEXT,
-      "round" TEXT,
-      "date_shot"	TEXT,
-      "bow_id"	INTEGER NOT NULL,
-      "is_draft"	INTEGER,
+      "roundJson" TEXT,
+      "dateShot"	TEXT,
+      "bowId"	INTEGER NOT NULL,
+      "isDraft"	INTEGER,
       PRIMARY KEY("id" AUTOINCREMENT),
       FOREIGN KEY("bow_id") REFERENCES "equipment"("id")
     );`;
 
-    LocalDb.Validate(sql, LocalDb.SHOOTSESSION_TABLE_NAME);
+    return LocalDb.Validate(sql, LocalDb.SHOOTSESSION_TABLE_NAME);
+  }
+
+  Restructure(): void {
+    LocalDb.DropTable(LocalDb.SHOOTSESSION_TABLE_NAME)
+      .then(() => this.Validate())
+      .catch(error => console.error(error));
   }
 
   /*
@@ -39,7 +46,7 @@ export class ShootSessionDb implements ITable<ShootSession> {
   }
 
   async GetDraft(): Promise<ShootSession | undefined> {
-    const sql: string = `SELECT * FROM ${LocalDb.SHOOTSESSION_TABLE_NAME} WHERE is_draft = ? ORDER BY date_shot DESC LIMIT 1`;
+    const sql: string = `SELECT * FROM ${LocalDb.SHOOTSESSION_TABLE_NAME} WHERE isDraft = ? ORDER BY dateShot DESC LIMIT 1`;
 
     const params: SQLiteBindParams = [1];
 
@@ -56,11 +63,11 @@ export class ShootSessionDb implements ITable<ShootSession> {
   Create(session: ShootSession): Promise<number | undefined> {
     console.log('Attempting to insert shooting session', session);
 
-    const sql: string = `INSERT INTO ${LocalDb.SHOOTSESSION_TABLE_NAME} (bow_id, round, note, date_shot, is_draft) VALUES (?, ?, ?, ?, ?)`;
+    const sql: string = `INSERT INTO ${LocalDb.SHOOTSESSION_TABLE_NAME} (bowId, roundJson, note, dateShot, isDraft) VALUES (?, ?, ?, ?, ?)`;
 
     const params: SQLiteBindParams = [
       session.bow.id,
-      session.round,
+      JSON.stringify(session.round),
       session.note,
       session.dateShot,
       true,

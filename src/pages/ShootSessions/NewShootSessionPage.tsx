@@ -38,17 +38,23 @@ export default function NewShootSessionPage({ navigation, route }) {
   /*
   Save a shoot session to the DB flagging it as a draft
   */
-  function SavePressed(data): Promise<number | undefined> {
+  function SavePressed(data) {
     const shootSession = new ShootSession();
     shootSession.dateShot = getCurrentDateTime();
     shootSession.note = data.notes;
     shootSession.round = data.roundPicker;
     shootSession.bow = bow;
 
-    console.log('THIS IS THE SHOOT SESSION', shootSession);
-
     const db = ShootSessionDb.GetInstance();
-    return db.Create(shootSession);
+    db.Create(shootSession)
+      .then(
+        navigation.navigate(globalConstants.routes.scoreCardPage, {
+          session: shootSession,
+        }),
+      )
+      .catch(error =>
+        console.error('An error occurred saving the shoot session', error),
+      );
   }
 
   return (

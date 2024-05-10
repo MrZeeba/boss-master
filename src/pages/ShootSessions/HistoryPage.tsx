@@ -24,7 +24,6 @@ export default function HistoryPage() {
   );
 
   return shootSessions.map((shootSession: ShootSession, index) => {
-    console.log('Loaded session', shootSession);
     return (
       <View key={index}>
         <Text>{`date - ${shootSession.dateShot}`}</Text>
