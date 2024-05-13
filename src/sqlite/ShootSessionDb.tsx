@@ -54,6 +54,7 @@ export class ShootSessionDb implements ITable<ShootSession> {
 
     return LocalDb.GetBySQL<ShootSession>(sql, params)
       .then(shootSession => {
+        console.log('returning', shootSession[0]);
         return shootSession[0]; // Assuming GetBySQL returns an array
       })
       .catch(error => {

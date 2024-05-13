@@ -20,11 +20,13 @@ export default function ShootSessionStack({ navigation }) {
 
   useFocusEffect(
     useCallback(() => {
-      shootSessionDb.GetDraft().then(draft =>
-        navigation.navigate(globalConstants.routes.scoreCardPage, {
-          session: draft,
-        }),
-      );
+      shootSessionDb.GetDraft().then(draft => {
+        if (draft !== undefined) {
+          navigation.navigate(globalConstants.routes.scoreCardPage, {
+            session: draft,
+          });
+        }
+      });
     }, []),
   );
 
