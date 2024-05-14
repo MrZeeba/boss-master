@@ -53,9 +53,12 @@ export class ShootSessionDb implements ITable<ShootSession> {
     const params: SQLiteBindParams = [1];
 
     return LocalDb.GetBySQL<ShootSession>(sql, params)
-      .then(shootSession => {
-        console.log('returning', shootSession[0]);
-        return shootSession[0]; // Assuming GetBySQL returns an array
+      .then(shootSessions => {
+        const shootSession = shootSessions[0];
+        if (shootSession) {
+          return ShootSession.fromPlainObject(shootSession);
+        }
+        return undefined;
       })
       .catch(error => {
         console.warn('Unable to retrieve draft', error);

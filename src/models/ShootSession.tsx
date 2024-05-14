@@ -15,6 +15,7 @@ export class ShootSession {
       // Lazy parsing of JSON data
       this._parsedRound = JSON.parse(this.roundJson) as IRound;
     }
+    console.log('parsed', this._parsedRound);
     return this._parsedRound;
   }
 
@@ -22,5 +23,11 @@ export class ShootSession {
   set round(value: IRound) {
     this._parsedRound = value;
     this.roundJson = JSON.stringify(value);
+  }
+
+  static fromPlainObject(obj: any): ShootSession {
+    const session = new ShootSession();
+    Object.assign(session, obj);
+    return session;
   }
 }
