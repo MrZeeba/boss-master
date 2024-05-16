@@ -88,4 +88,11 @@ export class ShootSessionDb implements ITable<ShootSession> {
         return undefined;
       });
   }
+
+  async Delete(shootSessionId) {
+    return LocalDb.DeleteRecord(
+      LocalDb.SHOOTSESSION_TABLE_NAME,
+      shootSessionId,
+    );
+  }
 }

@@ -1,6 +1,8 @@
+import { Feather } from '@expo/vector-icons';
 import { useEffect } from 'react';
-import { Text, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { ShootSession } from '../../models/ShootSession';
+import { ShootSessionDb } from '../../sqlite/ShootSessionDb';
 
 /*
 An active scoring session. This is someone in the middle of shooting a round
@@ -10,7 +12,19 @@ export default function EditScorecardPage({ navigation, route }) {
   const rehydratedSession = ShootSession.fromPlainObject(session);
 
   useEffect(() => {
-    navigation.setOptions({ title: rehydratedSession.round.displayName });
+    navigation.setOptions({
+      title: rehydratedSession.round.displayName,
+      headerRight: () => (
+        <TouchableOpacity onPress={() => DiscardDraft()}>
+          <Feather
+            name="delete"
+            size={32}
+            color="black"
+            style={{ marginRight: 20 }}
+          />
+        </TouchableOpacity>
+      ),
+    });
   }, [navigation]);
 
   //Where should the buttons be for discarding/saving? they shouldn't be easily pressed
@@ -24,4 +38,9 @@ export default function EditScorecardPage({ navigation, route }) {
       <Text>Arrow 1 of 6</Text>
     </View>
   );
+
+  function DiscardDraft() {
+    const db = ShootSessionDb.GetInstance();
+    db.DeleteRecord(rehydratedSession.id).then(navigation.goBack());
+  }
 }
