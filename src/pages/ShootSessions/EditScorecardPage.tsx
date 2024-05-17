@@ -2,7 +2,7 @@ import { Feather } from '@expo/vector-icons';
 import { useEffect } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { ShootSession } from '../../models/ShootSession';
-import { ShootSessionDb } from '../../sqlite/ShootSessionDb';
+import LocalDb from '../../sqlite/LocalDb';
 
 /*
 An active scoring session. This is someone in the middle of shooting a round
@@ -40,7 +40,11 @@ export default function EditScorecardPage({ navigation, route }) {
   );
 
   function DiscardDraft() {
-    const db = ShootSessionDb.GetInstance();
-    db.DeleteRecord(rehydratedSession.id).then(navigation.goBack());
+    if (rehydratedSession.id !== undefined) {
+      LocalDb.DeleteRecord(
+        LocalDb.SHOOTSESSION_TABLE_NAME,
+        rehydratedSession.id,
+      ).then(navigation.goBack());
+    }
   }
 }
