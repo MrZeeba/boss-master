@@ -128,7 +128,7 @@ export default function NewShootSessionPage({ navigation, route }) {
         maxLength={250}
         placeholder="Additional information you want to include about this session"
       />
-      <CustomButton title="Save" onPress={handleSubmit(SavePressed)} />
+      <CustomButton title="Start" onPress={handleSubmit(SavePressed)} />
     </View>
   );
 }

@@ -1,9 +1,13 @@
+import { useState } from 'react';
 import { View } from 'react-native';
 import CustomPicker from '../../../Components/CustomPicker';
-import CustomInfoArea from '../../../Components/RoundInfoArea';
+import RoundInfoArea from '../../../Components/RoundInfoArea';
+import { IRound } from '../../../Interfaces/RoundInterfaces';
 import { roundData } from '../../../models/data/rounds';
 
 export function OutdoorSessionComponent({ control }) {
+  const [round, setRound] = useState<IRound | undefined>(undefined);
+
   return (
     <View>
       <CustomPicker
@@ -11,9 +15,10 @@ export function OutdoorSessionComponent({ control }) {
         name="roundPicker"
         control={control}
         data={roundData.outdoor.rounds}
+        onSelect={(selected: IRound) => setRound(selected)}
         rules={{ required: 'A type of round is required' }}
       />
-      <CustomInfoArea />
+      {round !== undefined ? <RoundInfoArea round={round} /> : null}
     </View>
   );
 }
