@@ -13,7 +13,7 @@ export default function EditScorecardPage({ navigation, route }) {
 
   useEffect(() => {
     navigation.setOptions({
-      title: rehydratedSession.round.displayName,
+      title: `${rehydratedSession.round.displayName} (In Progress)`,
       headerRight: () => (
         <TouchableOpacity onPress={() => DiscardDraft()}>
           <Feather

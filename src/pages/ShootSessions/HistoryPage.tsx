@@ -1,6 +1,6 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback, useState } from 'react';
-import { Text, View } from 'react-native';
+import CustomCard from '../../Components/CustomCard';
 import { ShootSession } from '../../models/ShootSession';
 import LocalDb from '../../sqlite/LocalDb';
 
@@ -25,10 +25,12 @@ export default function HistoryPage() {
 
   return shootSessions.map((shootSession: ShootSession, index) => {
     return (
-      <View key={index}>
-        <Text>{`date - ${shootSession.dateShot}`}</Text>
-        <Text>{`note - ${shootSession.note}`}</Text>
-      </View>
+      <CustomCard
+        key={index}
+        heading={shootSession.dateShot}
+        fieldOne="End of 1 of x"
+        fieldTwo="Arrow 1 of x"
+      />
     );
   });
 }
