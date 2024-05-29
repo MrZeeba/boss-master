@@ -28,8 +28,9 @@ export default function HistoryPage() {
       <CustomCard
         key={index}
         heading={shootSession.dateShot}
-        fieldOne="End of 1 of x"
-        fieldTwo="Arrow 1 of x"
+        fieldOne="theroundname"
+        fieldTwo="End of 1 of x"
+        disableTap
       />
     );
   });
