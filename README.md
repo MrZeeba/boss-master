@@ -4,7 +4,7 @@ An Android/IOs app designed to aid and assist scoring in Archery.
 
 ## Useful Links
 
-- [Tech Stack](./docs/tech-stack)
+- [Tech Stack](./docs/tech-stack.md)
 - [Getting Started](./docs/getting-started.md)
 - [Linting](./docs/linting.md)
 - [Runbook](./docs/runbook.md)
