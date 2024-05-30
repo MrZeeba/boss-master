@@ -7,6 +7,7 @@ export class ShootSession {
   bow: Bow;
   note: string;
   roundJson: string; //Populated from the database column
+  isDraft: boolean;
   private _parsedRound?: any; // Private field to store the parsed JSON
 
   // Getter method for the round property. This is required to rebuild the IRound object after it being stored in the database as JSON

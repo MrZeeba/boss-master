@@ -1,5 +1,6 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback, useState } from 'react';
+import { Text } from 'react-native';
 import CustomCard from '../../Components/CustomCard';
 import { ShootSession } from '../../models/ShootSession';
 import LocalDb from '../../sqlite/LocalDb';
@@ -26,13 +27,16 @@ export default function HistoryPage() {
   return shootSessions.map((shootSession: ShootSession, index) => {
     const rehydratedShootSession = ShootSession.fromPlainObject(shootSession);
     return (
-      <CustomCard
-        key={index}
-        heading={rehydratedShootSession.dateShot}
-        fieldOne={rehydratedShootSession.round.displayName}
-        fieldTwo="End of 1 of x"
-        disableTap
-      />
+      <>
+        <Text>In Progress</Text>
+        <CustomCard
+          key={index}
+          heading={rehydratedShootSession.dateShot}
+          fieldOne={rehydratedShootSession.round.displayName}
+          fieldTwo="End of 1 of x"
+        />
+        <Text>All Time</Text>
+      </>
     );
   });
 }
