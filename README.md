@@ -1,6 +1,6 @@
 # Boss Master
 
-An Android/IOs app designed to aid and assist scoring in Archery
+An Android/IOs app designed to aid and assist scoring in Archery.
 
 ## Useful Links
 
@@ -28,13 +28,11 @@ An Android/IOs app designed to aid and assist scoring in Archery
 
 ## Unique Selling Point(s)
 
-AI Image Analysis. Taking pictures of the target with your arrows in it will analyse the results via AI and input them in as a score. No other app out there seems to do this
-
-Join a club. A club allows sharing of results between one another. When you complete a competition it can send a scorecard to the organiser.
+- **AI image analysis**: Taking pictures of the target with your arrows in it will analyse the results via AI and input them in as a score. No other app out there seems to do this
+- **Join a club**: A club allows sharing of results between one another. When you complete a competition it can send a scorecard to the organiser.
 
 ## MVP
-
-- Create a new session.
+- Create a new session
 - Manually enter scores
 - Tap to score. Must be an interactive boss. Consider line breakears
 - Take picture of score (AI is not part of MVP)
@@ -81,19 +79,19 @@ AI Image generation (user should be able to override results manually if it gets
 
 ### Profile
 
-A page about the user
+A page about the user. This might include information about them.
 
 #### Equipment
 
 - Add pictures of your bow(s)
-- List equipment in free-form text boxes
+- List equipment
 - Draw weight
 - Arrow length, spine type etc
 - Share with others?
 
 ## Storage
 
-I want to utilise combined storage where some data is stored in the cloud and some data is stored on the device.
+I want to utilise combined storage where some data is stored in the cloud and some data is stored on the device. For the MVP this would be data stored in a local database only.
 
 ### Cloud
 
@@ -132,7 +130,7 @@ I'm also storing some UI mock ups in my google drive folder [Boss Master - Arche
 
 The rest of the document will populated as a result of these research tasks rather than answering them here
 
-- [ ] App architecture.
+- [X] App architecture.
 - [ ] If we have React Native in the front, where does the C# code sit?
 - [ ] What would a server be used for?
 - [ ] What responsibilities would it have?
@@ -146,5 +144,8 @@ The rest of the document will populated as a result of these research tasks rath
 
 ### Scaffolding
 
-- [x] Create a Git Repository
-- [ ] Choose & setup an IDE
+- [x] Create a Git Repository - https://github.com/MrZeeba/boss-master
+- [X] Choose & setup an IDE - Visual Studio Code
+- [X] Setup android emulator on Windows - Done via Android Studio
+- [X] Setup iOS emulator on Macbook - Done via XCode
+- [X] Setup debugging on personal android phone - Done via Expo
