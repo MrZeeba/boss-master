@@ -4,11 +4,11 @@ import { ScoringType } from '../Enums/ScoringType';
 import { globalStyles } from '../globalStyles';
 
 interface ScoreSelectorProps {
-  mode: ScoringType;
+  scoringType: ScoringType;
 }
 
-export default function ScoreSelector({ mode }: ScoreSelectorProps) {
-  return (
+export default function ScoreSelector({ scoringType }: ScoreSelectorProps) {
+  return scoringType === ScoringType.TenPoint ? (
     <View style={styles.row}>
       <ScoreButton text="X" colour="yellow" />
       <ScoreButton text="9" colour="yellow" />
@@ -19,6 +19,15 @@ export default function ScoreSelector({ mode }: ScoreSelectorProps) {
       <ScoreButton text="4" colour="black" />
       <ScoreButton text="3" colour="black" />
       <ScoreButton text="2" colour="white" />
+      <ScoreButton text="1" colour="white" />
+      <ScoreButton text="M" colour="orange" />
+    </View>
+  ) : (
+    <View style={styles.row}>
+      <ScoreButton text="9" colour="yellow" />
+      <ScoreButton text="7" colour="red" />
+      <ScoreButton text="5" colour="lightblue" />
+      <ScoreButton text="3" colour="black" />
       <ScoreButton text="1" colour="white" />
       <ScoreButton text="M" colour="orange" />
     </View>

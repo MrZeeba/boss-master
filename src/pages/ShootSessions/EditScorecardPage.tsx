@@ -38,7 +38,7 @@ export default function EditScorecardPage({ navigation, route }) {
       <Text>{rehydratedSession.round.displayName}</Text>
       <Text>End 1 of 4</Text>
       <Text>Arrow 1 of 6</Text>
-      <ScoreSelector mode={ScoringType.FivePoint} />
+      <ScoreSelector scoringType={ScoringType.TenPoint} />
     </View>
   );
 
