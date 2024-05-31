@@ -1,0 +1,5 @@
+# Loading Objects from SQLite
+
+When pulling database objects its often necessary to `rehydrate the object`. After the object is loaded from the database in a DTO fashion, its methods cannot be called; We need to effectively instantiate the class from the object loaded from the database. A good example of this is the [ShootSession](../src/models/ShootSession.tsx) class. You'll notice the `fromPlainObject` method which deals with converting the database representation of the object into something we can work with.
+
+Further to this you'll notice how JSON data was stored in a column named `roundsJSON`. This was done to store legacy data incase a round changes over time (though unlikely). The round data effectively lives forever in each session metadata.

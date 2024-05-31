@@ -1,4 +1,5 @@
 import { SQLiteBindParams } from 'expo-sqlite/next';
+import { IChildTable } from '../Interfaces/IChildTable';
 import { Bow } from '../models/Bow';
 import LocalDb, { default as LocalDB } from './LocalDb';
 

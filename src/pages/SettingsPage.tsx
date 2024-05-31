@@ -4,8 +4,8 @@ import CustomButton from '../Components/CustomButton';
 import { ExportDb } from '../debug/ExportDb';
 import { BowDb } from '../sqlite/BowDb';
 import { EquipmentDb } from '../sqlite/EquipmentDb';
-import LocalDB, { DropTable, TruncateTable } from '../sqlite/LocalDb';
-import { ShootSessionsDb } from '../sqlite/ShootSessionDb';
+import LocalDB, { TruncateTable } from '../sqlite/LocalDb';
+import { ShootSessionDb } from '../sqlite/ShootSessionDb';
 
 export default function SettingsPage() {
   const [sqlResultText, setSQLResultText] = useState('...');
@@ -14,7 +14,7 @@ export default function SettingsPage() {
     LocalDB.Restructure();
     EquipmentDb.GetInstance().Validate();
     BowDb.GetInstance().Validate();
-    ShootSessionsDb.GetInstance().Validate();
+    ShootSessionDb.GetInstance().Validate();
   }
 
   return (
@@ -32,34 +32,32 @@ export default function SettingsPage() {
       <Text style={{ fontWeight: 'bold' }}>Shoot Sessions</Text>
       <CustomButton
         title="Truncate Shoot Sessions"
-        onPress={() => truncateTablePressed(ShootSessionsDb)}
+        onPress={() => truncateTablePressed(LocalDB.SHOOTSESSION_TABLE_NAME)}
       />
       <CustomButton
         title="Recreate Shoot Sessions (Deletes Data)"
-        onPress={() => recreateTablePressed(ShootSessionsDb)}
+        onPress={() => {
+          ShootSessionDb.GetInstance().Restructure();
+        }}
       />
 
       <Text style={{ fontWeight: 'bold' }}>Equipment</Text>
       <CustomButton
-        onPress={() => truncateTablePressed(EquipmentDb)}
+        onPress={() => truncateTablePressed(LocalDB.EQUIPMENT_TABLE_NAME)}
         title="Truncate ALL data"
       />
       <CustomButton
-        onPress={() => recreateTablePressed(EquipmentDb)}
+        onPress={() =>
+          recreateTablePressed(LocalDB.EQUIPMENT_TABLE_NAME, EquipmentDb)
+        }
         title="Recreate Table (Drops Data)"
       />
       <CustomButton onPress={insertTestData} title="Insert test data" />
     </View>
   );
 
-  async function truncateTablePressed<T extends DbTable<any>>(table: T) {
-    TruncateTable(table.tableName, sqlResults => {
-      setSQLResultText(`${sqlResults} rows deleted`);
-    });
-  }
-
-  async function recreateTablePressed<T extends DbTable<any>>(table: T) {
-    DropTable(table.tableName, true, table.Validate, sqlResults => {
+  async function truncateTablePressed(tableName: string) {
+    TruncateTable(tableName, sqlResults => {
       setSQLResultText(`${sqlResults} rows deleted`);
     });
   }

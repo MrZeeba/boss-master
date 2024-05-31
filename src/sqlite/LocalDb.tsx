@@ -126,30 +126,21 @@ export default class LocalDb {
   /*
   Deletes an entire table including the structure of it
   */
-  static DropTable(
-    tableName: string,
-    recreate: boolean = true,
-    validateFunction: () => void,
-    callback: (success: boolean) => void,
-  ) {
-    const db = this.connectToDatabase();
+  static DropTable(tableName: string): Promise<boolean> {
+    const db = this.GetDatabaseInstance();
 
-    db.transaction(tx => {
-      tx.executeSql(
-        `DROP TABLE IF EXISTS ${tableName}`,
-        [],
-        () => {
-          if (recreate) {
-            validateFunction();
-            callback(true);
-          }
-        },
-        (_, error: SQLite.SQLError) => {
-          console.error(`Error dropping table ${tableName}: ${error.message}`);
-          callback(false);
-          return false;
-        },
-      );
+    const sql = `DROP TABLE IF EXISTS ${tableName}`;
+
+    return new Promise<boolean>((resolve, reject) => {
+      db.withTransactionAsync(async () => {
+        await db
+          .execAsync(sql)
+          .then(() => resolve(true))
+          .catch(error => {
+            reject(error);
+            return false;
+          });
+      });
     });
   }
 

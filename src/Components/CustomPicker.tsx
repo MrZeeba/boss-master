@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Control, Controller } from 'react-hook-form';
 import { StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { IDisplayNameObject } from '../Interfaces/IDisplayNameObject';
 import { globalColours } from '../globalColours';
 import { globalStyles } from '../globalStyles';
 
@@ -10,9 +11,9 @@ interface CustomTextInputProps {
   control: Control<any, any>;
   name: string;
   labelText: string;
-  data: ObjectWithDisplayName;
+  data: { [key: string]: IDisplayNameObject };
   defaultValue?: string;
-  onSelect?: (item: ObjectWithDisplayName) => void;
+  onSelect?: (item: IDisplayNameObject) => void;
   rules: object;
 }
 /*
@@ -29,7 +30,7 @@ export default function CustomPicker({
 }: CustomTextInputProps) {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState<
-    ObjectWithDisplayName | undefined
+    IDisplayNameObject | undefined
   >(undefined);
 
   if (defaultValue !== undefined) {
@@ -40,7 +41,7 @@ export default function CustomPicker({
       );
   }
 
-  function handleSelect(item: ObjectWithDisplayName): void {
+  function handleSelect(item: IDisplayNameObject): void {
     setSelectedItem(item);
     setDropdownVisible(false);
     //Call any subscribers to the exposed onchange method
@@ -100,8 +101,8 @@ export default function CustomPicker({
     hookOnChange,
   }: {
     data: object;
-    onSelect: (item: ObjectWithDisplayName) => void;
-    hookOnChange: (value: ObjectWithDisplayName) => void;
+    onSelect: (item: IDisplayNameObject) => void;
+    hookOnChange: (value: IDisplayNameObject) => void;
   }) {
     return (
       <View style={globalStyles.container}>
