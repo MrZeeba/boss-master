@@ -1,3 +1,4 @@
+import { ZoneScoringType } from '../../Enums/ZoneScoringType';
 import {
   IRound,
   IRoundType,
@@ -15,7 +16,7 @@ export const roundData: ISessionType = {
         displayName: 'Short Metric',
         distanceType: 'metric',
         faceSize: 80,
-        zoneScoring: 10,
+        zoneScoring: ZoneScoringType.TenPoint,
         arrowsPerEnd: 6,
         arrowsAtEachDistance: 36,
         variations: [
@@ -30,7 +31,7 @@ export const roundData: ISessionType = {
         displayName: 'Long Metric',
         distanceType: 'metric',
         faceSize: 122,
-        zoneScoring: 10,
+        zoneScoring: ZoneScoringType.TenPoint,
         arrowsPerEnd: 6,
         arrowsAtEachDistance: 36,
         variations: [
@@ -45,7 +46,7 @@ export const roundData: ISessionType = {
         displayName: 'York',
         distanceType: 'imperial',
         faceSize: 122,
-        zoneScoring: 5,
+        zoneScoring: ZoneScoringType.FivePoint,
         arrowsPerEnd: 6,
         distances: [
           {
@@ -71,7 +72,7 @@ export const roundData: ISessionType = {
         displayName: 'Portsmouth',
         distanceType: 'imperial',
         faceSize: 60,
-        zoneScoring: 10,
+        zoneScoring: ZoneScoringType.TenPoint,
         arrowsPerEnd: 6,
         arrowsAtEachDistance: 60,
       } as IRound,

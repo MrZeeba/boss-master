@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { ScoringType } from '../Enums/ScoringType';
+import { ZoneScoringType } from '../Enums/ZoneScoringType';
 import { globalStyles } from '../globalStyles';
 
 interface ScoreSelectorProps {
-  scoringType: ScoringType;
+  scoringType: ZoneScoringType;
 }
 
 export default function ScoreSelector({ scoringType }: ScoreSelectorProps) {
-  return scoringType === ScoringType.TenPoint ? (
+  return scoringType === ZoneScoringType.TenPoint ? (
     <View style={styles.row}>
       <ScoreButton text="X" colour="yellow" />
       <ScoreButton text="9" colour="yellow" />

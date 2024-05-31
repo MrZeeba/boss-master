@@ -12,6 +12,7 @@ export default function RoundInfoArea({ round }: RoundAreaInfoProps) {
       <Text>Distance Type: {round.distanceType}</Text>
       <Text>Arrows per end: {round.arrowsPerEnd}</Text>
       <Text>Face size: {round.faceSize}cm</Text>
+      <Text>Zone Scoring: {round.zoneScoring}</Text>
       <Text>Arrows at each distance: {round.arrowsAtEachDistance}</Text>
       {round.distances?.map(item => (
         <Text key={item.distance}>
