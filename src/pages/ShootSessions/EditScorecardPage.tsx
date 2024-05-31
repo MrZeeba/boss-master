@@ -1,6 +1,8 @@
 import { Feather } from '@expo/vector-icons';
 import { useEffect } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
+import ScoreSelector from '../../Components/ScoreSelector';
+import { ScoringType } from '../../Enums/ScoringType';
 import { ShootSession } from '../../models/ShootSession';
 import LocalDb from '../../sqlite/LocalDb';
 
@@ -36,6 +38,7 @@ export default function EditScorecardPage({ navigation, route }) {
       <Text>{rehydratedSession.round.displayName}</Text>
       <Text>End 1 of 4</Text>
       <Text>Arrow 1 of 6</Text>
+      <ScoreSelector mode={ScoringType.FivePoint} />
     </View>
   );
 
