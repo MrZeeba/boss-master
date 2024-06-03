@@ -8,6 +8,13 @@ export const globalColours = {
   border: 'lightgrey',
   lightgrey: 'lightgrey',
   errorBorder: 'red',
+
+  targetGold: 'gold',
+  targetRed: 'red',
+  targetBlue: 'blue',
+  targetBlack: 'black',
+  targetWhite: 'white',
+  targetMiss: 'orange',
   /*
   primary: '#72705B', //emerald
   secondary: '#50C878', //green

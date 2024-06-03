@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Text, View } from 'react-native';
 import CustomButton from '../Components/CustomButton';
 import { ExportDb } from '../debug/ExportDb';
+import { globalStyles } from '../globalStyles';
 import { BowDb } from '../sqlite/BowDb';
 import { EquipmentDb } from '../sqlite/EquipmentDb';
 import LocalDB, { TruncateTable } from '../sqlite/LocalDb';
@@ -18,7 +19,7 @@ export default function SettingsPage() {
   }
 
   return (
-    <View>
+    <View style={globalStyles.pageContainer}>
       <Text>{sqlResultText}</Text>
 
       <Text style={{ fontWeight: 'bold' }}>General</Text>

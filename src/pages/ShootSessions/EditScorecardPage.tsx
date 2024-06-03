@@ -1,7 +1,9 @@
 import { Feather } from '@expo/vector-icons';
 import { useEffect } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
+import EndView from '../../Components/EndView';
 import ScoreSelector from '../../Components/ScoreSelector';
+import { globalStyles } from '../../globalStyles';
 import { ShootSession } from '../../models/ShootSession';
 import LocalDb from '../../sqlite/LocalDb';
 
@@ -32,11 +34,12 @@ export default function EditScorecardPage({ navigation, route }) {
   //We should auto-save every end
 
   return (
-    <View>
+    <View style={globalStyles.pageContainer}>
       <Text>{rehydratedSession.dateShot}</Text>
       <Text>{rehydratedSession.round.displayName}</Text>
       <Text>End 1 of 4</Text>
       <Text>Arrow 1 of 6</Text>
+      <EndView />
       <ScoreSelector scoringType={rehydratedSession.round.zoneScoring} />
     </View>
   );

@@ -1,5 +1,6 @@
 import { IRound } from '../Interfaces/RoundInterfaces';
 import { Bow } from './Bow';
+import { End } from './End';
 
 export class ShootSession {
   id: number | undefined;
@@ -8,6 +9,7 @@ export class ShootSession {
   note: string;
   roundJson: string; //Populated from the database column
   isDraft: boolean;
+  ends: End[];
   private _parsedRound?: any; // Private field to store the parsed JSON
 
   // Getter method for the round property. This is required to rebuild the IRound object after it being stored in the database as JSON
