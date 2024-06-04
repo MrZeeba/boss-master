@@ -7,10 +7,6 @@ export interface ISessionType {
   [key: string]: IRound;
 }
 
-export interface IRoundType extends IDisplayNameObject {
-  rounds: { [key: string]: IRound };
-}
-
 export interface IDistanceArrows {
   distance: number;
   arrows: number;
@@ -21,8 +17,7 @@ export interface IRound extends IDisplayNameObject {
   faceSize: number;
   zoneScoring: number;
   arrowsPerEnd: number;
-  distances?: IDistanceArrows[]; // Optional for rounds without variations
-  variations?: {
+  variations: {
     displayName: string;
     distances: IDistanceArrows[];
   }[];

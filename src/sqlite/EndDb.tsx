@@ -26,7 +26,7 @@ export class EndDb implements IChildTable<End> {
             "arrow4"	INTEGER,
             "arrow5"	INTEGER,
             "arrow6"	INTEGER,
-            FOREIGN KEY("shoot_session_id") REFERENCES "shoot_session"("id") ON DELETE CASCADE,
+            FOREIGN KEY("shootSessionId") REFERENCES "shoot_session"("id") ON DELETE CASCADE,
             PRIMARY KEY("id" AUTOINCREMENT)
         );
     `;

@@ -6,36 +6,125 @@ import { globalStyles } from '../globalStyles';
 
 interface ScoreSelectorProps {
   scoringType: ZoneScoringType;
+  addScore: (score: number) => void;
 }
 
-export default function ScoreSelector({ scoringType }: ScoreSelectorProps) {
+export default function ScoreSelector({
+  scoringType,
+  addScore,
+}: ScoreSelectorProps) {
   return scoringType === ZoneScoringType.TenPoint ? (
     <View style={styles.row}>
-      <ScoreButton text="X" colour={globalColours.targetGold} />
-      <ScoreButton text="9" colour={globalColours.targetGold} />
-      <ScoreButton text="8" colour={globalColours.targetRed} />
-      <ScoreButton text="7" colour={globalColours.targetRed} />
-      <ScoreButton text="6" colour={globalColours.targetBlue} />
-      <ScoreButton text="5" colour={globalColours.targetBlue} />
-      <ScoreButton text="4" colour={globalColours.targetBlack} />
-      <ScoreButton text="3" colour={globalColours.targetBlack} />
-      <ScoreButton text="2" colour={globalColours.targetWhite} />
-      <ScoreButton text="1" colour={globalColours.targetWhite} />
-      <ScoreButton text="M" colour={globalColours.targetMiss} />
+      <ScoreButton
+        text="X"
+        value={10}
+        colour={globalColours.targetGold}
+        addScore={addScore}
+      />
+      <ScoreButton
+        text="9"
+        value={9}
+        addScore={addScore}
+        colour={globalColours.targetGold}
+      />
+      <ScoreButton
+        text="8"
+        value={8}
+        addScore={addScore}
+        colour={globalColours.targetRed}
+      />
+      <ScoreButton
+        text="7"
+        value={7}
+        addScore={addScore}
+        colour={globalColours.targetRed}
+      />
+      <ScoreButton
+        text="6"
+        value={6}
+        addScore={addScore}
+        colour={globalColours.targetBlue}
+      />
+      <ScoreButton
+        text="5"
+        value={5}
+        addScore={addScore}
+        colour={globalColours.targetBlue}
+      />
+      <ScoreButton
+        text="4"
+        value={4}
+        addScore={addScore}
+        colour={globalColours.targetBlack}
+      />
+      <ScoreButton
+        text="3"
+        value={3}
+        addScore={addScore}
+        colour={globalColours.targetBlack}
+      />
+      <ScoreButton
+        text="2"
+        value={2}
+        addScore={addScore}
+        colour={globalColours.targetWhite}
+      />
+      <ScoreButton
+        text="1"
+        value={1}
+        addScore={addScore}
+        colour={globalColours.targetWhite}
+      />
+      <ScoreButton
+        text="M"
+        value={0}
+        addScore={addScore}
+        colour={globalColours.targetMiss}
+      />
     </View>
   ) : (
     <View style={styles.row}>
-      <ScoreButton text="9" colour={globalColours.targetGold} />
-      <ScoreButton text="7" colour={globalColours.targetRed} />
-      <ScoreButton text="5" colour={globalColours.targetBlue} />
-      <ScoreButton text="3" colour={globalColours.targetBlack} />
-      <ScoreButton text="1" colour={globalColours.targetWhite} />
-      <ScoreButton text="M" colour={globalColours.targetMiss} />
+      <ScoreButton
+        text="9"
+        value={9}
+        addScore={addScore}
+        colour={globalColours.targetGold}
+      />
+      <ScoreButton
+        text="7"
+        value={7}
+        addScore={addScore}
+        colour={globalColours.targetRed}
+      />
+      <ScoreButton
+        text="5"
+        value={5}
+        addScore={addScore}
+        colour={globalColours.targetBlue}
+      />
+      <ScoreButton
+        text="3"
+        value={3}
+        addScore={addScore}
+        colour={globalColours.targetBlack}
+      />
+      <ScoreButton
+        text="1"
+        value={1}
+        addScore={addScore}
+        colour={globalColours.targetWhite}
+      />
+      <ScoreButton
+        text="M"
+        value={0}
+        addScore={addScore}
+        colour={globalColours.targetMiss}
+      />
     </View>
   );
 }
 
-function ScoreButton({ text, colour }) {
+function ScoreButton({ text, value, colour, addScore }) {
   return (
     <TouchableOpacity
       style={[
@@ -43,7 +132,7 @@ function ScoreButton({ text, colour }) {
         styles.scoreButton,
         { backgroundColor: colour },
       ]}
-      onPressOut={() => console.log(`${text} was pressed`)}>
+      onPressOut={() => addScore(value)}>
       <Text>{text}</Text>
     </TouchableOpacity>
   );

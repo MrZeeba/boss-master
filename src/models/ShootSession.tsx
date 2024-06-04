@@ -28,13 +28,15 @@ export class ShootSession {
     this.roundJson = JSON.stringify(value);
   }
 
-  constructor(round: IRound) {
-    this.ends = new End[]();
-  }
-
   static fromPlainObject(obj: any): ShootSession {
     const session = new ShootSession();
     Object.assign(session, obj);
     return session;
+  }
+
+  // Adds a score to the current end
+  AddEndScore(score: number) {
+    if (this.ends === undefined) {
+    }
   }
 }

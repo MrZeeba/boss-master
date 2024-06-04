@@ -18,6 +18,14 @@ export function OutdoorSessionComponent({ control }) {
         onSelect={(selected: IRound) => setRound(selected)}
         rules={{ required: 'A type of round is required' }}
       />
+      {round !== undefined && round.variations.length > 1 ? (
+        <CustomPicker
+          labelText="Variation"
+          name="roundVariation"
+          control={control}
+          data={round.variations}
+        />
+      ) : null}
       {round !== undefined ? <RoundInfoArea round={round} /> : null}
     </View>
   );

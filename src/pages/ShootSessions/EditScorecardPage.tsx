@@ -30,6 +30,12 @@ export default function EditScorecardPage({ navigation, route }) {
     });
   }, [navigation]);
 
+  //Adds a score to the current session
+  function addScore(score: number) {
+    console.log('User has entered an arrow score of ', score);
+    rehydratedSession.AddEndScore(score);
+  }
+
   //Where should the buttons be for discarding/saving? they shouldn't be easily pressed
   //We should auto-save every end
 
@@ -39,9 +45,11 @@ export default function EditScorecardPage({ navigation, route }) {
       <Text>{rehydratedSession.round.displayName}</Text>
       <Text>End 1 of 4</Text>
       <Text>Arrow 1 of 6</Text>
-      <Text>{rehydratedSession.ends.toString()}</Text>
       <EndView />
-      <ScoreSelector scoringType={rehydratedSession.round.zoneScoring} />
+      <ScoreSelector
+        scoringType={rehydratedSession.round.zoneScoring}
+        addScore={score => addScore(score)}
+      />
     </View>
   );
 
