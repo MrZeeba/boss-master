@@ -18,14 +18,14 @@ export class EndDb implements IChildTable<End> {
     const sql: string = `
         CREATE TABLE IF NOT EXISTS ${LocalDb.END_TABLE_NAME} (
             "id"	INTEGER,
-            "shoot_session_id"	INTEGER,
+            "shootSessionId"	INTEGER,
             "image"	INTEGER,
-            "arrow_1"	INTEGER,
-            "arrow_2"	INTEGER,
-            "arrow_3"	INTEGER,
-            "arrow_4"	INTEGER,
-            "arrow_5"	INTEGER,
-            "arrow_6"	INTEGER,
+            "arrow1"	INTEGER,
+            "arrow2"	INTEGER,
+            "arrow3"	INTEGER,
+            "arrow4"	INTEGER,
+            "arrow5"	INTEGER,
+            "arrow6"	INTEGER,
             FOREIGN KEY("shoot_session_id") REFERENCES "shoot_session"("id") ON DELETE CASCADE,
             PRIMARY KEY("id" AUTOINCREMENT)
         );

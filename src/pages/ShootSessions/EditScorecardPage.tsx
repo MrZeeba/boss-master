@@ -39,6 +39,7 @@ export default function EditScorecardPage({ navigation, route }) {
       <Text>{rehydratedSession.round.displayName}</Text>
       <Text>End 1 of 4</Text>
       <Text>Arrow 1 of 6</Text>
+      <Text>{rehydratedSession.ends.toString()}</Text>
       <EndView />
       <ScoreSelector scoringType={rehydratedSession.round.zoneScoring} />
     </View>
@@ -46,6 +47,7 @@ export default function EditScorecardPage({ navigation, route }) {
 
   function DiscardDraft() {
     if (rehydratedSession.id !== undefined) {
+      console.log('Discarding draft', rehydratedSession.id);
       LocalDb.DeleteRecord(
         LocalDb.SHOOTSESSION_TABLE_NAME,
         rehydratedSession.id,

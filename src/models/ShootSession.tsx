@@ -28,6 +28,10 @@ export class ShootSession {
     this.roundJson = JSON.stringify(value);
   }
 
+  constructor(round: IRound) {
+    this.ends = new End[]();
+  }
+
   static fromPlainObject(obj: any): ShootSession {
     const session = new ShootSession();
     Object.assign(session, obj);

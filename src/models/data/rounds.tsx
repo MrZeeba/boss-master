@@ -18,13 +18,42 @@ export const roundData: ISessionType = {
         faceSize: 80,
         zoneScoring: ZoneScoringType.TenPoint,
         arrowsPerEnd: 6,
-        arrowsAtEachDistance: 36,
         variations: [
-          { displayName: 'I', distances: [70, 60] },
-          { displayName: 'II', distances: [60, 50] },
-          { displayName: 'III', distances: [50, 40] },
-          { displayName: 'IV', distances: [40, 30] },
-          { displayName: 'V', distances: [30, 20] },
+          {
+            displayName: 'I',
+            distances: [
+              { distance: 50, arrows: 36 },
+              { distance: 30, arrows: 36 },
+            ],
+          },
+          {
+            displayName: 'II',
+            distances: [
+              { distance: 40, arrows: 36 },
+              { distance: 30, arrows: 36 },
+            ],
+          },
+          {
+            displayName: 'III',
+            distances: [
+              { distance: 30, arrows: 36 },
+              { distance: 20, arrows: 36 },
+            ],
+          },
+          {
+            displayName: 'IV',
+            distances: [
+              { distance: 20, arrows: 36 },
+              { distance: 10, arrows: 36 },
+            ],
+          },
+          {
+            displayName: 'V',
+            distances: [
+              { distance: 15, arrows: 36 },
+              { distance: 10, arrows: 36 },
+            ],
+          },
         ],
       } as IRound,
       longmetric: {
@@ -33,13 +62,42 @@ export const roundData: ISessionType = {
         faceSize: 122,
         zoneScoring: ZoneScoringType.TenPoint,
         arrowsPerEnd: 6,
-        arrowsAtEachDistance: 36,
         variations: [
-          { displayName: 'I', distances: [90, 70] },
-          { displayName: 'II', distances: [70, 60] },
-          { displayName: 'III', distances: [50, 40] },
-          { displayName: 'IV', distances: [40, 30] },
-          { displayName: 'V', distances: [30, 20] },
+          {
+            displayName: 'I',
+            distances: [
+              { distance: 70, arrows: 36 },
+              { distance: 60, arrows: 36 },
+            ],
+          },
+          {
+            displayName: 'II',
+            distances: [
+              { distance: 60, arrows: 36 },
+              { distance: 50, arrows: 36 },
+            ],
+          },
+          {
+            displayName: 'III',
+            distances: [
+              { distance: 50, arrows: 36 },
+              { distance: 40, arrows: 36 },
+            ],
+          },
+          {
+            displayName: 'IV',
+            distances: [
+              { distance: 40, arrows: 36 },
+              { distance: 30, arrows: 36 },
+            ],
+          },
+          {
+            displayName: 'V',
+            distances: [
+              { distance: 30, arrows: 36 },
+              { distance: 20, arrows: 36 },
+            ],
+          },
         ],
       } as IRound,
       york: {

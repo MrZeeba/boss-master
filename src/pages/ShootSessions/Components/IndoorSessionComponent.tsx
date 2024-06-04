@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import CustomPicker from '../../../Components/CustomPicker';
 import RoundInfoArea from '../../../Components/RoundInfoArea';
 import { IRound } from '../../../Interfaces/RoundInterfaces';
-import { roundData } from '../../../models/data/rounds';
+import { indoorRounds } from '../../../models/data/indoorRounds';
 
 export function IndoorSessionComponent({ control }) {
   const [round, setRound] = useState<IRound | undefined>(undefined);
@@ -14,7 +14,7 @@ export function IndoorSessionComponent({ control }) {
         labelText="Round"
         name="roundPicker"
         control={control}
-        data={roundData.indoor.rounds}
+        data={indoorRounds}
         onSelect={(selected: IRound) => setRound(selected)}
         rules={{ required: 'A type of round is required' }}
       />

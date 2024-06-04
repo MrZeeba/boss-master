@@ -11,7 +11,6 @@ import { globalConstants } from '../../globalConstants';
 import { globalStyles } from '../../globalStyles';
 import { Bow } from '../../models/Bow';
 import { ShootSession } from '../../models/ShootSession';
-import { roundData } from '../../models/data/rounds';
 import { ShootSessionDb } from '../../sqlite/ShootSessionDb';
 import { IndoorSessionComponent } from './Components/IndoorSessionComponent';
 import { OutdoorSessionComponent } from './Components/OutdoorSessionComponent';
@@ -83,7 +82,7 @@ export default function NewShootSessionPage({ navigation, route }) {
 
       <View style={styles.rowContainer}>
         <CustomButton
-          title={roundData.outdoor.displayName}
+          title="Outdoor"
           icon={
             <Feather name="sun" size={50} color={globalColours.secondary} />
           }
@@ -96,7 +95,7 @@ export default function NewShootSessionPage({ navigation, route }) {
           }}
         />
         <CustomButton
-          title={roundData.indoor.displayName}
+          title="Indoor"
           icon={
             <Feather name="home" size={50} color={globalColours.secondary} />
           }

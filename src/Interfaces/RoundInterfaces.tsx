@@ -4,11 +4,16 @@ import { IDisplayNameObject } from './IDisplayNameObject';
 This file contains a list of definitions for round data to bring structure to the data
 */
 export interface ISessionType {
-  [key: string]: IRoundType;
+  [key: string]: IRound;
 }
 
 export interface IRoundType extends IDisplayNameObject {
   rounds: { [key: string]: IRound };
+}
+
+export interface IDistanceArrows {
+  distance: number;
+  arrows: number;
 }
 
 export interface IRound extends IDisplayNameObject {
@@ -16,10 +21,9 @@ export interface IRound extends IDisplayNameObject {
   faceSize: number;
   zoneScoring: number;
   arrowsPerEnd: number;
-  arrowsAtEachDistance?: number; // Optional for rounds with variations
-  distances?: { distance: number; arrows: number }[]; // Optional for rounds without variations
+  distances?: IDistanceArrows[]; // Optional for rounds without variations
   variations?: {
     displayName: string;
-    distances: number[];
+    distances: IDistanceArrows[];
   }[];
 }
