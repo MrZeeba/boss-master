@@ -10,7 +10,7 @@ import { globalColours } from '../../globalColours';
 import { globalConstants } from '../../globalConstants';
 import { globalStyles } from '../../globalStyles';
 import { Bow } from '../../models/Bow';
-import { ShootSession } from '../../models/ShootSession';
+import { ShootSession } from '../../models/domain/ShootSession';
 import { ShootSessionDb } from '../../sqlite/ShootSessionDb';
 import { IndoorSessionComponent } from './Components/IndoorSessionComponent';
 import { OutdoorSessionComponent } from './Components/OutdoorSessionComponent';

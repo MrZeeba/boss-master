@@ -1,6 +1,6 @@
 import { SQLiteBindParams } from 'expo-sqlite/next';
 import { ITable } from '../Interfaces/ITable';
-import { ShootSession } from '../models/ShootSession';
+import { ShootSession } from '../models/entity/ShootSession';
 import LocalDb from './LocalDb';
 
 /*
@@ -55,10 +55,7 @@ export class ShootSessionDb implements ITable<ShootSession> {
     return LocalDb.GetBySQL<ShootSession>(sql, params)
       .then(shootSessions => {
         const shootSession = shootSessions[0];
-        if (shootSession) {
-          return ShootSession.fromPlainObject(shootSession);
-        }
-        return undefined;
+        return shootSession ?? undefined;
       })
       .catch(error => {
         console.warn('Unable to retrieve draft', error);

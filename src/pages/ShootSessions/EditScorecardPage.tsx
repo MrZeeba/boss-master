@@ -4,7 +4,7 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import EndView from '../../Components/EndView';
 import ScoreSelector from '../../Components/ScoreSelector';
 import { globalStyles } from '../../globalStyles';
-import { ShootSession } from '../../models/ShootSession';
+import { ShootSession } from '../../models/domain/ShootSession';
 import LocalDb from '../../sqlite/LocalDb';
 
 /*

@@ -68,9 +68,9 @@ export default class LocalDb {
   /*
   Return all of a type
   */
-  static GetAll<Type>(tableName: string): Promise<Type[]> {
+  static GetAll<IEntity>(tableName: string): Promise<IEntity[]> {
     const db = this.GetDatabaseInstance();
-    return db.getAllAsync<Type>(`SELECT * FROM ${tableName}`);
+    return db.getAllAsync<IEntity>(`SELECT * FROM ${tableName}`);
   }
 
   /*

@@ -1,7 +1,7 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback, useState } from 'react';
 import CustomCard from '../../Components/CustomCard';
-import { ShootSession } from '../../models/ShootSession';
+import { ShootSession } from '../../models/domain/ShootSession';
 import LocalDb from '../../sqlite/LocalDb';
 
 export default function HistoryPage() {
