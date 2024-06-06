@@ -1,12 +1,12 @@
 import { SQLiteBindParams } from 'expo-sqlite/next';
 import { ITable } from '../Interfaces/ITable';
-import { ShootSession } from '../models/entity/ShootSession';
+import { ShootSessionEnt } from '../models/entity/ShootSessionEnt';
 import LocalDb from './LocalDb';
 
 /*
 Validates the schema for this table
 */
-export class ShootSessionDb implements ITable<ShootSession> {
+export class ShootSessionDb implements ITable<ShootSessionEnt> {
   private static instance: ShootSessionDb;
 
   private constructor() {}
@@ -47,12 +47,12 @@ export class ShootSessionDb implements ITable<ShootSession> {
     //older than last week
   }
 
-  async GetDraft(): Promise<ShootSession | undefined> {
+  async GetDraft(): Promise<ShootSessionEnt | undefined> {
     const sql: string = `SELECT * FROM ${LocalDb.SHOOTSESSION_TABLE_NAME} WHERE isDraft = ? ORDER BY dateShot DESC LIMIT 1`;
 
     const params: SQLiteBindParams = [1];
 
-    return LocalDb.GetBySQL<ShootSession>(sql, params)
+    return LocalDb.GetBySQL<ShootSessionEnt>(sql, params)
       .then(shootSessions => {
         const shootSession = shootSessions[0];
         return shootSession ?? undefined;
@@ -63,14 +63,14 @@ export class ShootSessionDb implements ITable<ShootSession> {
       });
   }
 
-  Create(session: ShootSession): Promise<number | undefined> {
+  Create(session: ShootSessionEnt): Promise<number | undefined> {
     console.log('Attempting to insert shooting session', session);
 
     const sql: string = `INSERT INTO ${LocalDb.SHOOTSESSION_TABLE_NAME} (bowId, roundJson, note, dateShot, isDraft) VALUES (?, ?, ?, ?, ?)`;
 
     const params: SQLiteBindParams = [
-      session.bow.id,
-      JSON.stringify(session.round),
+      session.bowId,
+      session.roundJson,
       session.note,
       session.dateShot,
       true,
