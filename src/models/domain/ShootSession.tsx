@@ -1,8 +1,8 @@
 import { IDomain } from '../../Interfaces/IDomain';
 import { IRound } from '../../Interfaces/RoundInterfaces';
-import { Bow } from '../Bow';
 import { End } from '../End';
 import { ShootSessionEnt as ShootSessionEntity } from '../entity/ShootSessionEnt';
+import { Bow } from './Bow';
 
 export class ShootSession implements IDomain {
   id?: number;

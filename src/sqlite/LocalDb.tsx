@@ -79,6 +79,8 @@ export default class LocalDb {
 
     console.log('Got results', results);
 
+    console.log('eggies', results[0].id);
+
     return results.map(x => x.toDomain());
   }
 

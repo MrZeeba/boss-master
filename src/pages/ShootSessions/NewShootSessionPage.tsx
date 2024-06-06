@@ -9,7 +9,7 @@ import getCurrentDateTime from '../../Helper/Date';
 import { globalColours } from '../../globalColours';
 import { globalConstants } from '../../globalConstants';
 import { globalStyles } from '../../globalStyles';
-import { Bow } from '../../models/Bow';
+import { Bow } from '../../models/domain/Bow';
 import { ShootSession } from '../../models/domain/ShootSession';
 import { ShootSessionDb } from '../../sqlite/ShootSessionDb';
 import { IndoorSessionComponent } from './Components/IndoorSessionComponent';
