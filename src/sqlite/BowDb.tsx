@@ -1,13 +1,14 @@
 import { SQLiteBindParams } from 'expo-sqlite/next';
 import { IChildTable } from '../Interfaces/IChildTable';
 import { Bow } from '../models/domain/Bow';
+import { BowEnt } from '../models/entity/BowEnt';
 import LocalDb, { default as LocalDB } from './LocalDb';
 
 /*
   Provides interactivity with the equipment table
   Must follow a singleton pattern as Typescript does not allow static methods on a interface.
   */
-export class BowDb implements IChildTable<Bow> {
+export class BowDb implements IChildTable<BowEnt> {
   private static instance: BowDb;
 
   private constructor() {}

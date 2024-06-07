@@ -1,7 +1,6 @@
 import * as FileSystem from 'expo-file-system';
 import * as SQLite from 'expo-sqlite/next';
 import { Platform } from 'react-native';
-import { IDomain } from '../Interfaces/IDomain';
 import { IEntity } from '../Interfaces/IEntity';
 
 export default class LocalDb {
@@ -72,16 +71,12 @@ export default class LocalDb {
   */
   static async GetAll<T extends IEntity>(
     tableName: string,
-  ): Promise<IDomain[]> {
+  ): Promise<IEntity[]> {
     const db = this.GetDatabaseInstance();
 
-    const results = await db.getAllAsync<T>(`SELECT * FROM ${tableName}`);
+    const sql = `SELECT * FROM ${tableName}`;
 
-    console.log('Got results', results);
-
-    console.log('eggies', results[0].id);
-
-    return results.map(x => x.toDomain());
+    return await db.getAllAsync<T>(sql);
   }
 
   /*

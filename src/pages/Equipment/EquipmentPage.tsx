@@ -8,7 +8,7 @@ import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import CustomCard from '../../Components/CustomCard';
 import { globalStyles } from '../../globalStyles';
 import { Equipment } from '../../models/Equipment';
-import LocalDB from '../../sqlite/LocalDb';
+import { BowDb } from '../../sqlite/BowDb';
 
 /*
 Equipment is currently just a bow but may be expanded in the future
@@ -22,8 +22,11 @@ export default function EquipmentPage({ navigation, route }) {
 
   useFocusEffect(
     useCallback(() => {
-      LocalDB.GetAll<Equipment>(LocalDB.EQUIPMENT_TABLE_NAME)
-        .then(results => setEquipmentList(results))
+      BowDb.Fetch()
+        .then(results => {
+          const equipment = results.map(x => x.toDomain());
+          setEquipmentList(equipment);
+        })
         .catch(error =>
           console.error('Critical error loading equipment results', error),
         );

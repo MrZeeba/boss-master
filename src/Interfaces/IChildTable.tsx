@@ -1,4 +1,4 @@
-import ITable from './ITable';
+import { ITable } from './ITable';
 
 export interface IChildTable<Type> extends ITable<Type> {
   Create(
