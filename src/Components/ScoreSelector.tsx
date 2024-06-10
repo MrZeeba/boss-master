@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { ZoneScoringType } from '../Enums/ZoneScoringType';
+import { ZoneScoringType } from '../enums/ZoneScoringType';
 import { globalColours } from '../globalColours';
 import { globalStyles } from '../globalStyles';
 

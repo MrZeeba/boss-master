@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { View } from 'react-native';
-import CustomPicker from '../../../Components/CustomPicker';
-import RoundInfoArea from '../../../Components/RoundInfoArea';
-import { IRound } from '../../../Interfaces/RoundInterfaces';
+import CustomPicker from '../../../components/CustomPicker';
+import RoundInfoArea from '../../../components/RoundInfoArea';
+import { IRound } from '../../../interfaces/RoundInterfaces';
 import { outdoorRounds } from '../../../models/data/outdoorRounds';
 
 export function OutdoorSessionComponent({ control }) {

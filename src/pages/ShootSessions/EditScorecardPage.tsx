@@ -1,8 +1,8 @@
 import { Feather } from '@expo/vector-icons';
 import { useEffect } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import EndView from '../../Components/EndView';
-import ScoreSelector from '../../Components/ScoreSelector';
+import EndView from '../../components/EndView';
+import ScoreSelector from '../../components/ScoreSelector';
 import { globalStyles } from '../../globalStyles';
 import { ShootSession } from '../../models/domain/ShootSession';
 import LocalDb from '../../sqlite/LocalDb';

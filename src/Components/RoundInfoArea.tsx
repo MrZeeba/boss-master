@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { IRound } from '../Interfaces/RoundInterfaces';
 import { globalColours } from '../globalColours';
+import { IRound } from '../interfaces/RoundInterfaces';
 
 interface RoundAreaInfoProps {
   round: IRound;

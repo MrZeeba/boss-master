@@ -5,10 +5,11 @@ import { Feather } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import CustomCard from '../../Components/CustomCard';
+import CustomCard from '../../components/CustomCard';
 import { globalStyles } from '../../globalStyles';
-import { Equipment } from '../../models/Equipment';
-import { BowDb } from '../../sqlite/BowDb';
+import { Equipment } from '../../models/domain/Equipment';
+import { EquipmentEnt } from '../../models/entity/EquipmentEnt';
+import LocalDb from '../../sqlite/LocalDb';
 
 /*
 Equipment is currently just a bow but may be expanded in the future
@@ -22,9 +23,12 @@ export default function EquipmentPage({ navigation, route }) {
 
   useFocusEffect(
     useCallback(() => {
-      BowDb.Fetch()
+      LocalDb.GetAll(LocalDb.EQUIPMENT_TABLE_NAME, () => new EquipmentEnt())
         .then(results => {
-          const equipment = results.map(x => x.toDomain());
+          console.log('Results from DB:', results);
+
+          const equipment = results.map(x => x.toDomain() as Equipment);
+
           setEquipmentList(equipment);
         })
         .catch(error =>
@@ -63,7 +67,7 @@ export default function EquipmentPage({ navigation, route }) {
               image={equipment.image}
               placeholderImageUri="../../assets/bow_placeholder.png"
               heading={equipment.name}
-              fieldOne={equipment.type.name}
+              fieldOne={equipment.type.displayName}
               fieldTwo={equipment.notes}
               onPress={() => (selectMode ? goBack(equipment) : view(equipment))}
             />

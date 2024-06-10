@@ -1,7 +1,7 @@
-import { IDisplayNameObject } from '../../Interfaces/IDisplayNameObject';
-import { IDomain } from '../../Interfaces/IDomain';
-import { Equipment } from '../Equipment';
+import { IDisplayNameObject } from '../../interfaces/IDisplayNameObject';
+import { IDomain } from '../../interfaces/IDomain';
 import { BowEnt } from '../entity/BowEnt';
+import { Equipment } from './Equipment';
 
 export class Bow extends Equipment implements IDomain {
   bowId?: number;

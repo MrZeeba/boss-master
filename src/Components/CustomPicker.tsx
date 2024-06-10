@@ -3,9 +3,9 @@ import { useState } from 'react';
 import { Control, Controller } from 'react-hook-form';
 import { StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { IDisplayNameObject } from '../Interfaces/IDisplayNameObject';
 import { globalColours } from '../globalColours';
 import { globalStyles } from '../globalStyles';
+import { IDisplayNameObject } from '../interfaces/IDisplayNameObject';
 
 interface CustomTextInputProps {
   control: Control<any, any>;

@@ -1,4 +1,4 @@
-import { IBowType } from '../../Interfaces/IBowTypes';
+import { IBowType } from '../../interfaces/IBowTypes';
 
 export const bowTypes: IBowType = {
   longbow: {

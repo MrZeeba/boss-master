@@ -1,5 +1,5 @@
 import { SQLiteBindParams } from 'expo-sqlite/next';
-import { ITable } from '../Interfaces/ITable';
+import { ITable } from '../interfaces/ITable';
 import { ShootSessionEnt } from '../models/entity/ShootSessionEnt';
 import LocalDb from './LocalDb';
 

@@ -1,7 +1,7 @@
 import * as FileSystem from 'expo-file-system';
 import * as SQLite from 'expo-sqlite/next';
 import { Platform } from 'react-native';
-import { IEntity } from '../Interfaces/IEntity';
+import { IEntity } from '../interfaces/IEntity';
 
 export default class LocalDb {
   static DATABASE_NAME: string = 'boss-master.db';
@@ -71,12 +71,20 @@ export default class LocalDb {
   */
   static async GetAll<T extends IEntity>(
     tableName: string,
+    entityFactory: () => T,
   ): Promise<IEntity[]> {
     const db = this.GetDatabaseInstance();
 
     const sql = `SELECT * FROM ${tableName}`;
 
-    return await db.getAllAsync<T>(sql);
+    const results = await db.getAllAsync<T>(sql);
+
+    //Rehydrate the object before passing back to the caller to ensure its fully built
+    return results.map(result => {
+      const entity = entityFactory();
+      Object.assign(entity, result);
+      return entity;
+    });
   }
 
   /*

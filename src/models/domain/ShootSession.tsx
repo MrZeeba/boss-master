@@ -1,5 +1,5 @@
-import { IDomain } from '../../Interfaces/IDomain';
-import { IRound } from '../../Interfaces/RoundInterfaces';
+import { IDomain } from '../../interfaces/IDomain';
+import { IRound } from '../../interfaces/RoundInterfaces';
 import { End } from '../End';
 import { ShootSessionEnt as ShootSessionEntity } from '../entity/ShootSessionEnt';
 import { Bow } from './Bow';

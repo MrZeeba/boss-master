@@ -1,6 +1,5 @@
 import { SQLiteBindParams } from 'expo-sqlite/next';
-import { IChildTable } from '../Interfaces/IChildTable';
-import { Bow } from '../models/domain/Bow';
+import { IChildTable } from '../interfaces/IChildTable';
 import { BowEnt } from '../models/entity/BowEnt';
 import LocalDb, { default as LocalDB } from './LocalDb';
 
@@ -12,6 +11,10 @@ export class BowDb implements IChildTable<BowEnt> {
   private static instance: BowDb;
 
   private constructor() {}
+
+  Restructure(): void {
+    throw new Error('Method not implemented.');
+  }
 
   static GetInstance(): BowDb {
     if (!this.instance) this.instance = new BowDb();
@@ -28,10 +31,11 @@ export class BowDb implements IChildTable<BowEnt> {
         REFERENCES equipment(id)
     )`;
 
-    LocalDb.Validate(sql, LocalDB.BOW_TABLE_NAME);
+    return LocalDb.Validate(sql, LocalDB.BOW_TABLE_NAME);
   }
 
-  Create(bow: Bow, parentId: number): Promise<number> {
+  // Returns the inserted record id
+  Create(bow: BowEnt, parentId: number): Promise<number> {
     console.log('Attempting to create bow', bow);
     return new Promise<number>((success, fail) => {
       const db = LocalDb.GetDatabaseInstance();

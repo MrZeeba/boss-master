@@ -1,4 +1,4 @@
-import { IEntity } from '../../Interfaces/IEntity';
+import { IEntity } from '../../interfaces/IEntity';
 
 import { ShootSession } from '../domain/ShootSession';
 

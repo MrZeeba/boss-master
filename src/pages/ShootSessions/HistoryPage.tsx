@@ -1,6 +1,6 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback, useState } from 'react';
-import CustomCard from '../../Components/CustomCard';
+import CustomCard from '../../components/CustomCard';
 import { ShootSession } from '../../models/domain/ShootSession';
 import LocalDb from '../../sqlite/LocalDb';
 

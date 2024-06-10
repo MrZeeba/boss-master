@@ -1,5 +1,5 @@
-import { IDisplayNameObject } from '../../Interfaces/IDisplayNameObject';
-import { IEntity } from '../../Interfaces/IEntity';
+import { IDisplayNameObject } from '../../interfaces/IDisplayNameObject';
+import { IEntity } from '../../interfaces/IEntity';
 import { Bow } from '../domain/Bow';
 
 export class BowEnt implements IEntity {

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Text, View } from 'react-native';
-import CustomButton from '../Components/CustomButton';
+import CustomButton from '../components/CustomButton';
 import { ExportDb } from '../debug/ExportDb';
 import { globalStyles } from '../globalStyles';
 import { BowDb } from '../sqlite/BowDb';

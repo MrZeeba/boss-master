@@ -1,5 +1,5 @@
-import { ZoneScoringType } from '../../Enums/ZoneScoringType';
-import { ISessionType } from '../../Interfaces/RoundInterfaces';
+import { ZoneScoringType } from '../../enums/ZoneScoringType';
+import { ISessionType } from '../../interfaces/RoundInterfaces';
 
 export const outdoorRounds: ISessionType = {
   shortmetric: {
