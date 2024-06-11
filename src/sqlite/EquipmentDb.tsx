@@ -50,7 +50,7 @@ export class EquipmentDb implements ITable<EquipmentEnt> {
 
       db.runAsync(sql, params)
         .then(result => {
-          console.log('Changes made', result.changes);
+          console.log('Inserted row', result.changes);
           success(result.lastInsertRowId);
         })
         .catch(error => {

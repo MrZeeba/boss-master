@@ -1,14 +1,14 @@
 import IDisplayNameObject from '../../interfaces/IDisplayNameObject';
 
 export class Equipment {
-  id: number;
+  id?: number;
   name: string;
   type: IDisplayNameObject;
   image: string;
   notes: string;
 
   constructor(
-    _id: number,
+    _id: number | undefined,
     _name: string,
     _type: IDisplayNameObject,
     _image: string,

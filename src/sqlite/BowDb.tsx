@@ -1,8 +1,6 @@
 import { SQLiteBindParams } from 'expo-sqlite/next';
 import { IChildTable } from '../interfaces/IChildTable';
 import { Bow } from '../models/domain/Bow';
-import { Equipment } from '../models/domain/Equipment';
-import { BowEnt } from '../models/entity/BowEnt';
 import { EquipmentDb } from './EquipmentDb';
 import LocalDb, { default as LocalDB } from './LocalDb';
 
@@ -45,8 +43,7 @@ export class BowDb implements IChildTable<BowEnt> {
 
       const sql = `SELECT b.*, e.* FROM ${LocalDB.BOW_TABLE_NAME} b JOIN ${LocalDB.EQUIPMENT_TABLE_NAME} e on b.equipment_id == e.id`;
 
-      const bows = db
-        .getAllAsync<BowEnt>(sql)
+      db.getAllAsync<BowEnt>(sql)
         .then(bows => {
           success(
             bows.map(
@@ -70,7 +67,7 @@ export class BowDb implements IChildTable<BowEnt> {
     });
   }
 
-  // Returns the inserted record id from the bow table
+  // Returns an updated bow object containing the id
   Create(bow: Bow): Promise<number> {
     console.log('Attempting to create bow', bow);
 
@@ -78,22 +75,18 @@ export class BowDb implements IChildTable<BowEnt> {
       const db = LocalDb.GetDatabaseInstance();
 
       const equipDb = EquipmentDb.GetInstance();
-      const equipmentSuper = Object.getPrototypeOf(bow) as Equipment;
-      console.log('equipmentSuper', equipmentSuper);
 
-      equipDb.Create(equipmentSuper).then(equipId => {
-        const bowEnt = bow.toEntity();
-
+      equipDb.Create(bow).then(equipId => {
         const sql: string = `INSERT INTO ${LocalDB.BOW_TABLE_NAME} (equipment_id, classification, draw_weight) VALUES(?,?,?)`;
         const params: SQLiteBindParams = [
           equipId,
-          bowEnt.classification,
-          bowEnt.drawWeight,
+          bow.classification.toString(),
+          bow.drawWeight,
         ];
 
         db.runAsync(sql, params)
           .then(result => {
-            console.log('Changes made', result.changes);
+            console.log('Inserted row', result.changes);
             success(result.lastInsertRowId);
           })
           .catch(error => {

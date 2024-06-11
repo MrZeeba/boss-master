@@ -37,17 +37,16 @@ export default function EditEquipmentPage({ navigation }) {
     console.log('DATA PASSED FROM FORM', data);
     //const bow = new Bow(id, data);
 
-    const bow = new Bow();
-    /*
     const bow = new Bow(
+      undefined,
       data.name,
       data.image,
       data.notes,
+      undefined,
       data.bowType,
       data.length,
       data.drawweight,
     );
-    */
 
     const bowDb = BowDb.GetInstance();
     bowDb
