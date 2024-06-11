@@ -9,7 +9,18 @@ export class Equipment implements IDomain {
   type: IDisplayNameObject;
   image: string;
   notes: string;
-  childFK: any;
+
+  constructor(
+    _name: string,
+    _type: IDisplayNameObject,
+    _image: string,
+    _notes: string,
+  ) {
+    this.name = _name;
+    this.type = _type;
+    this.image = _image;
+    this.notes = _notes;
+  }
 
   toEntity(): IEntity {
     const entity = new EquipmentEnt();

@@ -7,13 +7,10 @@ import CustomImagePicker from '../../components/CustomImagePicker';
 import CustomNotesInput from '../../components/CustomNotesInput';
 import CustomPicker from '../../components/CustomPicker';
 import CustomTextInput from '../../components/CustomTextInput';
-import { EquipmentType } from '../../enums/EquipmentType';
-import { bowTypes } from '../../models/data/bowtypes';
+import { bowTypes } from '../../models/data/bowTypes';
 import { Bow } from '../../models/domain/Bow';
 import { Equipment } from '../../models/domain/Equipment';
 import { BowDb } from '../../sqlite/BowDb';
-import { EquipmentDb } from '../../sqlite/EquipmentDb';
-import LocalDb from '../../sqlite/LocalDb';
 
 export default function EditEquipmentPage({ navigation }) {
   const maxNameLength: number = 25;
@@ -41,48 +38,25 @@ export default function EditEquipmentPage({ navigation }) {
     console.log('DATA PASSED FROM FORM', data);
     //const bow = new Bow(id, data);
 
-    const equipment = new Equipment();
-    equipment.type = EquipmentType.Bow;
-    equipment.name = data.name;
-    equipment.image = data.image;
-    equipment.notes = data.notes;
+    const bow = new Bow(
+      data.name,
+      data.image,
+      data.notes,
+      data.bowType,
+      data.length,
+      data.drawweight,
+    );
 
-    const bow = new Bow();
-    bow.classification = data.bowType;
-    bow.drawWeight = data.drawweight;
-
-    const equipmentDb = EquipmentDb.GetInstance();
-
-    equipmentDb
-      .Create(equipment.toEntity())
-      .then(id => {
-        console.log(
-          `New equipment created with id ${id}, creating child record...`,
-        );
-
-        const bowDb = BowDb.GetInstance();
-        bowDb
-          .Create(bow.toEntity(), id)
-          .then(bowId => {
-            console.log(
-              `New bow child record of equipment ${id} created with id`,
-              bowId,
-            );
-            navigation.goBack();
-          })
-          .catch(error => {
-            console.warn(
-              'Failed to create bow child record, rolling back parent with id',
-              id,
-              error,
-            );
-            LocalDb.DeleteRecord(LocalDb.EQUIPMENT_TABLE_NAME, id);
-          });
+    const bowDb = BowDb.GetInstance();
+    bowDb
+      .Create(bow)
+      .then(bowId => {
+        console.log('Inserted Bow with Id', bowId);
+        navigation.goBack();
       })
-      .catch(error => {
-        //Display or deal with error
-        console.warn(error);
-      });
+      .catch(error =>
+        console.log('An error occured when inserting the bow record', error),
+      );
   }
 
   function BeforeLeave(leaveData) {

@@ -1,5 +1,7 @@
 import { SQLiteBindParams } from 'expo-sqlite/next';
 import { IChildTable } from '../interfaces/IChildTable';
+import { Bow } from '../models/domain/Bow';
+import { Equipment } from '../models/domain/Equipment';
 import { BowEnt } from '../models/entity/BowEnt';
 import { EquipmentDb } from './EquipmentDb';
 import LocalDb, { default as LocalDB } from './LocalDb';
@@ -36,29 +38,36 @@ export class BowDb implements IChildTable<BowEnt> {
   }
 
   // Returns the inserted record id from the bow table
-  Create(bow: BowEnt): Promise<number> {
+  Create(bow: Bow): Promise<number> {
     console.log('Attempting to create bow', bow);
+
     return new Promise<number>((success, fail) => {
       const db = LocalDb.GetDatabaseInstance();
+
       const equipDb = EquipmentDb.GetInstance();
-      equipDb.Create();
+      const equipmentSuper = Object.getPrototypeOf(bow) as Equipment;
+      console.log('equipmentSuper', equipmentSuper);
 
-      const sql: string = `INSERT INTO ${LocalDB.BOW_TABLE_NAME} (equipment_id, classification, draw_weight) VALUES(?,?,?)`;
-      const params: SQLiteBindParams = [
-        parentId,
-        bow.classification.toString(),
-        bow.drawWeight,
-      ];
+      equipDb.Create(equipmentSuper).then(equipId => {
+        const bowEnt = bow.toEntity();
 
-      db.runAsync(sql, params)
-        .then(result => {
-          console.log('Changes made', result.changes);
-          success(result.lastInsertRowId);
-        })
-        .catch(error => {
-          console.warn('Failed to create record', error);
-          fail(error);
-        });
+        const sql: string = `INSERT INTO ${LocalDB.BOW_TABLE_NAME} (equipment_id, classification, draw_weight) VALUES(?,?,?)`;
+        const params: SQLiteBindParams = [
+          equipId,
+          bowEnt.classification,
+          bowEnt.drawWeight,
+        ];
+
+        db.runAsync(sql, params)
+          .then(result => {
+            console.log('Changes made', result.changes);
+            success(result.lastInsertRowId);
+          })
+          .catch(error => {
+            console.warn('Failed to create record', error);
+            fail(error);
+          });
+      });
     });
   }
 }

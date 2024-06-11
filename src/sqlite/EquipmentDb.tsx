@@ -1,5 +1,6 @@
 import { SQLiteBindParams } from 'expo-sqlite/next';
 import { ITable } from '../interfaces/ITable';
+import { Equipment } from '../models/domain/Equipment';
 import { EquipmentEnt } from '../models/entity/EquipmentEnt';
 import LocalDb from './LocalDb';
 
@@ -35,7 +36,7 @@ export class EquipmentDb implements ITable<EquipmentEnt> {
     return LocalDb.Validate(sql, LocalDb.EQUIPMENT_TABLE_NAME);
   }
 
-  Create(equipment: EquipmentEnt): Promise<number> {
+  Create(equipment: Equipment): Promise<number> {
     return new Promise<number>((success, fail) => {
       const db = LocalDb.GetDatabaseInstance();
 

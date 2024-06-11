@@ -1,6 +1,6 @@
 //Mock the database
 import * as SQLite from 'expo-sqlite';
-import { BowType } from '../../models/data/bowtypes';
+import { BowType } from '../../models/data/bowTypes';
 import { Bow } from '../../models/domain/Bow';
 import { ShootSession } from '../../models/domain/ShootSession';
 import * as LocalDB from '../LocalDb';

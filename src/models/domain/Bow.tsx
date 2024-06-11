@@ -1,5 +1,6 @@
+import { IDomain } from '../../Interfaces/IDomain';
 import { IDisplayNameObject } from '../../interfaces/IDisplayNameObject';
-import { IDomain } from '../../interfaces/IDomain';
+import { equipmentTypes } from '../data/equipmentTypes';
 import { BowEnt } from '../entity/BowEnt';
 import { Equipment } from './Equipment';
 
@@ -10,12 +11,18 @@ export class Bow extends Equipment implements IDomain {
   length: number;
   drawWeight: number;
 
-  super(
+  constructor(
+    _name: string,
+    _image: string,
+    _notes: string,
     _classification: IDisplayNameObject,
     _length: number,
     _drawWeight: number,
   ) {
-    classification = _classification;
+    super(_name, equipmentTypes.bow, _image, _notes);
+    this.classification = _classification;
+    this.length = _length;
+    this.drawWeight = _drawWeight;
   }
 
   toEntity(): BowEnt {
