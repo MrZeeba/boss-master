@@ -1,4 +1,4 @@
-import { ZoneScoringType } from '../../enums/ZoneScoringType';
+import { zoneScoringTypes } from '../../enums/zoneScoringTypes';
 import { ISessionType } from '../../interfaces/RoundInterfaces';
 
 export const outdoorRounds: ISessionType = {
@@ -6,7 +6,7 @@ export const outdoorRounds: ISessionType = {
     displayName: 'Short Metric',
     distanceType: 'metric',
     faceSize: 80,
-    zoneScoring: ZoneScoringType.TenPoint,
+    zoneScoring: zoneScoringTypes.TenPoint,
     arrowsPerEnd: 6,
     variations: [
       {
@@ -50,7 +50,7 @@ export const outdoorRounds: ISessionType = {
     displayName: 'Long Metric',
     distanceType: 'metric',
     faceSize: 122,
-    zoneScoring: ZoneScoringType.TenPoint,
+    zoneScoring: zoneScoringTypes.TenPoint,
     arrowsPerEnd: 6,
     variations: [
       {

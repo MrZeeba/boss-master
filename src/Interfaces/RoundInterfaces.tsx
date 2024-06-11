@@ -1,4 +1,4 @@
-import { IDisplayNameObject } from './IDisplayNameObject';
+import IDisplayNameObject from './IDisplayNameObject';
 
 /*
 This file contains a list of definitions for round data to bring structure to the data

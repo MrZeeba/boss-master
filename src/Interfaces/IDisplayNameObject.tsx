@@ -1,3 +1,3 @@
-export interface IDisplayNameObject {
+export default interface IDisplayNameObject {
   displayName: string;
 }

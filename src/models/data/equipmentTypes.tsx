@@ -1,4 +1,4 @@
-import { IDisplayNameObject } from '../../interfaces/IDisplayNameObject';
+import IDisplayNameObject from '../../interfaces/IDisplayNameObject';
 
 export const equipmentTypes: { [key: string]: IDisplayNameObject } = {
   bow: {

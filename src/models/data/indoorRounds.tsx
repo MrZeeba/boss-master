@@ -1,4 +1,4 @@
-import { ZoneScoringType } from '../../enums/ZoneScoringType';
+import { zoneScoringTypes } from '../../enums/zoneScoringTypes';
 import { ISessionType } from '../../interfaces/RoundInterfaces';
 
 export const indoorRounds: ISessionType = {
@@ -6,7 +6,7 @@ export const indoorRounds: ISessionType = {
     displayName: 'Portsmouth',
     distanceType: 'imperial',
     faceSize: 60,
-    zoneScoring: ZoneScoringType.TenPoint,
+    zoneScoring: zoneScoringTypes.TenPoint,
     arrowsPerEnd: 6,
     variations: [
       {

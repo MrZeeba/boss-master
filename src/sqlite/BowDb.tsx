@@ -37,6 +37,39 @@ export class BowDb implements IChildTable<BowEnt> {
     return LocalDb.Validate(sql, LocalDB.BOW_TABLE_NAME);
   }
 
+  Fetch(): Promise<Bow[]> {
+    console.log('Fetching bow records');
+
+    return new Promise<Bow[]>((success, fail) => {
+      const db = LocalDb.GetDatabaseInstance();
+
+      const sql = `SELECT b.*, e.* FROM ${LocalDB.BOW_TABLE_NAME} b JOIN ${LocalDB.EQUIPMENT_TABLE_NAME} e on b.equipment_id == e.id`;
+
+      const bows = db
+        .getAllAsync<BowEnt>(sql)
+        .then(bows => {
+          success(
+            bows.map(
+              row =>
+                new Bow(
+                  row.equipment_id,
+                  row.name,
+                  row.type,
+                  row.image,
+                  row.notes,
+                  row.classification,
+                  row.length,
+                  row.draw_weight,
+                ),
+            ),
+          );
+        })
+        .catch(err =>
+          console.warn('There was an error during SQL execution', err),
+        );
+    });
+  }
+
   // Returns the inserted record id from the bow table
   Create(bow: Bow): Promise<number> {
     console.log('Attempting to create bow', bow);

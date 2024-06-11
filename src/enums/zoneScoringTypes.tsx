@@ -1,4 +1,4 @@
-export enum ZoneScoringType {
+export enum zoneScoringTypes {
   FivePoint = 0,
   TenPoint = 1,
 }

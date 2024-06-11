@@ -1,21 +1,21 @@
 /*
 The root stack for the equipment page
 */
-import { Feather } from '@expo/vector-icons';
+import Feather from '@expo/vector-icons/Feather';
 import { useFocusEffect } from '@react-navigation/native';
-import React, { useCallback, useEffect, useState } from 'react';
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { useCallback, useEffect, useState } from 'react';
+import { Text, View } from 'react-native';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import CustomCard from '../../components/CustomCard';
 import { globalStyles } from '../../globalStyles';
-import { Equipment } from '../../models/domain/Equipment';
-import { EquipmentEnt } from '../../models/entity/EquipmentEnt';
-import LocalDb from '../../sqlite/LocalDb';
+import { Bow } from '../../models/domain/Bow';
+import { BowDb } from '../../sqlite/BowDb';
 
 /*
 Equipment is currently just a bow but may be expanded in the future
 */
 export default function EquipmentPage({ navigation, route }) {
-  const [equipmentList, setEquipmentList] = useState<Equipment[]>([]);
+  const [bowList, setBowList] = useState<Bow[]>([]);
 
   //A mode in which only selection of bows is available
   const { selectMode } = route.params ?? { selectMode: false };
@@ -23,17 +23,12 @@ export default function EquipmentPage({ navigation, route }) {
 
   useFocusEffect(
     useCallback(() => {
-      LocalDb.GetAll(LocalDb.EQUIPMENT_TABLE_NAME, () => new EquipmentEnt())
-        .then(results => {
-          console.log('Results from DB:', results);
-
-          const equipment = results.map(x => x.toDomain() as Equipment);
-
-          setEquipmentList(equipment);
-        })
-        .catch(error =>
-          console.error('Critical error loading equipment results', error),
-        );
+      BowDb.GetInstance()
+        .Fetch()
+        .then(bows => {
+          console.log('Bows retrieved', bows);
+          setBowList(bows);
+        });
     }, []),
   );
 
@@ -60,8 +55,8 @@ export default function EquipmentPage({ navigation, route }) {
   return (
     <View style={globalStyles.pageContainer}>
       <ScrollView>
-        {equipmentList.length > 0 ? (
-          equipmentList.map(equipment => (
+        {bowList.length > 0 ? (
+          bowList.map(equipment => (
             <CustomCard
               key={equipment.id}
               image={equipment.image}
@@ -79,12 +74,12 @@ export default function EquipmentPage({ navigation, route }) {
     </View>
   );
 
-  function goBack(selectedEquipment: Equipment) {
-    console.log('Passing equipment back to previous screen', selectedEquipment);
-    navigation.navigate(prevScreen, { bow: selectedEquipment });
+  function goBack(selectedBow: Bow) {
+    console.log('Passing equipment back to previous screen', selectedBow);
+    navigation.navigate(prevScreen, { bow: selectedBow });
   }
 
-  function view(equipment: Equipment) {
+  function view(bow: Bow) {
     throw new Error('Function not implemented.');
   }
 }

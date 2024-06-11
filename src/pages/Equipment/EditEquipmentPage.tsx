@@ -7,7 +7,6 @@ import CustomImagePicker from '../../components/CustomImagePicker';
 import CustomNotesInput from '../../components/CustomNotesInput';
 import CustomPicker from '../../components/CustomPicker';
 import CustomTextInput from '../../components/CustomTextInput';
-import { bowTypes } from '../../models/data/bowTypes';
 import { Bow } from '../../models/domain/Bow';
 import { Equipment } from '../../models/domain/Equipment';
 import { BowDb } from '../../sqlite/BowDb';
@@ -38,6 +37,8 @@ export default function EditEquipmentPage({ navigation }) {
     console.log('DATA PASSED FROM FORM', data);
     //const bow = new Bow(id, data);
 
+    const bow = new Bow();
+    /*
     const bow = new Bow(
       data.name,
       data.image,
@@ -46,6 +47,7 @@ export default function EditEquipmentPage({ navigation }) {
       data.length,
       data.drawweight,
     );
+    */
 
     const bowDb = BowDb.GetInstance();
     bowDb

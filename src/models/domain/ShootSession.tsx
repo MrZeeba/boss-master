@@ -1,32 +1,34 @@
-import { IDomain } from '../../interfaces/IDomain';
 import { IRound } from '../../interfaces/RoundInterfaces';
-import { End } from '../End';
-import { ShootSessionEnt as ShootSessionEntity } from '../entity/ShootSessionEnt';
 import { Bow } from './Bow';
 
-export class ShootSession implements IDomain {
-  id?: number;
+export class ShootSession {
+  id: number | undefined;
   dateShot: string;
   bow: Bow;
   note: string;
+  roundJson: string; //Populated from the database column
   isDraft: boolean;
-  ends: End[];
-  round: IRound;
+  private _parsedRound?: any; // Private field to store the parsed JSON
 
-  toEntity(): ShootSessionEntity {
-    const entity = new ShootSessionEntity();
-    entity.dateShot = this.dateShot;
-    entity.bowId = this.bow.bowId;
-    entity.note = this.note;
-    entity.isDraft = this.isDraft;
-    entity.roundJson = JSON.stringify(this.round);
-    return entity;
+  // Getter method for the round property. This is required to rebuild the IRound object after it being stored in the database as JSON
+  get round(): IRound {
+    if (!this._parsedRound && this.roundJson) {
+      // Lazy parsing of JSON data
+      this._parsedRound = JSON.parse(this.roundJson) as IRound;
+    }
+    console.log('parsed', this._parsedRound);
+    return this._parsedRound;
   }
 
-  // Adds a score to the current end
-  AddEndScore(score: number) {
-    /* if (this.ends === undefined) {
-      this.ends = new End[this.round.]
-    }*/
+  // Allows us to set as an IRound object too, which also populates the roundJson for database operation
+  set round(value: IRound) {
+    this._parsedRound = value;
+    this.roundJson = JSON.stringify(value);
+  }
+
+  static fromPlainObject(obj: any): ShootSession {
+    const session = new ShootSession();
+    Object.assign(session, obj);
+    return session;
   }
 }
