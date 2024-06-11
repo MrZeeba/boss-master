@@ -1,5 +1,5 @@
+import { IDomain } from '../../Interfaces/IDomain';
 import { IDisplayNameObject } from '../../interfaces/IDisplayNameObject';
-import { IDomain } from '../../interfaces/IDomain';
 import { IEntity } from '../../interfaces/IEntity';
 import { EquipmentEnt } from '../entity/EquipmentEnt';
 

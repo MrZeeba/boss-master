@@ -10,6 +10,14 @@ export class Bow extends Equipment implements IDomain {
   length: number;
   drawWeight: number;
 
+  super(
+    _classification: IDisplayNameObject,
+    _length: number,
+    _drawWeight: number,
+  ) {
+    classification = _classification;
+  }
+
   toEntity(): BowEnt {
     const entity = new BowEnt();
     entity.equipmentId = this.equipmentId;

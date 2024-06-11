@@ -1,6 +1,7 @@
 import { SQLiteBindParams } from 'expo-sqlite/next';
 import { IChildTable } from '../interfaces/IChildTable';
 import { BowEnt } from '../models/entity/BowEnt';
+import { EquipmentDb } from './EquipmentDb';
 import LocalDb, { default as LocalDB } from './LocalDb';
 
 /*
@@ -34,11 +35,13 @@ export class BowDb implements IChildTable<BowEnt> {
     return LocalDb.Validate(sql, LocalDB.BOW_TABLE_NAME);
   }
 
-  // Returns the inserted record id
-  Create(bow: BowEnt, parentId: number): Promise<number> {
+  // Returns the inserted record id from the bow table
+  Create(bow: BowEnt): Promise<number> {
     console.log('Attempting to create bow', bow);
     return new Promise<number>((success, fail) => {
       const db = LocalDb.GetDatabaseInstance();
+      const equipDb = EquipmentDb.GetInstance();
+      equipDb.Create();
 
       const sql: string = `INSERT INTO ${LocalDB.BOW_TABLE_NAME} (equipment_id, classification, draw_weight) VALUES(?,?,?)`;
       const params: SQLiteBindParams = [

@@ -1,13 +1,13 @@
 import { SQLiteBindParams } from 'expo-sqlite/next';
 import { ITable } from '../interfaces/ITable';
-import { Equipment } from '../models/domain/Equipment';
+import { EquipmentEnt } from '../models/entity/EquipmentEnt';
 import LocalDb from './LocalDb';
 
 /*
 Provides interactivity with the equipment table
 Must follow a singleton pattern as Typescript does not allow static methods on a interface.
 */
-export class EquipmentDb implements ITable<Equipment> {
+export class EquipmentDb implements ITable<EquipmentEnt> {
   private static instance: EquipmentDb;
 
   private constructor() {}
@@ -17,6 +17,10 @@ export class EquipmentDb implements ITable<Equipment> {
       this.instance = new EquipmentDb();
     }
     return this.instance;
+  }
+
+  Restructure(): void {
+    throw new Error('Method not implemented.');
   }
 
   Validate() {
@@ -31,7 +35,7 @@ export class EquipmentDb implements ITable<Equipment> {
     return LocalDb.Validate(sql, LocalDb.EQUIPMENT_TABLE_NAME);
   }
 
-  Create(equipment: Equipment): Promise<number> {
+  Create(equipment: EquipmentEnt): Promise<number> {
     return new Promise<number>((success, fail) => {
       const db = LocalDb.GetDatabaseInstance();
 

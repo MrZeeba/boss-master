@@ -54,7 +54,7 @@ export default function EditEquipmentPage({ navigation }) {
     const equipmentDb = EquipmentDb.GetInstance();
 
     equipmentDb
-      .Create(equipment)
+      .Create(equipment.toEntity())
       .then(id => {
         console.log(
           `New equipment created with id ${id}, creating child record...`,
@@ -62,7 +62,7 @@ export default function EditEquipmentPage({ navigation }) {
 
         const bowDb = BowDb.GetInstance();
         bowDb
-          .Create(bow, id)
+          .Create(bow.toEntity(), id)
           .then(bowId => {
             console.log(
               `New bow child record of equipment ${id} created with id`,
