@@ -7,6 +7,7 @@ import CustomImagePicker from '../../components/CustomImagePicker';
 import CustomNotesInput from '../../components/CustomNotesInput';
 import CustomPicker from '../../components/CustomPicker';
 import CustomTextInput from '../../components/CustomTextInput';
+import { bowTypes } from '../../models/data/bowtypes';
 import { Bow } from '../../models/domain/Bow';
 import { Equipment } from '../../models/domain/Equipment';
 import { BowDb } from '../../sqlite/BowDb';
