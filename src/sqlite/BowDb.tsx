@@ -12,8 +12,6 @@ import LocalDb, { default as LocalDB } from './LocalDb';
 export class BowDb implements IChildTable<Bow> {
   private static instance: BowDb;
 
-  private constructor() {}
-
   Restructure(): void {
     throw new Error('Method not implemented.');
   }

@@ -16,8 +16,6 @@ export default class LocalDb {
   private static instance: LocalDb | null = null;
   private static db: SQLite.SQLiteDatabase | null = null;
 
-  private constructor() {}
-
   static GetInstance(): LocalDb {
     if (!this.instance) {
       this.instance = new LocalDb();
@@ -63,22 +61,6 @@ export default class LocalDb {
     });
 
     return false;
-  }
-
-  /*
-  Return all of a type
-  */
-  static async GetAll<T>(tableName: string): Promise<T[]> {
-    const db = this.GetDatabaseInstance();
-
-    const sql = `SELECT * FROM ${tableName}`;
-
-    return await db.getAllAsync<T>(sql).then(foo => {
-      console.log("Here's my foo!", foo);
-      return foo;
-    });
-
-    //Rehydrate the object before passing back to the caller to ensure its fully built
   }
 
   /*
@@ -178,7 +160,7 @@ export default class LocalDb {
     callback: (rowsDeleted: number) => void,
   ) {
     console.log(`Truncating table ${tableName}...`);
-    const db = this.connectToDatabase();
+    const db = this.GetDatabaseInstance();
 
     db.transaction(tx => {
       tx.executeSql(

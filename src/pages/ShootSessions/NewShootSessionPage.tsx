@@ -73,7 +73,7 @@ export default function NewShootSessionPage({ navigation, route }) {
             image={bow.image}
             placeholderImageUri="../../assets/bow_placeholder.png"
             heading={bow.name}
-            fieldOne={bow.type.name}
+            fieldOne={bow.type.displayName}
             fieldTwo={bow.notes}
             disableTap
           />

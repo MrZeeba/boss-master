@@ -9,7 +9,9 @@ Validates the schema for this table
 export class ShootSessionDb implements ITable<ShootSessionEnt> {
   private static instance: ShootSessionDb;
 
-  private constructor() {}
+  Fetch(): Promise<ShootSessionEnt[]> {
+    throw new Error('Method not implemented.');
+  }
 
   static GetInstance(): ShootSessionDb {
     if (!this.instance) this.instance = new ShootSessionDb();
