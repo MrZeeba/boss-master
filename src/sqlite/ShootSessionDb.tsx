@@ -51,34 +51,29 @@ export class ShootSessionDb implements ITable<ShootSession> {
 
       db.getAllAsync<ShootSessionEnt>(sql)
         .then(async rows => {
-          try {
-            const sessions = await Promise.all(
-              rows.map(async r => {
-                const bowEnt = await LocalDb.GetById<BowEnt>(
-                  LocalDb.BOW_TABLE_NAME,
-                  r.bow_id,
-                  'id',
-                );
+          const sessions = await Promise.all(
+            rows.map(async r => {
+              const bowEnt = await LocalDb.GetById<BowEnt>(
+                LocalDb.BOW_TABLE_NAME,
+                r.bow_id,
+              );
 
-                if (!bowEnt) {
-                  throw new Error(`Bow not found for bow_id: ${r.bow_id}`);
-                }
+              if (!bowEnt) {
+                throw new Error(`Bow not found for bow_id: ${r.bow_id}`);
+              }
 
-                const bow = Bow.FromRow(bowEnt);
-                return new ShootSession(
-                  r.id,
-                  r.date_shot,
-                  bow,
-                  r.note,
-                  JSON.parse(r.round_json),
-                  r.isDraft,
-                );
-              }),
-            );
-            resolve(sessions);
-          } catch (error) {
-            reject(error);
-          }
+              const bow = Bow.FromRow(bowEnt);
+              return new ShootSession(
+                r.id,
+                r.date_shot,
+                bow,
+                r.note,
+                JSON.parse(r.round_json),
+                r.isDraft,
+              );
+            }),
+          );
+          resolve(sessions);
         })
         .catch(err => reject(err));
     });

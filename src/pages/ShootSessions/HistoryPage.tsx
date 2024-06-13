@@ -25,14 +25,13 @@ export default function HistoryPage() {
     }, []),
   );
 
-  return shootSessions.map((shootSession: ShootSession, index) => {
-    const rehydratedShootSession = ShootSession.fromPlainObject(shootSession);
+  return shootSessions.map((session: ShootSession, index) => {
     return (
       <CustomCard
         key={index}
-        heading={rehydratedShootSession.dateShot}
-        fieldOne={rehydratedShootSession.round.displayName}
-        fieldTwo={`In Progress: ${rehydratedShootSession.isDraft}`}
+        heading={session.dateShot}
+        fieldOne={session.round.displayName}
+        fieldTwo={`In Progress: ${session.isDraft}`}
       />
     );
   });

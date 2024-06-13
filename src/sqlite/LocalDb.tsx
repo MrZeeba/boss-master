@@ -66,16 +66,17 @@ export default class LocalDb {
   /*
   Return a specific record by type
   */
-  static GetById<Type>(
+  static async GetById<Type>(
     tableName: string,
     id: number,
-    idColumn: string = 'id',
   ): Promise<Type | null> {
     const db = this.GetDatabaseInstance();
-    return db.getFirstAsync<Type>(
-      `SELECT TOP(1) FROM ${tableName} WHERE ? = ?`,
-      [idColumn, id],
-    );
+
+    const sql = `SELECT * FROM ${tableName} WHERE id = ?`;
+    const params: SQLite.SQLiteBindParams = [id];
+
+    console.log('Locating record by id with SQL', sql, params);
+    return await db.getFirstAsync<Type>(sql, params);
   }
 
   /*

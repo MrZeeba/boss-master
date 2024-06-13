@@ -5,5 +5,5 @@ export interface ShootSessionEnt {
   round_json: string;
   date_shot: any;
   bow_id: number;
-  isDraft: boolean;
+  is_draft: boolean;
 }
