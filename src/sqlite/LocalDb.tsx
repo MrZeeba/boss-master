@@ -92,20 +92,13 @@ export default class LocalDb {
   /*
   Performs an insert statement on the database and returns the last inserted ID
   */
-  static Insert(
-    sql: string,
-    params: SQLite.SQLiteBindParams,
-  ): Promise<number | undefined> {
+  static Insert(sql: string, params: SQLite.SQLiteBindParams): Promise<number> {
     const db = this.GetDatabaseInstance();
 
     return db
       .runAsync(sql, params)
       .then(result => {
-        if (result.changes > 0) {
-          return result.lastInsertRowId;
-        } else {
-          return undefined; // No rows were inserted
-        }
+        return result.lastInsertRowId;
       })
       .catch(error => {
         console.error('Error inserting data:', error);
@@ -160,7 +153,7 @@ export default class LocalDb {
     callback: (rowsDeleted: number) => void,
   ) {
     console.log(`Truncating table ${tableName}...`);
-    const db = this.GetDatabaseInstance();
+    const db = this.GetInstance();
 
     db.transaction(tx => {
       tx.executeSql(

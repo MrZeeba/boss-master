@@ -2,10 +2,11 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useCallback, useState } from 'react';
 import CustomCard from '../../components/CustomCard';
 import { ShootSession } from '../../models/domain/ShootSession';
-import LocalDb from '../../sqlite/LocalDb';
+import { ShootSessionDb } from '../../sqlite/ShootSessionDb';
 
 export default function HistoryPage() {
   const [shootSessions, setShootSessions] = useState<ShootSession[]>([]);
+  const shootSessionsDb = ShootSessionDb.GetInstance();
 
   /*
   Makes effect only run when values are changed, cannot use hooks as we're changing screen
@@ -13,7 +14,8 @@ export default function HistoryPage() {
   */
   useFocusEffect(
     useCallback(() => {
-      LocalDb.GetAll<ShootSession>(LocalDb.SHOOTSESSION_TABLE_NAME)
+      shootSessionsDb
+        .Fetch()
         .then(results => {
           setShootSessions(results);
         })

@@ -18,7 +18,15 @@ export class EquipmentDb implements ITable<Equipment> {
   }
 
   Validate(): Promise<boolean> {
-    throw new Error('Method not implemented.');
+    const sql = `CREATE TABLE IF NOT EXISTS ${LocalDb.EQUIPMENT_TABLE_NAME} 
+      (id INTEGER PRIMARY KEY AUTOINCREMENT, 
+        name INTEGER NOT NULL,
+        type TEXT,
+        image TEXT,
+        notes TEXT
+      )`;
+
+    return LocalDb.Validate(sql, LocalDb.EQUIPMENT_TABLE_NAME);
   }
 
   Restructure(): void {

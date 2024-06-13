@@ -1,5 +1,6 @@
 import IDisplayNameObject from '../../interfaces/IDisplayNameObject';
 import { equipmentTypes } from '../data/equipmentTypes';
+import { BowEnt } from '../entity/BowEnt';
 import { Equipment } from './Equipment';
 
 export class Bow extends Equipment {
@@ -23,5 +24,20 @@ export class Bow extends Equipment {
     this.classification = _classification;
     this.length = _length;
     this.drawWeight = _drawWeight;
+  }
+
+  static FromRow(r: BowEnt): Bow {
+    const bow = new Bow(
+      r.equipment_id,
+      r.name,
+      r.image,
+      r.notes,
+      r.id,
+      r.classification,
+      r.length,
+      r.draw_weight,
+    );
+
+    return bow;
   }
 }

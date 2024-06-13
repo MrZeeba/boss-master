@@ -5,19 +5,19 @@ export class Equipment {
   name: string;
   type: IDisplayNameObject;
   image: string;
-  notes: string;
+  note: string;
 
   constructor(
     _id: number | undefined,
     _name: string,
     _type: IDisplayNameObject,
     _image: string,
-    _notes: string,
+    _note: string,
   ) {
     this.id = _id;
     this.name = _name;
     this.type = _type;
     this.image = _image;
-    this.notes = _notes;
+    this.note = _note;
   }
 }

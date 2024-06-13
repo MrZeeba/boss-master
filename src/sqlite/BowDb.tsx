@@ -1,5 +1,5 @@
 import { SQLiteBindParams } from 'expo-sqlite/next';
-import { IChildTable } from '../interfaces/IChildTable';
+import { ITable } from '../interfaces/ITable';
 import { Bow } from '../models/domain/Bow';
 import { BowEnt } from '../models/entity/BowEnt';
 import { EquipmentDb } from './EquipmentDb';
@@ -9,12 +9,8 @@ import LocalDb, { default as LocalDB } from './LocalDb';
   Provides interactivity with the equipment table
   Must follow a singleton pattern as Typescript does not allow static methods on a interface.
   */
-export class BowDb implements IChildTable<Bow> {
+export class BowDb implements ITable<Bow> {
   private static instance: BowDb;
-
-  Restructure(): void {
-    throw new Error('Method not implemented.');
-  }
 
   static GetInstance(): BowDb {
     if (!this.instance) this.instance = new BowDb();
@@ -34,6 +30,10 @@ export class BowDb implements IChildTable<Bow> {
     return LocalDb.Validate(sql, LocalDB.BOW_TABLE_NAME);
   }
 
+  Restructure(): void {
+    throw new Error('Method not implemented.');
+  }
+
   Fetch(): Promise<Bow[]> {
     console.log('Fetching bow records');
 
@@ -44,26 +44,14 @@ export class BowDb implements IChildTable<Bow> {
 
       db.getAllAsync<BowEnt>(sql)
         .then(bows => {
-          success(
-            bows.map(
-              row =>
-                new Bow(
-                  row.equipment_id,
-                  row.name,
-                  row.image,
-                  row.notes,
-                  row.id,
-                  row.classification,
-                  row.length,
-                  row.draw_weight,
-                ),
-            ),
-          );
+          success(bows.map(row => Bow.FromRow(row)));
         })
-        .catch(err =>
-          console.warn('There was an error during SQL execution', err),
-        );
+        .catch(err => fail(err));
     });
+  }
+
+  GetById(bow_id: number) {
+    throw new Error('Method not implemented.');
   }
 
   // Returns an updated bow object containing the id
