@@ -63,7 +63,7 @@ export default function EquipmentPage({ navigation, route }) {
               placeholderImageUri="../../assets/bow_placeholder.png"
               heading={equipment.name}
               fieldOne={equipment.type.displayName}
-              fieldTwo={equipment.notes}
+              fieldTwo={equipment.note}
               onPress={() => (selectMode ? goBack(equipment) : view(equipment))}
             />
           ))

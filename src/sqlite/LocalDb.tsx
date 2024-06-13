@@ -179,7 +179,7 @@ export default class LocalDb {
     });
   }
 
-  static ValidationError(typeName: string, error: SQLite.SQLError) {
+  static ValidationError(typeName: string, error: SQLiteErr) {
     console.error(
       `There was a problem during database validation of type ${typeName}`,
       error,

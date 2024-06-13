@@ -46,7 +46,7 @@ export class EquipmentDb implements ITable<Equipment> {
         equipment.name,
         equipment.type.toString(),
         equipment.image,
-        equipment.notes,
+        equipment.note,
       ];
 
       db.runAsync(sql, params)

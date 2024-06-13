@@ -69,7 +69,7 @@ export class ShootSessionDb implements ITable<ShootSession> {
                 bow,
                 r.note,
                 JSON.parse(r.round_json),
-                r.isDraft,
+                r.is_draft,
               );
             }),
           );
