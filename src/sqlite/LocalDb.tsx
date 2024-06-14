@@ -147,43 +147,21 @@ export default class LocalDb {
   }
 
   /*
-  Removes the data from a table but retains the structure
+  Removes the data from a table but retains the structure. Returns a promise containing the qty deleted. 
   */
-  static TruncateTable(
-    tableName: string,
-    callback: (rowsDeleted: number) => void,
-  ) {
-    console.log(`Truncating table ${tableName}...`);
-    const db = this.GetInstance();
+  static TruncateTable(tableName: string): number {
+    const db = this.GetDatabaseInstance();
+    const rowsDeleted = db.runSync(`DELETE FROM ${tableName}`).changes;
 
-    db.transaction(tx => {
-      tx.executeSql(
-        `DELETE FROM ${tableName}`,
-        [],
-        (_, result) => {
-          console.log('Truncate result', result);
-          callback(result.rowsAffected);
-
-          //Resequence table
-          tx.executeSql(`UPDATE SQLITE_SEQUENCE SET SEQ = 0 WHERE NAME = ?`, [
-            tableName,
-          ]);
-        },
-        (_, error: SQLite.SQLError) => {
-          console.error(
-            `Error truncating table ${tableName}: ${error.message}`,
-          );
-          return false;
-        },
-      );
-    });
-  }
-
-  static ValidationError(typeName: string, error: SQLiteErr) {
-    console.error(
-      `There was a problem during database validation of type ${typeName}`,
-      error,
+    console.log(
+      `Deleted ${rowsDeleted} rows from ${tableName}. Resequencing table...`,
     );
+
+    db.runSync(`UPDATE SQLITE_SEQUENCE SET SEQ = 0 WHERE NAME = ?`, [
+      tableName,
+    ]);
+
+    return rowsDeleted;
   }
 
   static async Restructure() {

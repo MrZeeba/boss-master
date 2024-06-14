@@ -12,10 +12,7 @@ An active scoring session. This is someone in the middle of shooting a round
 */
 export default function EditScorecardPage({ navigation, route }) {
   const { session }: { session: ShootSession } = route.params;
-  console.log(session);
-  const foo = session.toEntity();
-  console.log('hello', foo);
-  //Do I need to rehydrate here?
+  console.log('Retrieved object into editscorecard', session);
 
   useEffect(() => {
     navigation.setOptions({
@@ -36,7 +33,7 @@ export default function EditScorecardPage({ navigation, route }) {
   //Adds a score to the current session
   function addScore(score: number) {
     console.log('User has entered an arrow score of ', score);
-    session.AddEndScore(score);
+    //session.AddEndScore(score);
   }
 
   //Where should the buttons be for discarding/saving? they shouldn't be easily pressed

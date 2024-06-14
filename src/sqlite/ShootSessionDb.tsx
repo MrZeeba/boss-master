@@ -63,14 +63,7 @@ export class ShootSessionDb implements ITable<ShootSession> {
               }
 
               const bow = Bow.FromRow(bowEnt);
-              return new ShootSession(
-                r.id,
-                r.date_shot,
-                bow,
-                r.note,
-                JSON.parse(r.round_json),
-                r.is_draft,
-              );
+              return ShootSession.FromRow(r, bow);
             }),
           );
           resolve(sessions);
@@ -86,20 +79,37 @@ export class ShootSessionDb implements ITable<ShootSession> {
     //older than last week
   }
 
-  async GetDraft(): Promise<ShootSessionEnt | undefined> {
+  async GetDraft(): Promise<ShootSession | undefined> {
     const sql: string = `SELECT * FROM ${LocalDb.SHOOTSESSION_TABLE_NAME} WHERE is_draft = ? ORDER BY date_shot DESC LIMIT 1`;
 
     const params: SQLiteBindParams = [1];
 
-    return LocalDb.GetBySQL<ShootSessionEnt>(sql, params)
-      .then(shootSessions => {
-        const shootSession = shootSessions[0];
-        return shootSession ?? undefined;
-      })
-      .catch(error => {
-        console.warn('Unable to retrieve draft', error);
-        return undefined;
-      });
+    return new Promise<ShootSession | undefined>((resolve, reject) => {
+      LocalDb.GetBySQL<ShootSessionEnt>(sql, params)
+        .then(async shootSessions => {
+          console.log(shootSessions);
+          //There may be no draft, exit early
+          if (shootSessions.length <= 0) return resolve(undefined);
+
+          const bowEnt = await LocalDb.GetById<BowEnt>(
+            LocalDb.BOW_TABLE_NAME,
+            shootSessions[0].bow_id,
+          );
+
+          if (!bowEnt) {
+            throw new Error(
+              `Bow not found for bow_id: ${shootSessions[0].bow_id}`,
+            );
+          }
+
+          const bow = Bow.FromRow(bowEnt);
+          resolve(ShootSession.FromRow(shootSessions[0], bow));
+        })
+        .catch(error => {
+          console.warn('Unable to retrieve draft', error);
+          throw new Error();
+        });
+    });
   }
 
   Create(session: ShootSession): Promise<number> {
